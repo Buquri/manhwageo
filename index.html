@@ -30,21 +30,10 @@
       background-position: center;
     }
 
-    .box.first {
-      background-image: url('images/bg-main.jpg');
-    }
-
-    .box.second {
-      background-image: url('images/bg-2.jpg');
-    }
-
-    .box.third {
-      background-image: url('images/bg-3.jpg');
-    }
-
-    .box.fourth {
-      background-image: url('images/bg-4.jpg');
-    }
+    .box.first   { background-image: url('images/bg-main.jpg'); }
+    .box.second  { background-image: url('images/bg-2.jpg'); }
+    .box.third   { background-image: url('images/bg-3.jpg'); }
+    .box.fourth  { background-image: url('images/bg-4.jpg'); }
 
     .box h2,
     .box button {
@@ -168,59 +157,49 @@
   </div>
 
   <script>
-  let currentPrefix = 'ch';
-  let currentFolder = 'images/';
+    let currentPrefix = 'ch';
+    let currentFolder = 'images/';
 
-  function toggleModal(id) {
-    const modal = document.getElementById(id);
-    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-  }
-
-  function openChapterSelect(prefix) {
-    currentPrefix = prefix;
-
-    // ფოლდერის განსაზღვრა prefix-ის მიხედვით
-    switch (prefix) {
-      case 'ch':
-        currentFolder = 'images/';
-        break;
-      case 'w2_ch':
-        currentFolder = 'images2/';
-        break;
-      case 'w3_ch':
-        currentFolder = 'images3/';
-        break;
-      case 'w4_ch':
-        currentFolder = 'images4/';
-        break;
-      default:
-        currentFolder = 'images/';
+    function toggleModal(id) {
+      const modal = document.getElementById(id);
+      modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    const chapterButtons = document.getElementById('chapterButtons');
-    chapterButtons.innerHTML = '';
-    for (let i = 1; i <= 5; i++) {
-      const btn = document.createElement('button');
-      btn.textContent = `თავი ${i}`;
-      btn.onclick = () => openChapter(i);
-      chapterButtons.appendChild(btn);
-    }
-    toggleModal('chapterSelect');
-  }
+    function openChapterSelect(prefix) {
+      currentPrefix = prefix;
 
-  function openChapter(chapterNumber) {
-    const imagesContainer = document.getElementById('imagesContainer');
-    imagesContainer.innerHTML = '';
-    for (let i = 1; i <= 16; i++) {
-      const img = document.createElement('img');
-      img.src = `${currentFolder}${currentPrefix}${chapterNumber}_page${i}.jpg`;
-      img.alt = `${currentPrefix}${chapterNumber}_page${i}`;
-      imagesContainer.appendChild(img);
+      switch (prefix) {
+        case 'ch':     currentFolder = 'images/';   break;
+        case 'w2_ch':  currentFolder = 'images2/';  break;
+        case 'w3_ch':  currentFolder = 'images3/';  break;
+        case 'w4_ch':  currentFolder = 'images4/';  break;
+        default:       currentFolder = 'images/';
+      }
+
+      const chapterButtons = document.getElementById('chapterButtons');
+      chapterButtons.innerHTML = '';
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = `თავი ${i}`;
+        btn.onclick = () => openChapter(i);
+        chapterButtons.appendChild(btn);
+      }
+      toggleModal('chapterSelect');
     }
-    document.getElementById('chapterTitle').textContent = `თავი ${chapterNumber}`;
-    toggleModal('chapterSelect');
-    toggleModal('chapterModal');
-  }
+
+    function openChapter(chapterNumber) {
+      const imagesContainer = document.getElementById('imagesContainer');
+      imagesContainer.innerHTML = '';
+      for (let i = 1; i <= 16; i++) {
+        const img = document.createElement('img');
+        img.src = `${currentFolder}${currentPrefix}${chapterNumber}_page${i}.jpg`;
+        img.alt = `${currentPrefix}${chapterNumber}_page${i}`;
+        imagesContainer.appendChild(img);
+      }
+      document.getElementById('chapterTitle').textContent = `თავი ${chapterNumber}`;
+      toggleModal('chapterSelect');
+      toggleModal('chapterModal');
+    }
   </script>
 
 </body>
