@@ -2,7 +2,9 @@
 <html lang="ka">
 <head>
   <meta charset="UTF-8">
-  <title>manhwageo</title>
+  <title>Manhwageo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manhwageo - ქართული მანჰვების ონლაინ ბიბლიოთეკა. წაიკითხეთ საუკეთესო მანჰვები ქართულ ენაზე.">
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
     * {
@@ -18,30 +20,72 @@
       padding: 10px;
       background-color: #000;
       color: #fff;
+      overflow-x: hidden;
     }
 
     .box {
       border: 2px solid #333;
       padding: 10px;
-      overflow: auto;
+      overflow: hidden;
       position: relative;
       background-color: #111;
       background-size: cover;
       background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      border-radius: 8px;
     }
 
-    .box.first   { background-image: url('images/bg-main.jpg'); }
-    .box.second  { background-image: url('images/bg-2.jpg'); }
-    .box.third   { background-image: url('images/bg-3.jpg'); }
-    .box.fourth  { background-image: url('images/bg-4.jpg'); }
+    .box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+    }
+
+    .box.first {
+      background-image: url('images/bg-main.jpg');
+    }
+
+    .box.second {
+      background-image: url('images/bg-2.jpg');
+    }
+
+    .box.third {
+      background-image: url('images/bg-3.jpg');
+    }
+
+    .box.fourth {
+      background-image: url('images/bg-4.jpg');
+    }
 
     .box h2,
     .box button {
+      position: relative;
+      z-index: 1;
       color: white;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 5px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 8px 12px;
       border: none;
       border-radius: 5px;
+      margin: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .box button:hover:not(:disabled) {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .box button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      background-color: rgba(50, 50, 50, 0.7);
     }
 
     .modal {
@@ -62,13 +106,20 @@
       padding: 20px;
       border-radius: 8px;
       max-width: 90vw;
-      max-height: 100vh;
+      max-height: 95vh;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chapter-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
     }
 
     .chapter-buttons button {
-      display: block;
-      margin: 10px auto;
       padding: 10px 20px;
       background-color: #ff4444;
       border: none;
@@ -81,15 +132,22 @@
 
     .chapter-buttons button:hover {
       background-color: #cc0000;
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
     .images-container {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-height: 80vh;
+      margin-top: 15px;
+      flex-grow: 1;
       overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .images-container::-webkit-scrollbar {
+        display: none;
     }
 
     .images-container img {
@@ -101,6 +159,13 @@
       animation: fadeUp 0.5s ease forwards;
     }
 
+    .loading-indicator {
+        text-align: center;
+        padding: 20px;
+        font-size: 1.2em;
+        color: #ddd;
+    }
+
     @keyframes fadeUp {
       to {
         opacity: 1;
@@ -109,12 +174,84 @@
     }
 
     .close-btn {
-      margin-top: 15px;
+      margin-top: 20px;
       background-color: #555;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     .close-btn:hover {
       background-color: #777;
+    }
+
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      gap: 10px;
+    }
+
+    .navigation-buttons button {
+      flex: 1;
+      padding: 10px 20px;
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .navigation-buttons button:hover:not(:disabled) {
+        background-color: #cc0000;
+        transform: scale(1.03);
+    }
+    .navigation-buttons button:disabled {
+        background-color: #555;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        padding: 5px;
+      }
+      .box {
+        height: 30vh;
+      }
+      .overlay {
+        padding: 15px;
+        max-width: 95vw;
+        max-height: 90vh;
+      }
+      .chapter-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+      .box h2, .box button {
+        font-size: 0.9em;
+        padding: 6px 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .box {
+        height: 25vh;
+      }
+      .box h2 {
+        font-size: 0.8em;
+      }
+      .box button {
+        font-size: 0.8em;
+      }
+      .overlay {
+        padding: 10px;
+      }
     }
   </style>
 </head>
@@ -132,29 +269,18 @@
 
   <div class="box third">
     <h2>მალე</h2>
-    <button onclick="openChapterSelect('w3_ch')">გახსნა / დახურვა</button>
+    <button onclick="openChapterSelect('w3_ch')" disabled>გახსნა / დახურვა</button>
   </div>
 
   <div class="box fourth">
     <h2>მალეე</h2>
-    <button onclick="openChapterSelect('w4_ch')">გახსნა / დახურვა</button>
+    <button onclick="openChapterSelect('w4_ch')" disabled>გახსნა / დახურვა</button>
   </div>
 
   <div class="modal" id="chapterSelect">
     <div class="overlay">
-      <h2>თავების არჩევა</h2>
+      <h2 id="chapterSelectTitle">თავების არჩევა</h2>
       <div class="chapter-buttons" id="chapterButtons"></div>
-          <!-- კომენტარების ნაწილი -->
-    <div id="comments" style="margin-top: 30px;">
-      <script src="https://utteranc.es/client.js"
-              repo="buquri/manhwageo"
-              issue-term="title"
-              theme="github-dark"
-              crossorigin="anonymous"
-              async>
-      </script>
-    </div>
-
       <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
     </div>
   </div>
@@ -162,55 +288,168 @@
   <div class="modal" id="chapterModal">
     <div class="overlay">
       <h2 id="chapterTitle">თავი</h2>
-      <div class="images-container" id="imagesContainer"></div>
+      <div class="images-container" id="imagesContainer">
+        <p class="loading-indicator">იტვირთება...</p>
+      </div>
+      <div class="navigation-buttons">
+        <button id="prevChapterBtn" onclick="navigateChapter(-1)">წინა თავი</button>
+        <button id="nextChapterBtn" onclick="navigateChapter(1)">შემდეგი თავი</button>
+      </div>
       <button class="close-btn" onclick="toggleModal('chapterModal')">დახურვა</button>
     </div>
   </div>
 
   <script>
-    let currentPrefix = 'ch';
-    let currentFolder = 'images/';
+    const manhwas = {
+      "ch": {
+        title: "ბნელი ჯადოქრის დაბრუნება 1",
+        folder: "images/",
+        chapters: [
+          { id: 1, pages: 16 },
+          { id: 2, pages: 15 },
+          { id: 3, pages: 20 },
+          { id: 4, pages: 18 },
+          { id: 5, pages: 17 }
+        ]
+      },
+      "w2_ch": {
+        title: "რკინის სისხლიანი ხმლის მქონე მონადირე",
+        folder: "images2/",
+        chapters: [
+          { id: 1, pages: 10 },
+          { id: 2, pages: 12 },
+          { id: 3, pages: 8 }
+        ]
+      },
+      "w3_ch": {
+        title: "მალე",
+        folder: "images3/",
+        chapters: []
+      },
+      "w4_ch": {
+        title: "მალეე",
+        folder: "images4/",
+        chapters: []
+      }
+    };
 
-    function toggleModal(id) {
+    let currentManhwaId = null;
+    let currentChapterId = null;
+    let currentTotalPages = 0;
+
+    let currentOpenModalId = null;
+
+    function toggleModal(id, doPushState = true) {
       const modal = document.getElementById(id);
-      modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+      if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+        if (doPushState && currentOpenModalId === id) {
+          history.back();
+          currentOpenModalId = null;
+        }
+      } else {
+        modal.style.display = 'flex';
+        currentOpenModalId = id;
+        if (doPushState) {
+          history.pushState({ modal: id }, '', `#${id}`);
+        }
+      }
     }
 
-    function openChapterSelect(prefix) {
-      currentPrefix = prefix;
+    function openChapterSelect(manhwaId) {
+      currentManhwaId = manhwaId;
+      const manhwaData = manhwas[manhwaId];
 
-      switch (prefix) {
-        case 'ch':     currentFolder = 'images/';   break;
-        case 'w2_ch':  currentFolder = 'images2/';  break;
-        case 'w3_ch':  currentFolder = 'images3/';  break;
-        case 'w4_ch':  currentFolder = 'images4/';  break;
-        default:       currentFolder = 'images/';
+      if (!manhwaData || manhwaData.chapters.length === 0) {
+        document.getElementById('chapterButtons').innerHTML = '<p style="text-align:center; color:#aaa;">თავები ჯერ არ არის დამატებული.</p>';
+        document.getElementById('chapterSelectTitle').textContent = `${manhwaData.title} - თავების არჩევა`;
+        toggleModal('chapterSelect');
+        return;
       }
 
+      document.getElementById('chapterSelectTitle').textContent = `${manhwaData.title} - თავების არჩევა`;
       const chapterButtons = document.getElementById('chapterButtons');
       chapterButtons.innerHTML = '';
-      for (let i = 1; i <= 5; i++) {
+      manhwaData.chapters.forEach(chapter => {
         const btn = document.createElement('button');
-        btn.textContent = `თავი ${i}`;
-        btn.onclick = () => openChapter(i);
+        btn.textContent = `თავი ${chapter.id}`;
+        btn.onclick = () => openChapter(chapter.id, chapter.pages);
         chapterButtons.appendChild(btn);
-      }
+      });
       toggleModal('chapterSelect');
     }
 
-    function openChapter(chapterNumber) {
+    function openChapter(chapterId, totalPages) {
+      currentChapterId = chapterId;
+      currentTotalPages = totalPages;
+
       const imagesContainer = document.getElementById('imagesContainer');
-      imagesContainer.innerHTML = '';
-      for (let i = 1; i <= 16; i++) {
-        const img = document.createElement('img');
-        img.src = `${currentFolder}${currentPrefix}${chapterNumber}_page${i}.jpg`;
-        img.alt = `${currentPrefix}${chapterNumber}_page${i}`;
-        imagesContainer.appendChild(img);
-      }
-      document.getElementById('chapterTitle').textContent = `თავი ${chapterNumber}`;
-      toggleModal('chapterSelect');
-      toggleModal('chapterModal');
+      imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
+
+      document.getElementById('chapterTitle').textContent = `თავი ${chapterId}`;
+      toggleModal('chapterSelect', false);
+      toggleModal('chapterModal', true);
+
+      // Set timeout to simulate loading and show images
+      setTimeout(() => {
+        imagesContainer.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+          const img = document.createElement('img');
+          img.src = `${manhwas[currentManhwaId].folder}${currentManhwaId}${chapterId}_page${i}.jpg`;
+          img.alt = `თავი ${chapterId}, გვერდი ${i}`;
+          img.loading = 'lazy'; // Lazy loading for images
+          img.onerror = function() {
+            this.src = 'images/placeholder.jpg'; // Path to a placeholder image
+            this.alt = 'სურათი ვერ მოიძებნა';
+          };
+          imagesContainer.appendChild(img);
+        }
+        imagesContainer.scrollTop = 0; // Scroll to top after loading
+        updateNavigationButtons();
+      }, 500); // Simulate network delay
     }
+
+    function updateNavigationButtons() {
+        const prevBtn = document.getElementById('prevChapterBtn');
+        const nextBtn = document.getElementById('nextChapterBtn');
+        const manhwaData = manhwas[currentManhwaId];
+        const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
+
+        prevBtn.disabled = currentChapterIndex <= 0;
+        nextBtn.disabled = currentChapterIndex >= manhwaData.chapters.length - 1;
+    }
+
+    function navigateChapter(direction) {
+        const manhwaData = manhwas[currentManhwaId];
+        const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
+        const newChapterIndex = currentChapterIndex + direction;
+
+        if (newChapterIndex >= 0 && newChapterIndex < manhwaData.chapters.length) {
+            const newChapter = manhwaData.chapters[newChapterIndex];
+            openChapter(newChapter.id, newChapter.pages);
+        }
+    }
+
+    window.onpopstate = function(event) {
+      if (document.getElementById('chapterModal').style.display === 'flex') {
+        toggleModal('chapterModal', false);
+        toggleModal('chapterSelect', true); // Open chapter select when exiting chapter view
+      } else if (document.getElementById('chapterSelect').style.display === 'flex') {
+        toggleModal('chapterSelect', false);
+      }
+      currentOpenModalId = null;
+    };
+
+    // Initial check for hash in URL on page load (for direct links or refresh)
+    window.onload = function() {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1); // Remove '#'
+            if (hash === 'chapterSelect' || hash === 'chapterModal') {
+                // If a modal hash exists, remove it from history to prevent immediate exit
+                history.replaceState({}, '', window.location.pathname + window.location.search);
+            }
+        }
+    };
   </script>
 
 </body>
