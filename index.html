@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <title>manhwageo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: sans-serif;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 50vh);
+      gap: 10px;
+      margin: 0;
+      padding: 10px;
+      background-color: #000;
+      color: #fff;
+    }
+
+    .box {
+      border: 2px solid #333;
+      padding: 10px;
+      overflow: auto;
+      position: relative;
+      background-color: #111;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .box.first {
+      background-image: url('images/bg-main.jpg');
+    }
+
+    .box.second {
+      background-image: url('images/bg-2.jpg');
+    }
+
+    .box.third {
+      background-image: url('images/bg-3.jpg');
+    }
+
+    .box.fourth {
+      background-image: url('images/bg-4.jpg');
+    }
+
+    .box h2,
+    .box button {
+      color: white;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 90vw;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .chapter-buttons button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .chapter-buttons button:hover {
+      background-color: #cc0000;
+    }
+
+    .images-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .images-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      background-color: #555;
+    }
+
+    .close-btn:hover {
+      background-color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box first">
+    <h2>ფანჯარა 1</h2>
+    <button onclick="openChapter(1, 'ch')">თავების ნახვა</button>
+  </div>
+
+  <div class="box second">
+    <h2>ფანჯარა 2</h2>
+    <button onclick="openChapter(1, 'w2_ch')">თავების ნახვა</button>
+  </div>
+
+  <div class="box third">
+    <h2>ფანჯარა 3</h2>
+    <button onclick="openChapter(1, 'w3_ch')">თავების ნახვა</button>
+  </div>
+
+  <div class="box fourth">
+    <h2>ფანჯარა 4</h2>
+    <button onclick="openChapter(1, 'w4_ch')">თავების ნახვა</button>
+  </div>
+
+  <div class="modal" id="chapterModal">
+    <div class="overlay">
+      <h2 id="chapterTitle">თავი</h2>
+      <div class="images-container" id="imagesContainer"></div>
+      <button class="close-btn" onclick="toggleModal('chapterModal')">დახურვა</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleModal(id) {
+      const modal = document.getElementById(id);
+      modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function openChapter(chapterNumber, prefix = 'ch') {
+      const imagesContainer = document.getElementById('imagesContainer');
+      imagesContainer.innerHTML = '';
+      for (let i = 1; i <= 13; i++) {
+        const img = document.createElement('img');
+        img.src = `images/${prefix}${chapterNumber}_page${i}.jpg`;
+        img.alt = `${prefix}${chapterNumber}_page${i}`;
+        imagesContainer.appendChild(img);
+      }
+      document.getElementById('chapterTitle').textContent = `თავი ${chapterNumber}`;
+      toggleModal('chapterModal');
+    }
+  </script>
+
+</body>
+</html>
