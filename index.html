@@ -121,6 +121,22 @@
   <div class="box first">
     <h2>ფანჯარა 1</h2>
     <button onclick="openChapter(1, 'ch')">თავების ნახვა</button>
+     <button onclick="toggleModal('chapterSelect')">გახსნა / დახურვა</button>
+  </div>
+
+  <div class="box"><h2>ფანჯარა 2</h2></div>
+  <div class="box"><h2>ფანჯარა 3</h2></div>
+  <div class="box"><h2>ფანჯარა 4</h2></div>
+
+  <div class="modal" id="chapterSelect">
+    <div class="overlay">
+      <h2>თავების არჩევა</h2>
+      <div class="chapter-buttons">
+        <button onclick="openChapter(1)">თავი 1</button>
+               
+          <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
+      </div>
+    </div>
   </div>
 
   <div class="box second">
