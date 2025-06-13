@@ -72,7 +72,7 @@
       background-color: rgba(0, 0, 0, 0.85);
       padding: 20px;
       border-radius: 8px;
-      max-width: 100vw;
+      max-width: 90vw;
       max-height: 100vh;
       overflow-y: auto;
     }
@@ -179,7 +179,7 @@
       currentPrefix = prefix;
       const chapterButtons = document.getElementById('chapterButtons');
       chapterButtons.innerHTML = '';
-      for (let i = 1; i <= 7; i++) { // შეგიძლია თავიების რაოდენობა შეცვალო
+      for (let i = 1; i <= 5; i++) { // შეგიძლია თავიების რაოდენობა შეცვალო
         const btn = document.createElement('button');
         btn.textContent = `თავი ${i}`;
         btn.onclick = () => openChapter(i);
