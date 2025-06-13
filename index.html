@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>manhwageo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
     }
     body {
-      font-family: sans-serif;
+      font-family: 'Poppins', sans-serif;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 50vh);
@@ -86,10 +87,12 @@
       font-size: 1em;
       cursor: pointer;
       border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .chapter-buttons button:hover {
       background-color: #cc0000;
+      transform: scale(1.05);
     }
 
     .images-container {
@@ -104,6 +107,16 @@
       width: 100%;
       height: auto;
       border-radius: 5px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .close-btn {
@@ -120,55 +133,30 @@
 
   <div class="box first">
     <h2>ფანჯარა 1</h2>
-        <button onclick="toggleModal('chapterSelect')">გახსნა / დახურვა</button>
-  </div>
-
-  <div class="modal" id="chapterSelect">
-    <div class="overlay">
-      <h2>თავების არჩევა</h2>
-      <div class="chapter-buttons">
-        <button onclick="openChapter(1)">თავი 1</button>
-               
-          <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
-      </div>
-    </div>
+    <button onclick="openChapterSelect('ch')">გახსნა / დახურვა</button>
   </div>
 
   <div class="box second">
     <h2>ფანჯარა 2</h2>
-                <button onclick="toggleModal('chapterSelect')">გახსნა / დახურვა</button>
-  </div>
-
-  <div class="modal" id="chapterSelect">
-    <div class="overlay">
-      <h2>თავების არჩევა</h2>
-      <div class="chapter-buttons">
-        <button onclick="openChapter(1)">თავი 1</button>
-               
-          <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="chapterSelect">
-    <div class="overlay">
-      <h2>თავების არჩევა</h2>
-      <div class="chapter-buttons">
-        <button onclick="openChapter(1)">თავი 1</button>
-               
-          <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
-      </div>
-    </div>
+    <button onclick="openChapterSelect('w2_ch')">გახსნა / დახურვა</button>
   </div>
 
   <div class="box third">
     <h2>ფანჯარა 3</h2>
-    <button onclick="openChapter(1, 'w3_ch')">თავების ნახვა</button>
+    <button onclick="openChapterSelect('w3_ch')">გახსნა / დახურვა</button>
   </div>
 
   <div class="box fourth">
     <h2>ფანჯარა 4</h2>
-    <button onclick="openChapter(1, 'w4_ch')">თავების ნახვა</button>
+    <button onclick="openChapterSelect('w4_ch')">გახსნა / დახურვა</button>
+  </div>
+
+  <div class="modal" id="chapterSelect">
+    <div class="overlay">
+      <h2>თავების არჩევა</h2>
+      <div class="chapter-buttons" id="chapterButtons"></div>
+      <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
+    </div>
   </div>
 
   <div class="modal" id="chapterModal">
@@ -180,21 +168,37 @@
   </div>
 
   <script>
+    let currentPrefix = 'ch';
+
     function toggleModal(id) {
       const modal = document.getElementById(id);
       modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    function openChapter(chapterNumber, prefix = 'ch') {
+    function openChapterSelect(prefix) {
+      currentPrefix = prefix;
+      const chapterButtons = document.getElementById('chapterButtons');
+      chapterButtons.innerHTML = '';
+      for (let i = 1; i <= 3; i++) { // შეგიძლია თავიების რაოდენობა შეცვალო
+        const btn = document.createElement('button');
+        btn.textContent = `თავი ${i}`;
+        btn.onclick = () => openChapter(i);
+        chapterButtons.appendChild(btn);
+      }
+      toggleModal('chapterSelect');
+    }
+
+    function openChapter(chapterNumber) {
       const imagesContainer = document.getElementById('imagesContainer');
       imagesContainer.innerHTML = '';
       for (let i = 1; i <= 13; i++) {
         const img = document.createElement('img');
-        img.src = `images/${prefix}${chapterNumber}_page${i}.jpg`;
-        img.alt = `${prefix}${chapterNumber}_page${i}`;
+        img.src = `images/${currentPrefix}${chapterNumber}_page${i}.jpg`;
+        img.alt = `${currentPrefix}${chapterNumber}_page${i}`;
         imagesContainer.appendChild(img);
       }
       document.getElementById('chapterTitle').textContent = `თავი ${chapterNumber}`;
+      toggleModal('chapterSelect');
       toggleModal('chapterModal');
     }
   </script>
