@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <title>manhwageo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 50vh);
+      gap: 10px;
+      margin: 0;
+      padding: 10px;
+      background-color: #000;
+    }
+
+    .box {
+      border: 2px solid #333;
+      padding: 10px;
+      overflow: auto;
+      background-color: #111;
+      color: #eee;
+      position: relative;
+    }
+
+    .toggle-content {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>ფანჯარა 1</h2>
+    <button onclick="toggle('inner1')">გახსნა / დახურვა</button>
+    <div id="inner1" class="toggle-content">
+      <h3>შიდა ფანჯარა 1</h3>
+      <button onclick="toggle('innerGallery')">გალერეა გახსნა / დახურვა</button>
+      <div id="innerGallery" class="toggle-content gallery">
+        <img src="images/chapter1_img1.jpg" alt="სურათი 1">
+        <img src="images/chapter1_img2.jpg" alt="სურათი 2">
+        <img src="images/chapter1_img3.jpg" alt="სურათი 3">
+      </div>
+    </div>
+  </div>
+
+  <div class="box"><h2>ფანჯარა 2</h2></div>
+  <div class="box"><h2>ფანჯარა 3</h2></div>
+  <div class="box"><h2>ფანჯარა 4</h2></div>
+
+  <script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+    }
+  </script>
+
+</body>
+</html>
