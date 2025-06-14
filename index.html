@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Manhwageo - ქართული მანჰვების ონლაინ ბიბლიოთეკა. წაიკითხეთ საუკეთესო მანჰვები ქართულ ენაზე.">
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     /* Reset basic margins/paddings for consistency */
     * {
@@ -112,6 +113,26 @@
       cursor: not-allowed;
       opacity: 0.5;
       background-color: rgba(50, 50, 50, 0.7);
+    }
+
+    /* Styles for Views Counter */
+    .views-counter {
+      position: relative;
+      z-index: 1;
+      color: #ccc;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 5px 10px;
+      border-radius: 8px;
+      margin: 0px 10px 5px 10px; /* Aligned above the button */
+      font-size: 0.8em;
+      display: flex; /* To align icon and text */
+      align-items: center;
+      gap: 5px; /* Space between icon and text */
+      align-self: flex-start; /* Align to the start of the flex container (bottom-left) */
+    }
+
+    .views-counter i {
+      color: #ff4444; /* Icon color */
     }
 
     .modal {
@@ -317,27 +338,94 @@
         opacity: 0.6;
     }
   </style>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+    import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBRcdavGb1Pi2eQlN6T_UbNue2bEa-8t-g",
+      authDomain: "manhwageo.firebaseapp.com",
+      projectId: "manhwageo",
+      storageBucket: "manhwageo.firebasestorage.app",
+      messagingSenderId: "822450839137",
+      appId: "1:822450839137:web:7dcb516bf572ae08191420",
+      measurementId: "G-3KMGGLE821"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app); // Analytics is optional but good to have
+    export const db = getFirestore(app); // Initialize Firestore and export it
+
+    // This function is now accessible globally because it's attached to window
+    window.updateAndGetViews = async function(manhwaId) {
+      const docRef = doc(db, "manhwa_views", manhwaId);
+
+      try {
+        const docSnap = await getDoc(docRef);
+        let views = 0;
+
+        if (docSnap.exists()) {
+          views = docSnap.data().count + 1;
+          await updateDoc(docRef, { count: views });
+        } else {
+          views = 1;
+          await setDoc(docRef, { count: views });
+        }
+        return views;
+      } catch (error) {
+        console.error("ნახვების განახლების შეცდომა: ", error);
+        return "შეცდომა";
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
+      manhwaBoxes.forEach(async box => {
+        const manhwaId = box.dataset.manhwaId;
+        if (manhwaId) {
+          const viewsElement = box.querySelector(`#views-${manhwaId}`);
+          if (viewsElement) {
+            const views = await window.updateAndGetViews(manhwaId);
+            viewsElement.textContent = views;
+          }
+        }
+      });
+    });
+  </script>
 </head>
 <body>
 
   <div class="main-grid">
-    <div class="box first">
-      <h2>ბნელი ჯადოქრის დაბრუნება 1</h2>
+    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება 1</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-ch">0</span>
+      </div>
       <button onclick="openChapterSelect('ch')">გახსნა / დახურვა</button>
     </div>
 
-    <div class="box second">
-      <h2>რკინის სისხლიანი ხმლის მქონე მონადირე</h2>
+    <div class="box second" data-manhwa-id="w2_ch"> <h2>რკინის სისხლიანი ხმლის მქონე მონადირე</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-w2_ch">0</span>
+      </div>
       <button onclick="openChapterSelect('w2_ch')">გახსნა / დახურვა</button>
     </div>
 
-    <div class="box third">
-      <h2>მალე</h2>
+    <div class="box third" data-manhwa-id="w3_ch"> <h2>მალე</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-w3_ch">0</span>
+      </div>
       <button onclick="openChapterSelect('w3_ch')" disabled>გახსნა / დახურვა</button>
     </div>
 
-    <div class="box fourth">
-      <h2>მალეე</h2>
+    <div class="box fourth" data-manhwa-id="w4_ch"> <h2>მალეე</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-w4_ch">0</span>
+      </div>
       <button onclick="openChapterSelect('w4_ch')" disabled>გახსნა / დახურვა</button>
     </div>
   </div>
@@ -539,6 +627,8 @@
                 history.replaceState({}, '', window.location.pathname + window.location.search);
             }
         }
+        // This part is now handled by the DOMContentLoaded listener in the Firebase module script
+        // because updateAndGetViews is attached to window.
     };
 
     // Handle scroll for chapter modal header and controls
