@@ -361,7 +361,7 @@
     const analytics = getAnalytics(app); // Analytics is optional but good to have
     export const db = getFirestore(app); // Initialize Firestore and export it
 
-    // This function is now accessible globally because it's attached to window
+    // This function updates (increments) views when a manhwa's "open" button is clicked
     window.updateAndGetViews = async function(manhwaId) {
       const docRef = doc(db, "manhwa_views", manhwaId);
 
@@ -383,21 +383,38 @@
       }
     };
 
-    // --- ეს document.addEventListener('DOMContentLoaded') ბლოკი წაიშალა
-    // document.addEventListener('DOMContentLoaded', () => {
-    //   const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
-    //   manhwaBoxes.forEach(async box => {
-    //     const manhwaId = box.dataset.manhwaId;
-    //     if (manhwaId) {
-    //       const viewsElement = box.querySelector(`#views-${manhwaId}`);
-    //       if (viewsElement) {
-    //         const views = await window.updateAndGetViews(manhwaId);
-    //         viewsElement.textContent = views;
-    //       }
-    //     }
-    //   });
-    // });
-    // ---
+    // This new function retrieves the current views without incrementing
+    window.getInitialViews = async function(manhwaId) {
+      const docRef = doc(db, "manhwa_views", manhwaId);
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          return docSnap.data().count; // Return the existing count
+        } else {
+          return 0; // If document doesn't exist yet, initial views are 0
+        }
+      } catch (error) {
+        console.error("საწყისი ნახვების წამოღების შეცდომა: ", error);
+        return "შეცდომა";
+      }
+    };
+
+    // This block runs when the page is fully loaded
+    // It fetches and displays the saved view counts for each manhwa
+    document.addEventListener('DOMContentLoaded', async () => {
+      const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
+      for (const box of manhwaBoxes) { // Use for...of for proper async/await handling in loop
+        const manhwaId = box.dataset.manhwaId;
+        if (manhwaId) {
+          const viewsElement = box.querySelector(`#views-${manhwaId}`);
+          if (viewsElement) {
+            // Fetch initial views from Firebase
+            const views = await window.getInitialViews(manhwaId);
+            viewsElement.textContent = views;
+          }
+        }
+      }
+    });
   </script>
 </head>
 <body>
