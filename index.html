@@ -383,19 +383,21 @@
       }
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
-      manhwaBoxes.forEach(async box => {
-        const manhwaId = box.dataset.manhwaId;
-        if (manhwaId) {
-          const viewsElement = box.querySelector(`#views-${manhwaId}`);
-          if (viewsElement) {
-            const views = await window.updateAndGetViews(manhwaId);
-            viewsElement.textContent = views;
-          }
-        }
-      });
-    });
+    // --- ეს document.addEventListener('DOMContentLoaded') ბლოკი წაიშალა
+    // document.addEventListener('DOMContentLoaded', () => {
+    //   const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
+    //   manhwaBoxes.forEach(async box => {
+    //     const manhwaId = box.dataset.manhwaId;
+    //     if (manhwaId) {
+    //       const viewsElement = box.querySelector(`#views-${manhwaId}`);
+    //       if (viewsElement) {
+    //         const views = await window.updateAndGetViews(manhwaId);
+    //         viewsElement.textContent = views;
+    //       }
+    //     }
+    //   });
+    // });
+    // ---
   </script>
 </head>
 <body>
@@ -549,6 +551,20 @@
           chapterButtons.appendChild(btn);
         });
       }
+
+      // --- აქ დაემატა ნახვების განახლების ლოგიკა ---
+      // `viewsElement`-ის მიღება `box`-დან, რადგან `openChapterSelect` არ იღებს `box`-ს პარამეტრად
+      const viewsElement = document.querySelector(`.box[data-manhwa-id="${manhwaId}"] .views-counter span`);
+      if (viewsElement) { // დარწმუნდით, რომ ელემენტი არსებობს
+        window.updateAndGetViews(manhwaId).then(views => {
+          viewsElement.textContent = views;
+        }).catch(error => {
+          console.error("ნახვების განახლების შეცდომა openChapterSelect-დან: ", error);
+          viewsElement.textContent = "შეცდომა"; // აჩვენებს "შეცდომა", თუ Firebase-თან კომუნიკაცია ვერ მოხერხდა
+        });
+      }
+      // --- დამატების დასასრული ---
+
       toggleModal('chapterSelect');
     }
 
@@ -621,14 +637,14 @@
     };
 
     window.onload = function() {
+        // ეს window.onload ბლოკი დარჩა უცვლელი, რადგან მისი ლოგიკა არ ეწინააღმდეგება ახალ ფუნქციონალს.
+        // ის მხოლოდ URL-ის ჰეშს ამუშავებს.
         if (window.location.hash) {
             const hash = window.location.hash.substring(1);
             if (hash === 'chapterSelect' || hash === 'chapterModal') {
                 history.replaceState({}, '', window.location.pathname + window.location.search);
             }
         }
-        // This part is now handled by the DOMContentLoaded listener in the Firebase module script
-        // because updateAndGetViews is attached to window.
     };
 
     // Handle scroll for chapter modal header and controls
