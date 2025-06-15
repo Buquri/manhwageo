@@ -274,17 +274,6 @@
       /* pointer-events: none; Optional: prevents interaction when hidden */
     }
 
-    .modal-header h2 {
-      margin: 0;
-      font-size: 1.2em; /* Adjust font size */
-    }
-
-    .modal-description {
-      font-size: 0.9em;
-      color: #bbb;
-      margin-top: 5px;
-    }
-
     .modal-controls {
       display: flex;
       justify-content: space-between;
@@ -546,12 +535,13 @@
       // --- New entries for video manhwas ---
       "video_manhwa1": {
         title: "მეხუთე ვიდეო",
-        folder: "videos/", // Path to your video files (https://drive.google.com/file/d/1WZX5iL9ubFCS9Ue3jI7jqhK0ktVYB2-a/view?usp=drivesdk)
+        // folder: "videos/", // ეს ხაზი აღარ არის საჭირო ვიდეოსთვის, რადგან სრული URL გვაქვს
         description: "აქ ჯერ არაფერია თუმცა ყველაფერი წინ არის.",
         type: 'video', // Indicates this is a video manhwa
         chapters: [
-          { id: 1, file: "https://drive.google.com/file/d/1WZX5iL9ubFCS9Ue3jI7jqhK0ktVYB2-a/view?usp=drivesdk" }, // File name of the video
-          { id: 2, file: "w5_v2.mp4" }
+          // გამოიყენეთ პირდაპირი ბმული Google Drive-დან
+          { id: 1, file: "https://drive.google.com/uc?export=download&id=1WZX5iL9ubFCS9Ue3jI7jqhK0ktVYB2-a" },
+          { id: 2, file: "w5_v2.mp4" } // თუ ამ ვიდეოსაც Google Drive-ზე ატვირთავთ, მასაც დასჭირდება პირდაპირი ბმული
         ]
       },
       "video_manhwa2": {
@@ -640,7 +630,7 @@
 
     function openChapter(chapterId, contentData) { // Renamed totalPages to contentData for clarity
       currentChapterId = chapterId;
-      // currentTotalPages = totalPages; // This is no longer directly used for video type
+      // currentTotalPages = totalData; // This is no longer directly used for video type
 
       const imagesContainer = document.getElementById('imagesContainer');
       imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
@@ -677,7 +667,8 @@
         } else if (manhwaData.type === 'video') {
           // Logic for video manhwas
           const video = document.createElement('video');
-          video.src = `${manhwaData.folder}${contentData}`; // contentData is the file name here
+          // contentData უკვე არის სრული პირდაპირი URL
+          video.src = contentData; // Use contentData directly as it's the full URL
           video.controls = true; // Show video controls (play, pause, volume, etc.)
           video.preload = 'auto'; // Preload video for faster playback
           video.style.maxWidth = '100%'; // Ensure video fits container width
@@ -717,7 +708,7 @@
             const newChapter = manhwaData.chapters[newChapterIndex];
             // --- Modified logic to pass correct parameter based on manhwa type ---
             if (manhwaData.type === 'video') {
-              openChapter(newChapter.id, newChapter.file); // Pass file name for video
+              openChapter(newChapter.id, newChapter.file); // Pass file name (full URL) for video
             } else {
               openChapter(newChapter.id, newChapter.pages); // Pass page count for image
             }
