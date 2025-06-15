@@ -274,6 +274,17 @@
       /* pointer-events: none; Optional: prevents interaction when hidden */
     }
 
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.2em; /* Adjust font size */
+    }
+
+    .modal-description {
+      font-size: 0.9em;
+      color: #bbb;
+      margin-top: 5px;
+    }
+
     .modal-controls {
       display: flex;
       justify-content: space-between;
@@ -446,7 +457,7 @@
     </div>
 
     <div class="box fifth" data-manhwa-id="video_manhwa1">
-      <h2>მეხუთე ვიდეო</h2>
+      <h2>მეხუთე ვიდეო მანჰვა</h2>
       <div class="views-counter">
         <i class="fas fa-eye"></i> <span id="views-video_manhwa1">0</span>
       </div>
@@ -454,7 +465,7 @@
     </div>
 
     <div class="box sixth" data-manhwa-id="video_manhwa2">
-      <h2>მეექვსე ვიდეო</h2>
+      <h2>მეექვსე ვიდეო მანჰვა</h2>
       <div class="views-counter">
         <i class="fas fa-eye"></i> <span id="views-video_manhwa2">0</span>
       </div>
@@ -534,21 +545,22 @@
       },
       // --- New entries for video manhwas ---
       "video_manhwa1": {
-        title: "მეხუთე ვიდეო",
-        // folder: "videos/", // ეს ხაზი აღარ არის საჭირო ვიდეოსთვის, რადგან სრული URL გვაქვს
-        description: "აქ ჯერ არაფერია თუმცა ყველაფერი წინ არის.",
+        title: "მეხუთე ვიდეო ",
+        folder: "videos/", // Path to your video files (e.g., 'videos/w5_v1.mp4')
+        description: "აღმოაჩინეთ ახალი თავგადასავლები ამ მომაჯადოებელ ვიდეო მანჰვაში. თავი სავსეა მოქმედებით და ემოციებით.",
         type: 'video', // Indicates this is a video manhwa
         chapters: [
-          // გამოიყენეთ პირდაპირი ბმული Google Drive-დან
-          / თუ ამ ვიდეოსაც Google Drive-ზე ატვირთავთ, მასაც დასჭირდება პირდაპირი ბმული
+          { id: 0, file: "w5_v1.mp4" }, // File name of the video
+          { id: 0, file: "w5_v2.mp4" }
         ]
       },
       "video_manhwa2": {
-        title: "მეექვსე ვიდეო",
+        title: "მეექვსე ვიდეო ",
         folder: "videos/", // Path to your video files (e.g., 'videos/w6_v1.mp4')
-        description: "თქვენგან მთავარია აქტიურობა ყველაფერი წი არის.",
+        description: "მთავარია თქვენი აქტიურობა ყველაფერი იქნება .",
         type: 'video', // Indicates this is a video manhwa
         chapters: [
+          { id: 0, file: "w6_v1.mp4" }
         ]
       }
       // --- End new entries ---
@@ -629,7 +641,7 @@
 
     function openChapter(chapterId, contentData) { // Renamed totalPages to contentData for clarity
       currentChapterId = chapterId;
-      // currentTotalPages = totalData; // This is no longer directly used for video type
+      // currentTotalPages = totalPages; // This is no longer directly used for video type
 
       const imagesContainer = document.getElementById('imagesContainer');
       imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
@@ -666,8 +678,7 @@
         } else if (manhwaData.type === 'video') {
           // Logic for video manhwas
           const video = document.createElement('video');
-          // contentData უკვე არის სრული პირდაპირი URL
-          video.src = contentData; // Use contentData directly as it's the full URL
+          video.src = `${manhwaData.folder}${contentData}`; // contentData is the file name here
           video.controls = true; // Show video controls (play, pause, volume, etc.)
           video.preload = 'auto'; // Preload video for faster playback
           video.style.maxWidth = '100%'; // Ensure video fits container width
@@ -707,7 +718,7 @@
             const newChapter = manhwaData.chapters[newChapterIndex];
             // --- Modified logic to pass correct parameter based on manhwa type ---
             if (manhwaData.type === 'video') {
-              openChapter(newChapter.id, newChapter.file); // Pass file name (full URL) for video
+              openChapter(newChapter.id, newChapter.file); // Pass file name for video
             } else {
               openChapter(newChapter.id, newChapter.pages); // Pass page count for image
             }
