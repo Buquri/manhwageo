@@ -84,6 +84,16 @@
       background-image: url('images/bg-4.jpg');
     }
 
+    /* --- New box background images for video manhwas --- */
+    .box.fifth {
+      background-image: url('images/bg-5.jpg'); /* Change to your desired image path */
+    }
+
+    .box.sixth {
+      background-image: url('images/bg-6.jpg'); /* Change to your desired image path */
+    }
+    /* --- End new box background images --- */
+
     .box h2,
     .box button {
       position: relative;
@@ -213,17 +223,15 @@
         display: none;
     }
 
-    .images-container img {
+    .images-container img, .images-container video { /* Add video to this rule */
       width: 100%; /* Changed to 100% to fill available width */
       height: auto;
-      display: block; /* Remove extra space below images */
+      display: block; /* Remove extra space below images/videos */
       border-radius: 0; /* No border-radius for full screen */
       opacity: 0;
       transform: translateY(20px);
       animation: fadeUp 0.5s ease forwards;
-      /* Max-width to ensure it doesn't overflow if somehow larger */
       max-width: 100%;
-      /* object-fit: contain; // If you want to ensure the whole image is visible without cropping, use this, but it might leave blank spaces on sides if image is too narrow for screen. */
     }
 
     .loading-indicator {
@@ -447,7 +455,23 @@
       </div>
       <button onclick="openChapterSelect('w4_ch')" disabled>გახსნა / დახურვა</button>
     </div>
-  </div>
+
+    <div class="box fifth" data-manhwa-id="video_manhwa1">
+      <h2>მეხუთე ვიდეო მანჰვა</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-video_manhwa1">0</span>
+      </div>
+      <button onclick="openChapterSelect('video_manhwa1')">გახსნა / დახურვა</button>
+    </div>
+
+    <div class="box sixth" data-manhwa-id="video_manhwa2">
+      <h2>მეექვსე ვიდეო მანჰვა</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-video_manhwa2">0</span>
+      </div>
+      <button onclick="openChapterSelect('video_manhwa2')">გახსნა / დახურვა</button>
+    </div>
+    </div>
 
   <div class="modal" id="chapterSelect">
     <div class="overlay">
@@ -486,6 +510,7 @@
         title: "ბნელი ჯადოქრის დაბრუნება 1",
         folder: "images/",
         description: "ამბავი ახალგაზრდა ჯადოქარზე, რომელიც წარსულიდან ბრუნდება, რათა შური იძიოს და სამყარო ბნელი ძალებისგან იხსნას. მისი გზა სავსეა გამოწვევებით და მოულოდნელი შეტაკებებით.",
+        type: 'image', // Added type for image manhwa
         chapters: [
           { id: 1, pages: 16 },
           { id: 2, pages: 15 },
@@ -498,6 +523,7 @@
         title: "რკინის სისხლიანი ხმლის მქონე მონადირე",
         folder: "images2/",
         description: "მონადირე, რომელსაც რკინის სისხლიანი ხმალი აქვს, იწყებს სახიფათო მოგზაურობას მონსტრების სამყაროში. მას მრავალი ბრძოლა ელის თავისი ბედის ასასრულებლად.",
+        type: 'image', // Added type for image manhwa
         chapters: [
           { id: 1, pages: 10 },
           { id: 2, pages: 10 },
@@ -507,19 +533,42 @@
         title: "მალე",
         folder: "images3/",
         description: "ეს მანჰვა მალე დაემატება. თვალყური ადევნეთ განახლებებს!",
+        type: 'image', // Added type for image manhwa
         chapters: []
       },
       "w4_ch": {
         title: "მალეე",
         folder: "images4/",
         description: "უახლესი მანჰვა, რომელიც მალე იქნება ხელმისაწვდომი. მოემზადეთ ახალი თავგადასავლებისთვის!",
+        type: 'image', // Added type for image manhwa
         chapters: []
+      },
+      // --- New entries for video manhwas ---
+      "video_manhwa1": {
+        title: "მეხუთე ვიდეო მანჰვა",
+        folder: "videos/", // Path to your video files (e.g., 'videos/w5_v1.mp4')
+        description: "აღმოაჩინეთ ახალი თავგადასავლები ამ მომაჯადოებელ ვიდეო მანჰვაში. თავი სავსეა მოქმედებით და ემოციებით.",
+        type: 'video', // Indicates this is a video manhwa
+        chapters: [
+          { id: 1, file: "w5_v1.mp4" }, // File name of the video
+          { id: 2, file: "w5_v2.mp4" }
+        ]
+      },
+      "video_manhwa2": {
+        title: "მეექვსე ვიდეო მანჰვა",
+        folder: "videos/", // Path to your video files (e.g., 'videos/w6_v1.mp4')
+        description: "გააგრძელეთ ამბავი ამ ვიდეო მანჰვას მეორე ნაწილში. გაიგეთ, რა ელის გმირებს.",
+        type: 'video', // Indicates this is a video manhwa
+        chapters: [
+          { id: 1, file: "w6_v1.mp4" }
+        ]
       }
+      // --- End new entries ---
     };
 
     let currentManhwaId = null;
     let currentChapterId = null;
-    let currentTotalPages = 0;
+    let currentTotalPages = 0; // This variable will now be less relevant for video types
 
     let currentOpenModalId = null;
     let lastScrollTop = 0;
@@ -564,30 +613,35 @@
         manhwaData.chapters.forEach(chapter => {
           const btn = document.createElement('button');
           btn.textContent = `თავი ${chapter.id}`;
-          btn.onclick = () => openChapter(chapter.id, chapter.pages);
+          // --- Modified logic to pass correct parameter based on manhwa type ---
+          if (manhwaData.type === 'video') {
+            btn.onclick = () => openChapter(chapter.id, chapter.file); // Pass file name for video
+          } else {
+            btn.onclick = () => openChapter(chapter.id, chapter.pages); // Pass page count for image
+          }
+          // --- End of modification ---
           chapterButtons.appendChild(btn);
         });
       }
 
-      // --- აქ დაემატა ნახვების განახლების ლოგიკა ---
-      // `viewsElement`-ის მიღება `box`-დან, რადგან `openChapterSelect` არ იღებს `box`-ს პარამეტრად
+      // --- Views update logic (remains the same) ---
       const viewsElement = document.querySelector(`.box[data-manhwa-id="${manhwaId}"] .views-counter span`);
-      if (viewsElement) { // დარწმუნდით, რომ ელემენტი არსებობს
+      if (viewsElement) {
         window.updateAndGetViews(manhwaId).then(views => {
           viewsElement.textContent = views;
         }).catch(error => {
           console.error("ნახვების განახლების შეცდომა openChapterSelect-დან: ", error);
-          viewsElement.textContent = "შეცდომა"; // აჩვენებს "შეცდომა", თუ Firebase-თან კომუნიკაცია ვერ მოხერხდა
+          viewsElement.textContent = "შეცდომა";
         });
       }
-      // --- დამატების დასასრული ---
+      // --- End views update logic ---
 
       toggleModal('chapterSelect');
     }
 
-    function openChapter(chapterId, totalPages) {
+    function openChapter(chapterId, contentData) { // Renamed totalPages to contentData for clarity
       currentChapterId = chapterId;
-      currentTotalPages = totalPages;
+      // currentTotalPages = totalPages; // This is no longer directly used for video type
 
       const imagesContainer = document.getElementById('imagesContainer');
       imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
@@ -606,17 +660,40 @@
       clearTimeout(scrollTimeout); // Clear any old timeouts
 
       setTimeout(() => {
-        imagesContainer.innerHTML = '';
-        for (let i = 1; i <= totalPages; i++) {
-          const img = document.createElement('img');
-          img.src = `${manhwaData.folder}${currentManhwaId}${chapterId}_page${i}.jpg`;
-          img.alt = `თავი ${chapterId}, გვერდი ${i}`;
-          img.loading = 'lazy';
-          img.onerror = function() {
-            this.src = 'images/placeholder.jpg';
-            this.alt = 'სურათი ვერ მოიძებნა';
+        imagesContainer.innerHTML = ''; // Clear loading indicator
+
+        if (manhwaData.type === 'image') {
+          // Logic for image manhwas
+          for (let i = 1; i <= contentData; i++) { // contentData is totalPages here
+            const img = document.createElement('img');
+            img.src = `${manhwaData.folder}${currentManhwaId}${chapterId}_page${i}.jpg`;
+            img.alt = `თავი ${chapterId}, გვერდი ${i}`;
+            img.loading = 'lazy';
+            img.onerror = function() {
+              this.src = 'images/placeholder.jpg';
+              this.alt = 'სურათი ვერ მოიძებნა';
+            };
+            imagesContainer.appendChild(img);
+          }
+        } else if (manhwaData.type === 'video') {
+          // Logic for video manhwas
+          const video = document.createElement('video');
+          video.src = `${manhwaData.folder}${contentData}`; // contentData is the file name here
+          video.controls = true; // Show video controls (play, pause, volume, etc.)
+          video.preload = 'auto'; // Preload video for faster playback
+          video.style.maxWidth = '100%'; // Ensure video fits container width
+          video.style.height = 'auto'; // Maintain aspect ratio
+          video.style.display = 'block'; // Remove extra space below video
+          video.autoplay = true; // Autoplay video when opened
+          video.onerror = function() {
+            console.error("ვიდეოს ჩატვირთვის შეცდომა: ", this.src);
+            const errorDiv = document.createElement('div');
+            errorDiv.textContent = 'ვიდეოს ჩატვირთვის შეცდომა.';
+            errorDiv.style.color = 'red';
+            errorDiv.style.textAlign = 'center';
+            imagesContainer.appendChild(errorDiv);
           };
-          imagesContainer.appendChild(img);
+          imagesContainer.appendChild(video);
         }
         updateNavigationButtons();
       }, 500);
@@ -639,7 +716,13 @@
 
         if (newChapterIndex >= 0 && newChapterIndex < manhwaData.chapters.length) {
             const newChapter = manhwaData.chapters[newChapterIndex];
-            openChapter(newChapter.id, newChapter.pages);
+            // --- Modified logic to pass correct parameter based on manhwa type ---
+            if (manhwaData.type === 'video') {
+              openChapter(newChapter.id, newChapter.file); // Pass file name for video
+            } else {
+              openChapter(newChapter.id, newChapter.pages); // Pass page count for image
+            }
+            // --- End of modification ---
         }
     }
 
@@ -654,8 +737,6 @@
     };
 
     window.onload = function() {
-        // ეს window.onload ბლოკი დარჩა უცვლელი, რადგან მისი ლოგიკა არ ეწინააღმდეგება ახალ ფუნქციონალს.
-        // ის მხოლოდ URL-ის ჰეშს ამუშავებს.
         if (window.location.hash) {
             const hash = window.location.hash.substring(1);
             if (hash === 'chapterSelect' || hash === 'chapterModal') {
