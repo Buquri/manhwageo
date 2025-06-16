@@ -107,7 +107,22 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
       font-size: 0.8em; /* Smaller font for mobile */
+    } .box h7,
+    .box button {
+      position: relative;
+      z-index: 7;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 8px 12px;
+      border: none;
+      border-radius: 10px;
+      margin: 5px 10px 10px 15px; /* Adjusted margin to push from edges */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.8em; /* Smaller font for mobile */
     }
+
+    
 
     @media (min-width: 768px) {
       .box h2, .box button {
