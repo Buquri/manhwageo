@@ -11,15 +11,15 @@
     /* Reset basic margins/paddings for consistency */
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      margin: 20;
+      padding: 10;
     }
     body {
       font-family: 'Poppins', sans-serif;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin: 0;
+      margin: 5;
       padding: 10px;
       background-color: #E9967A;
       color: #fff;
@@ -42,17 +42,17 @@
 
     .box {
       border: 2px solid #333;
-      /* padding: 10px; Removed padding to give more space to background image */
+      /* padding: 15px; Removed padding to give more space to background image */
       overflow: hidden;
       position: relative;
       background-color: #197;
       background-size: cover; /* Use cover to fill the box */
-      background-position: center; /* Center the image */
+      background-position: left ; /* Center the image */
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-start;
-      border-radius: 8px;
+      border-radius: 6px;
       min-height: 200px; /* Adjust as needed for mobile */
       height: 45vh; /* Responsive height */
       max-height: 400px; /* Max height for larger screens */
@@ -61,8 +61,8 @@
     .box::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 20;
+      left: 10;
       width: 100%;
       height: 110%;
       background-color: rgb(205, 92, 92));
@@ -103,10 +103,10 @@
       padding: 8px 12px;
       border: none;
       border-radius: 10px;
-      margin: 5px 10px 10px 10px; /* Adjusted margin to push from edges */
+      margin: 5px 10px 10px 15px; /* Adjusted margin to push from edges */
       cursor: pointer;
       transition: background-color 0.3s ease;
-      font-size: 0.9em; /* Smaller font for mobile */
+      font-size: 1.9em; /* Smaller font for mobile */
     }
 
     @media (min-width: 768px) {
