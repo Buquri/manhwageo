@@ -558,7 +558,7 @@
   <div id="character-controls">
     <button id="walkSpeedBtn">სიარული</button>
     <button id="runSpeedBtn">სირბილი</button>
-  </div>
+    <button id="toggleAnimationBtn">გაჩერება / გაგრძელება</button> </div>
   <script>
     const manhwas = {
       "ch": {
@@ -573,7 +573,6 @@
           { id: 4, pages: 18 },
           { id: 5, pages: 17 },
           { id: 6, pages: 14 },   
-          { id: 7, pages: 12 }, 
         ]
       },
       "w2_ch": {
@@ -842,32 +841,42 @@
       }
     });
 
-    // --- New JavaScript for the animated character ---
+    // --- New/Modified JavaScript for the animated character ---
     document.addEventListener('DOMContentLoaded', () => {
       const character = document.getElementById('animated-character');
       const walkSpeedBtn = document.getElementById('walkSpeedBtn');
       const runSpeedBtn = document.getElementById('runSpeedBtn');
+      const toggleAnimationBtn = document.getElementById('toggleAnimationBtn'); // Get new button
 
-      // --- Configuration ---
+      // --- Configuration (Adjust these based on your actual images) ---
       const animationFolderPath = 'images/'; // Make sure this path is correct
-      const characterWidth = 120; // Match CSS width
-      const characterHeight = 170; // Match CSS height
-      const walkFrames = 4; // Number of frames for walk animation (e.g., animation_1_walk_1.png to animation_1_walk_8.png)
-      const runFrames = 4;  // Number of frames for run animation
-      const walkSpeed = 0.5;  // Pixels per animation frame for walking
-      const runSpeed = 3;  // Pixels per animation frame for running
-      const walkInterval = 1800; // Milliseconds between walk animation frames
-      const runInterval = 1800;  // Milliseconds between run animation frames
+
+      // IMPORTANT: Update these based on the ACTUAL number of frames you have for each animation
+      // If you only have ONE image for walk, run, idle, set frames to 1.
+      const idleFrames = 1; // Assuming you have 'animation_1_idle_1.png'
+      const walkFrames = 1; // Assuming you have 'animation_1_walk_1.png'
+      const runFrames = 1;  // Assuming you have 'animation_1_run_1.png'
+
+      const characterWidth = 100; // Adjust character width
+      const characterHeight = 100; // Adjust character height
+      
+      const walkSpeed = 5;  // Pixels per animation frame for walking
+      const runSpeed = 10;  // Pixels per animation frame for running
+      
+      const idleInterval = 500; // Milliseconds between idle animation frames (if more than 1)
+      const walkInterval = 100; // Milliseconds between walk animation frames
+      const runInterval = 70;  // Milliseconds between run animation frames
 
       let currentX = 0;
-      let direction = 3; // 3 for right, -3 for left
+      let direction = 1; // 1 for right, -1 for left
       let animationFrame = 1;
-      let currentSpeed = walkSpeed;
-      let currentInterval = walkInterval;
-      let currentAnimationType = 'walk'; // 'walk' or 'run'
+      let currentSpeed = 0; // Start with 0 speed (idle)
+      let currentInterval = idleInterval; // Start with idle interval
+      let currentAnimationType = 'idle'; // 'idle', 'walk', or 'run'
 
       let animationIntervalId;
       let movementIntervalId;
+      let isAnimationRunning = true; // Track animation state
 
       // Set initial character size
       character.style.width = `${characterWidth}px`;
@@ -875,10 +884,18 @@
 
       // Function to update character image (sprite)
       function updateCharacterImage() {
-        character.style.backgroundImage = `url('${animationFolderPath}animation_1_${currentAnimationType}_${animationFrame}.png')`;
-        animationFrame++;
+        let maxFrames;
+        if (currentAnimationType === 'idle') {
+          maxFrames = idleFrames;
+        } else if (currentAnimationType === 'walk') {
+          maxFrames = walkFrames;
+        } else { // 'run'
+          maxFrames = runFrames;
+        }
 
-        let maxFrames = currentAnimationType === 'walk' ? walkFrames : runFrames;
+        character.style.backgroundImage = `url('${animationFolderPath}animation_1_${currentAnimationType}_${animationFrame}.png')`;
+        
+        animationFrame++;
         if (animationFrame > maxFrames) {
           animationFrame = 1;
         }
@@ -886,6 +903,10 @@
 
       // Function to move the character
       function moveCharacter() {
+        if (!isAnimationRunning || currentAnimationType === 'idle') {
+          return; // Don't move if paused or idle
+        }
+
         currentX += direction * currentSpeed;
 
         // Check boundaries
@@ -916,8 +937,20 @@
         movementIntervalId = setInterval(moveCharacter, 20); // Faster update for smooth movement
       }
 
-      // Initial start of animation
-      startAnimation();
+      // Function to stop animation and set to idle
+      function stopAnimation() {
+        clearInterval(animationIntervalId);
+        clearInterval(movementIntervalId);
+        isAnimationRunning = false;
+        currentAnimationType = 'idle';
+        animationFrame = 1; // Reset to first idle frame
+        updateCharacterImage(); // Display idle image immediately
+      }
+
+      // Initial state: Start in idle mode if you have an idle image
+      updateCharacterImage(); // Display initial idle image
+      // Optionally start moving on page load, or wait for button click:
+      // startAnimation(); // Uncomment this line if you want it to move immediately
 
       // Event listeners for speed control buttons
       walkSpeedBtn.addEventListener('click', () => {
@@ -925,6 +958,7 @@
         currentInterval = walkInterval;
         currentAnimationType = 'walk';
         animationFrame = 1; // Reset animation frame when changing type
+        isAnimationRunning = true;
         startAnimation();
       });
 
@@ -933,7 +967,25 @@
         currentInterval = runInterval;
         currentAnimationType = 'run';
         animationFrame = 1; // Reset animation frame when changing type
+        isAnimationRunning = true;
         startAnimation();
+      });
+
+      // Event listener for the new toggle button
+      toggleAnimationBtn.addEventListener('click', () => {
+        if (isAnimationRunning) {
+          stopAnimation();
+          toggleAnimationBtn.textContent = 'გაგრძელება';
+        } else {
+          isAnimationRunning = true;
+          // When resuming, restore previous speed/animation or set to a default (e.g., walk)
+          currentAnimationType = 'walk'; 
+          currentSpeed = walkSpeed;
+          currentInterval = walkInterval;
+          animationFrame = 1; // Reset frame
+          startAnimation();
+          toggleAnimationBtn.textContent = 'გაჩერება';
+        }
       });
 
       // Adjust character position on window resize
@@ -944,8 +996,11 @@
           character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
         }
       });
+
+      // Initialize character state on load: set to idle
+      stopAnimation(); // Start in stopped/idle state
     });
-    // --- End New JavaScript for the animated character ---
+    // --- End New/Modified JavaScript for the animated character ---
   </script>
 
 </body>
