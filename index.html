@@ -107,7 +107,7 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
       font-size: 0.8em; /* Smaller font for mobile */
-    }     }
+    }     /* Removed extra closing brace here: } */
 
     
 
@@ -175,7 +175,7 @@
       max-width: 100vw; /* Changed to 100vw */
       max-height: 130vh;
       border-radius: 0;
-      background-color b3da06; /* Ensure fully black background */
+      background-color: #000; /* Ensure fully black background - Corrected "b3da06;" to "#000" or a valid color */
     }
 
     .chapter-buttons {
@@ -218,7 +218,7 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
       margin-top: 0; /* No top margin */
-      background-color: b3da06:; /* Ensure background is black between images */
+      background-color: #000; /* Ensure background is black between images - Corrected "b3da06:" to "#000" or a valid color */
     }
 
     .images-container::-webkit-scrollbar {
@@ -283,7 +283,7 @@
 
     .modal-description {
       font-size: 0.9em;
-      color: b3da06;
+      color: #b3da06; /* Corrected to a valid color code */
       margin-top: 5px;
     }
 
@@ -550,18 +550,19 @@
         title: "მეხუთე ",
         folder: "videos/", // Path to your video files (e.g., 'videos/w5_v1.mp4')
         description: "აქ ჯერ არაფერია თუმცა მალე ყველაფერი იქნება,თქვენგან მხოლოდ აქტიურობაა საჭირო .",
-        type: 'video', //
-       
-         
+        type: 'video', // Added type for video manhwa
+        chapters: [ // <--- This array was missing or incomplete!
+            { id: 1, file: "w5_v1.mp4" } // Example: Assuming this is a local video file in the 'videos' folder
+            // Add more video chapters here if needed
         ]
       },
       "video_manhwa2": {
         title: "მეექვსე  ",
         folder: "videos/", // Path to your video files (e.g., 'videos/w6_v1.mp4')
         description: "მთავარია თქვენი აქტიურობა ყველაფერი იქნება .",
-        type: 'video', // 
-       
-       
+        type: 'video', // Added type for video manhwa
+        chapters: [ // <--- This array was missing or incomplete!
+            // { id: 1, file: "w6_v1.mp4" } // Add actual video chapters here
         ]
       }
       // --- End new entries ---
