@@ -856,8 +856,8 @@
       const runFrames = 4;  // Number of frames for run animation
       const walkSpeed = 2;  // Pixels per animation frame for walking
       const runSpeed = 5;  // Pixels per animation frame for running
-      const walkInterval = 0; // Milliseconds between walk animation frames
-      const runInterval = 0;  // Milliseconds between run animation frames
+      const walkInterval = 1800; // Milliseconds between walk animation frames
+      const runInterval = 1800;  // Milliseconds between run animation frames
 
       let currentX = 0;
       let direction = 3; // 3 for right, -3 for left
@@ -913,7 +913,7 @@
 
         // Start new intervals with current settings
         animationIntervalId = setInterval(updateCharacterImage, currentInterval);
-        movementIntervalId = setInterval(moveCharacter, 20); // Faster update for smooth movement
+        movementIntervalId = setInterval(moveCharacter, 3); // Faster update for smooth movement
       }
 
       // Initial start of animation
