@@ -573,6 +573,7 @@
           { id: 4, pages: 18 },
           { id: 5, pages: 17 },
           { id: 6, pages: 14 },   
+          { id: 7, pages: 12 }, 
         ]
       },
       "w2_ch": {
@@ -849,17 +850,17 @@
 
       // --- Configuration ---
       const animationFolderPath = 'images/'; // Make sure this path is correct
-      const characterWidth = 100; // Match CSS width
-      const characterHeight = 100; // Match CSS height
-      const walkFrames = 8; // Number of frames for walk animation (e.g., animation_1_walk_1.png to animation_1_walk_8.png)
-      const runFrames = 8;  // Number of frames for run animation
-      const walkSpeed = 5;  // Pixels per animation frame for walking
-      const runSpeed = 10;  // Pixels per animation frame for running
-      const walkInterval = 100; // Milliseconds between walk animation frames
+      const characterWidth = 120; // Match CSS width
+      const characterHeight = 170; // Match CSS height
+      const walkFrames = 4; // Number of frames for walk animation (e.g., animation_1_walk_1.png to animation_1_walk_8.png)
+      const runFrames = 4;  // Number of frames for run animation
+      const walkSpeed = 2;  // Pixels per animation frame for walking
+      const runSpeed = 5;  // Pixels per animation frame for running
+      const walkInterval = 40; // Milliseconds between walk animation frames
       const runInterval = 70;  // Milliseconds between run animation frames
 
       let currentX = 0;
-      let direction = 1; // 1 for right, -1 for left
+      let direction = 2; // 2 for right, -2 for left
       let animationFrame = 1;
       let currentSpeed = walkSpeed;
       let currentInterval = walkInterval;
