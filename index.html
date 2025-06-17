@@ -854,8 +854,8 @@
       const characterHeight = 170; // Match CSS height
       const walkFrames = 4; // Number of frames for walk animation (e.g., animation_1_walk_1.png to animation_1_walk_8.png)
       const runFrames = 4;  // Number of frames for run animation
-      const walkSpeed = 2;  // Pixels per animation frame for walking
-      const runSpeed = 5;  // Pixels per animation frame for running
+      const walkSpeed = 0.5;  // Pixels per animation frame for walking
+      const runSpeed = 3;  // Pixels per animation frame for running
       const walkInterval = 1800; // Milliseconds between walk animation frames
       const runInterval = 1800;  // Milliseconds between run animation frames
 
@@ -913,7 +913,7 @@
 
         // Start new intervals with current settings
         animationIntervalId = setInterval(updateCharacterImage, currentInterval);
-        movementIntervalId = setInterval(moveCharacter, 3); // Faster update for smooth movement
+        movementIntervalId = setInterval(moveCharacter, 20); // Faster update for smooth movement
       }
 
       // Initial start of animation
