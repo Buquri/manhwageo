@@ -573,6 +573,7 @@
           { id: 4, pages: 18 },
           { id: 5, pages: 17 },
           { id: 6, pages: 14 },   
+          { id: 7, pages: 12 },
         ]
       },
       "w2_ch": {
@@ -606,7 +607,7 @@
         description: "აქ ჯერ არაფერია თუმცა მალე ყველაფერი იქნება,თქვენგან მხოლოდ აქტიურობაა საჭირო .",
         type: 'video', // Added type for video manhwa
         chapters: [ // <--- This array was missing or incomplete!
-            { id: 1, file: "w5_v1.mp4" } // Example: Assuming this is a local video file in the 'videos' folder
+            { } // Example: Assuming this is a local video file in the 'videos' folder
             // Add more video chapters here if needed
         ]
       },
@@ -616,7 +617,7 @@
         description: "მთავარია თქვენი აქტიურობა ყველაფერი იქნება .",
         type: 'video', // Added type for video manhwa
         chapters: [ // <--- This array was missing or incomplete!
-            // { id: 1, file: "w6_v1.mp4" } // Add actual video chapters here
+            // { // Add actual video chapters here
         ]
       }
       // --- End new entries ---
@@ -857,11 +858,11 @@
       const walkFrames = 1; // Assuming you have 'animation_1_walk_1.png'
       const runFrames = 1;  // Assuming you have 'animation_1_run_1.png'
 
-      const characterWidth = 100; // Adjust character width
-      const characterHeight = 100; // Adjust character height
+      const characterWidth = 110; // Adjust character width
+      const characterHeight = 120; // Adjust character height
       
-      const walkSpeed = 5;  // Pixels per animation frame for walking
-      const runSpeed = 10;  // Pixels per animation frame for running
+      const walkSpeed = 0.5;  // Pixels per animation frame for walking
+      const runSpeed = 3;  // Pixels per animation frame for running
       
       const idleInterval = 500; // Milliseconds between idle animation frames (if more than 1)
       const walkInterval = 100; // Milliseconds between walk animation frames
