@@ -25,6 +25,7 @@
       color: #fff;
       overflow-x: hidden;
       min-height: 50vh;
+      position: relative; /* Needed for absolute positioning of the animation character */
     }
 
     .main-grid {
@@ -175,7 +176,7 @@
       max-width: 100vw; /* Changed to 100vw */
       max-height: 130vh;
       border-radius: 0;
-      background-color: 0085f5; /* Ensure fully black background - Corrected "b3da06;" to "f500a7" or a valid color */
+      background-color: black; /* Ensure fully black background - Corrected invalid color */
     }
 
     .chapter-buttons {
@@ -218,7 +219,7 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
       margin-top: 0; /* No top margin */
-      background-color: 00cb6c; /* Ensure background is black between images - Corrected "b3da06:" to "004dcb" or a valid color */
+      background-color: black; /* Ensure background is black between images - Corrected invalid color */
     }
 
     .images-container::-webkit-scrollbar {
@@ -347,6 +348,53 @@
         cursor: not-allowed;
         opacity: 0.6;
     }
+
+    /* --- Styles for the animated character --- */
+    #animated-character {
+      position: fixed;
+      bottom: 20px; /* Adjust as needed */
+      left: 0; /* Starts from the left edge */
+      width: 100px; /* Adjust character width */
+      height: 100px; /* Adjust character height */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: 99; /* Below modals, above main content */
+      transition: transform 0.1s linear; /* Smooth horizontal movement */
+      image-rendering: pixelated; /* Keeps pixel art sharp if applicable */
+    }
+
+    #character-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px; /* Position controls on the right */
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #character-controls button {
+      background-color: #6a5acd; /* Royal Blue */
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.9em;
+    }
+
+    #character-controls button:hover {
+      background-color: #483d8b; /* Darker Royal Blue */
+    }
+
+    #character-controls button:disabled {
+      background-color: #777;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    /* --- End styles for animated character --- */
   </style>
 
   <script type="module">
@@ -506,6 +554,11 @@
     </div>
   </div>
 
+  <div id="animated-character"></div>
+  <div id="character-controls">
+    <button id="walkSpeedBtn">სიარული</button>
+    <button id="runSpeedBtn">სირბილი</button>
+  </div>
   <script>
     const manhwas = {
       "ch": {
@@ -638,7 +691,6 @@
         });
       }
       // --- End views update logic ---
-
       toggleModal('chapterSelect');
     }
 
@@ -789,6 +841,110 @@
       }
     });
 
+    // --- New JavaScript for the animated character ---
+    document.addEventListener('DOMContentLoaded', () => {
+      const character = document.getElementById('animated-character');
+      const walkSpeedBtn = document.getElementById('walkSpeedBtn');
+      const runSpeedBtn = document.getElementById('runSpeedBtn');
+
+      // --- Configuration ---
+      const animationFolderPath = 'images/'; // Make sure this path is correct
+      const characterWidth = 100; // Match CSS width
+      const characterHeight = 100; // Match CSS height
+      const walkFrames = 8; // Number of frames for walk animation (e.g., animation_1_walk_1.png to animation_1_walk_8.png)
+      const runFrames = 8;  // Number of frames for run animation
+      const walkSpeed = 5;  // Pixels per animation frame for walking
+      const runSpeed = 10;  // Pixels per animation frame for running
+      const walkInterval = 100; // Milliseconds between walk animation frames
+      const runInterval = 70;  // Milliseconds between run animation frames
+
+      let currentX = 0;
+      let direction = 1; // 1 for right, -1 for left
+      let animationFrame = 1;
+      let currentSpeed = walkSpeed;
+      let currentInterval = walkInterval;
+      let currentAnimationType = 'walk'; // 'walk' or 'run'
+
+      let animationIntervalId;
+      let movementIntervalId;
+
+      // Set initial character size
+      character.style.width = `${characterWidth}px`;
+      character.style.height = `${characterHeight}px`;
+
+      // Function to update character image (sprite)
+      function updateCharacterImage() {
+        character.style.backgroundImage = `url('${animationFolderPath}animation_1_${currentAnimationType}_${animationFrame}.png')`;
+        animationFrame++;
+
+        let maxFrames = currentAnimationType === 'walk' ? walkFrames : runFrames;
+        if (animationFrame > maxFrames) {
+          animationFrame = 1;
+        }
+      }
+
+      // Function to move the character
+      function moveCharacter() {
+        currentX += direction * currentSpeed;
+
+        // Check boundaries
+        const maxX = window.innerWidth - characterWidth;
+        const minX = 0;
+
+        if (currentX >= maxX) {
+          currentX = maxX;
+          direction = -1; // Change direction to left
+          character.style.transform = `translateX(${currentX}px) scaleX(-1)`; // Flip horizontally for left movement
+        } else if (currentX <= minX) {
+          currentX = minX;
+          direction = 1; // Change direction to right
+          character.style.transform = `translateX(${currentX}px) scaleX(1)`; // Flip horizontally back to normal
+        } else {
+          character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
+        }
+      }
+
+      // Function to start animation and movement
+      function startAnimation() {
+        // Clear any existing intervals
+        clearInterval(animationIntervalId);
+        clearInterval(movementIntervalId);
+
+        // Start new intervals with current settings
+        animationIntervalId = setInterval(updateCharacterImage, currentInterval);
+        movementIntervalId = setInterval(moveCharacter, 20); // Faster update for smooth movement
+      }
+
+      // Initial start of animation
+      startAnimation();
+
+      // Event listeners for speed control buttons
+      walkSpeedBtn.addEventListener('click', () => {
+        currentSpeed = walkSpeed;
+        currentInterval = walkInterval;
+        currentAnimationType = 'walk';
+        animationFrame = 1; // Reset animation frame when changing type
+        startAnimation();
+      });
+
+      runSpeedBtn.addEventListener('click', () => {
+        currentSpeed = runSpeed;
+        currentInterval = runInterval;
+        currentAnimationType = 'run';
+        animationFrame = 1; // Reset animation frame when changing type
+        startAnimation();
+      });
+
+      // Adjust character position on window resize
+      window.addEventListener('resize', () => {
+        const maxX = window.innerWidth - characterWidth;
+        if (currentX > maxX) {
+          currentX = maxX;
+          character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
+        }
+      });
+    });
+    // --- End New JavaScript for the animated character ---
   </script>
 
 </body>
