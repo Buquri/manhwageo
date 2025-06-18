@@ -11,8 +11,8 @@
     /* სტილების გადატვირთვა კონსისტენტურობისთვის */
     * {
       box-sizing: border-box;
-      margin: 0; /* შესწორებულია: ერთეულები აკლდა */
-      padding: 0; /* შესწორებულია: ერთეულები აკლდა */
+      margin: 0;
+      padding: 0;
     }
 
     body {
@@ -20,13 +20,13 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin: 0; /* შესწორებულია: ერთეულები აკლდა */
+      margin: 0;
       padding: 10px;
       background-color: #E9967A;
       color: #fff;
       overflow-x: hidden;
-      min-height: 100vh; /* შესწორებულია: უნდა ფარავდეს ეკრანის მთელ სიმაღლეს */
-      position: relative; /* საჭიროა ანიმაციური პერსონაჟის აბსოლუტური პოზიციონირებისთვის */
+      min-height: 100vh;
+      position: relative;
     }
 
     /* მთავარი გრიდი (განლაგება) */
@@ -79,10 +79,10 @@
     .box::before {
       content: '';
       position: absolute;
-      top: 0; /* შესწორებულია */
-      left: 0; /* შესწორებულია */
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 100%; /* შესწორებულია */
+      height: 100%;
       background-color: rgba(205, 92, 92, 0.3); /* გამჭვირვალე ფერი, რათა ფონი ოდნავ გამოჩნდეს */
     }
 
@@ -373,21 +373,21 @@
     /* --- ანიმაციური პერსონაჟისა და კონტროლების სტილები --- */
     #animated-character {
       position: fixed;
-      bottom: 10px; /* რეგულირება საჭიროებისამებრ */
-      left: 0; /* მარცხენა კიდიდან იწყება */
-      width: 120px; /* პერსონაჟის სიგანის რეგულირება */
-      height: 130px; /* პერსონაჟის სიმაღლის რეგულირება */
+      bottom: 10px;
+      left: 0;
+      width: 120px;
+      height: 130px;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      z-index: 99; /* მოდალებს ქვემოთ, მთავარ კონტენტს ზემოთ */
-      image-rendering: pixelated; /* პიქსელ არტს ინარჩუნებს მკვეთრად, თუ შესაბამისია */
+      z-index: 99;
+      image-rendering: pixelated;
     }
 
     #character-controls {
       position: fixed;
       bottom: 3px;
-      right: 3px; /* კონტროლების განლაგება მარჯვენა მხარეს */
+      right: 3px;
       z-index: 100;
       display: flex;
       flex-direction: column;
@@ -395,7 +395,7 @@
     }
 
     #character-controls button {
-      background-color: #6a5acd; /* Royal Blue */
+      background-color: #6a5acd;
       color: white;
       border: none;
       padding: 3px 5px;
@@ -406,7 +406,7 @@
     }
 
     #character-controls button:hover {
-      background-color: #483d8b; /* მუქი Royal Blue */
+      background-color: #483d8b;
     }
 
     #character-controls button:disabled {
@@ -418,12 +418,10 @@
   </style>
 
   <script type="module">
-    // Firebase SDK-დან საჭირო ფუნქციების იმპორტი
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
     import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    // თქვენი ვებ აპლიკაციის Firebase კონფიგურაცია
     const firebaseConfig = {
       apiKey: "AIzaSyBRcdavGb1Pi2eQlN6T_UbNue2bEa-8t-g",
       authDomain: "manhwageo.firebaseapp.com",
@@ -434,12 +432,10 @@
       measurementId: "G-3KMGGLE821"
     };
 
-    // Firebase-ის ინიციალიზაცია
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app); // Analytics სურვილისამებრ
-    export const db = getFirestore(app); // Firestore-ის ინიციალიზაცია და ექსპორტი
+    const analytics = getAnalytics(app);
+    export const db = getFirestore(app);
 
-    // ფუნქცია, რომელიც ანახლებს (ზრდის) ნახვებს, როდესაც მანჰვას "გახსნა" ღილაკზე დაჭერით
     window.updateAndGetViews = async function(manhwaId) {
       const docRef = doc(db, "manhwa_views", manhwaId);
 
@@ -461,15 +457,14 @@
       }
     };
 
-    // ახალი ფუნქცია, რომელიც იღებს მიმდინარე ნახვებს გაზრდის გარეშე
     window.getInitialViews = async function(manhwaId) {
       const docRef = doc(db, "manhwa_views", manhwaId);
       try {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          return docSnap.data().count; // არსებული რაოდენობის დაბრუნება
+          return docSnap.data().count;
         } else {
-          return 0; // თუ დოკუმენტი არ არსებობს, საწყისი ნახვები 0-ია
+          return 0;
         }
       } catch (error) {
         console.error("საწყისი ნახვების წამოღების შეცდომა: ", error);
@@ -477,16 +472,13 @@
       }
     };
 
-    // ეს ბლოკი გვერდის სრულად ჩატვირთვისას სრულდება
-    // ის იღებს და აჩვენებს შენახულ ნახვების რაოდენობას თითოეული მანჰვასთვის
     document.addEventListener('DOMContentLoaded', async () => {
       const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
-      for (const box of manhwaBoxes) { // for...of ციკლი async/await-ის სწორად დამუშავებისთვის
+      for (const box of manhwaBoxes) {
         const manhwaId = box.dataset.manhwaId;
         if (manhwaId) {
           const viewsElement = box.querySelector(`#views-${manhwaId}`);
           if (viewsElement) {
-            // Firebase-დან საწყისი ნახვების წამოღება
             const views = await window.getInitialViews(manhwaId);
             viewsElement.textContent = views;
           }
@@ -574,7 +566,6 @@
     </div>
   </div>
 
-  <!-- ანიმაციური პერსონაჟის HTML და კონტროლები -->
   <div id="animated-character"></div>
   <div id="character-controls">
     <button id="walkSpeedBtn">სიარული</button>
@@ -811,7 +802,6 @@
         }
     };
 
-    // სქროლის დამუშავება თავის მოდალის სათაურისა და კონტროლებისთვის
     document.getElementById('imagesContainer').addEventListener('scroll', function() {
         const currentScrollTop = this.scrollTop;
         const header = document.getElementById('chapterModalHeader');
@@ -835,7 +825,6 @@
         lastScrollTop = currentScrollTop;
     });
 
-    // კონტროლების გამოჩენა დაჭერაზე, თუ დამალულია
     document.getElementById('imagesContainer').addEventListener('click', function() {
       const header = document.getElementById('chapterModalHeader');
       const controls = document.getElementById('chapterModalControls');
@@ -850,55 +839,49 @@
       }
     });
 
-    // --- ანიმაციური პერსონაჟის JavaScript ---
     document.addEventListener('DOMContentLoaded', () => {
       const character = document.getElementById('animated-character');
       const walkSpeedBtn = document.getElementById('walkSpeedBtn');
       const runSpeedBtn = document.getElementById('runSpeedBtn');
       const toggleAnimationBtn = document.getElementById('toggleAnimationBtn');
 
-      // --- კონფიგურაცია (შეცვალეთ თქვენი სურათების მიხედვით) ---
-      const animationFolderPath = 'images/'; // დარწმუნდით, რომ ეს გზა სწორია
+      const animationFolderPath = 'images/';
 
-      // მნიშვნელოვანია: განაახლეთ ეს მნიშვნელობები თქვენი ანიმაციის კადრების რეალური რაოდენობის მიხედვით
-      // თუ სიარულის, სირბილის, იდლისთვის მხოლოდ ერთი სურათი გაქვთ, დააყენეთ 1-ზე.
-      const idleFrames = 1; // ვარაუდობთ, რომ გაქვთ 'animation_1_idle_1.png'
-      const walkFrames = 2; // ვარაუდობთ, რომ გაქვთ 'animation_1_walk_1.png' და 'animation_1_walk_2.png'
-      const runFrames = 2;  // ვარაუდობთ, რომ გაქვთ 'animation_1_run_1.png' და 'animation_1_run_2.png' (ან იგივე რაც walk)
+      const idleFrames = 1;
+      const walkFrames = 2;
+      const runFrames = 2;
 
-      const characterWidth = 110; // პერსონაჟის სიგანის რეგულირება
-      const characterHeight = 120; // პერსონაჟის სიმაღლის რეგულირება
+      const characterWidth = 110;
+      const characterHeight = 120;
       
-      const walkSpeed = 0.5;  // პიქსელი ანიმაციის კადრზე სიარულისთვის
-      const runSpeed = 3;  // პიქსელი ანიმაციის კადრზე სირბილისთვის
+      const walkSpeed = 0.5;
+      const runSpeed = 3;
       
-      const idleInterval = 500; // მილიწამები იდლ ანიმაციის კადრებს შორის (თუ 1-ზე მეტია)
-      const walkInterval = 450; // მილიწამები სიარულის ანიმაციის კადრებს შორის
-      const runInterval = 300;  // მილიწამები სირბილის ანიმაციის კადრებს შორის
+      const idleInterval = 500;
+      const walkInterval = 450;
+      const runInterval = 300;
 
       let currentX = 0;
-      let direction = 1; // 1 მარჯვნივ, -1 მარცხნივ
+      let direction = 1;
       let animationFrame = 1;
-      let currentSpeed = 0; // იწყება 0 სიჩქარით (იდლ)
-      let currentInterval = idleInterval; // იწყება იდლ ინტერვალით
-      let currentAnimationType = 'idle'; // 'idle', 'walk', ან 'run'
+      let currentSpeed = 0;
+      let currentInterval = idleInterval;
+      let currentAnimationType = 'idle';
 
       let animationIntervalId;
       let movementIntervalId;
-      let isAnimationRunning = false; // იწყება false-ით (თავიდანვე გაჩერებულია)
+      let isAnimationRunning = false;
 
-      // პერსონაჟის საწყისი ზომის დაყენება
       character.style.width = `${characterWidth}px`;
       character.style.height = `${characterHeight}px`;
 
-      // პერსონაჟის გამოსახულების (სპრაიტის) განახლების ფუნქცია
       function updateCharacterImage() {
         let maxFrames;
         if (currentAnimationType === 'idle') {
           maxFrames = idleFrames;
         } else if (currentAnimationType === 'walk') {
           maxFrames = walkFrames;
-        } else { // 'run'
+        } else {
           maxFrames = runFrames;
         }
 
@@ -910,61 +893,53 @@
         }
       }
 
-      // პერსონაჟის გადაადგილების ფუნქცია
       function moveCharacter() {
         if (!isAnimationRunning || currentAnimationType === 'idle') {
-          return; // არ გადაადგილდეს თუ შეჩერებულია ან იდლ მდგომარეობაშია
+          return;
         }
 
         currentX += direction * currentSpeed;
 
-        // საზღვრების შემოწმება
         const maxX = window.innerWidth - characterWidth;
         const minX = 0;
 
         if (currentX >= maxX) {
           currentX = maxX;
-          direction = -1; // მიმართულების შეცვლა მარცხნივ
-          character.style.transform = `translateX(${currentX}px) scaleX(-1)`; // ჰორიზონტალურად გაფლიპვა მარცხენა მოძრაობისთვის
+          direction = -1;
+          character.style.transform = `translateX(${currentX}px) scaleX(-1)`;
         } else if (currentX <= minX) {
           currentX = minX;
-          direction = 1; // მიმართულების შეცვლა მარჯვნივ
-          character.style.transform = `translateX(${currentX}px) scaleX(1)`; // ჰორიზონტალურად გაფლიპვა ნორმალურზე
+          direction = 1;
+          character.style.transform = `translateX(${currentX}px) scaleX(1)`;
         } else {
           character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
         }
       }
 
-      // ანიმაციისა და მოძრაობის დაწყების ფუნქცია
       function startAnimation() {
-        // არსებული ინტერვალების გასუფთავება
         clearInterval(animationIntervalId);
         clearInterval(movementIntervalId);
 
-        // ახალი ინტერვალების დაწყება მიმდინარე პარამეტრებით
         animationIntervalId = setInterval(updateCharacterImage, currentInterval);
-        movementIntervalId = setInterval(moveCharacter, 20); // უფრო სწრაფი განახლება გლუვი მოძრაობისთვის
+        movementIntervalId = setInterval(moveCharacter, 20);
       }
 
-      // ანიმაციის შეჩერების და იდლ მდგომარეობაში გადაყვანის ფუნქცია
       function stopAnimation() {
         clearInterval(animationIntervalId);
         clearInterval(movementIntervalId);
         isAnimationRunning = false;
         currentAnimationType = 'idle';
-        animationFrame = 1; // დაყენება პირველ იდლ კადრზე
-        updateCharacterImage(); // იდლ სურათის ჩვენება დაუყოვნებლივ
+        animationFrame = 1;
+        updateCharacterImage();
       }
 
-      // საწყისი მდგომარეობა: დაიწყოს იდლ რეჟიმში
-      stopAnimation(); // გვერდის ჩატვირთვისას გაჩერებულ/იდლ მდგომარეობაში დაიწყება
+      stopAnimation();
 
-      // სიჩქარის კონტროლის ღილაკების Event listener-ები
       walkSpeedBtn.addEventListener('click', () => {
         currentSpeed = walkSpeed;
         currentInterval = walkInterval;
         currentAnimationType = 'walk';
-        animationFrame = 1; // ანიმაციის კადრის გადატვირთვა ტიპის შეცვლისას
+        animationFrame = 1;
         isAnimationRunning = true;
         startAnimation();
       });
@@ -973,29 +948,26 @@
         currentSpeed = runSpeed;
         currentInterval = runInterval;
         currentAnimationType = 'run';
-        animationFrame = 1; // ანიმაციის კადრის გადატვირთვა ტიპის შეცვლისას
+        animationFrame = 1;
         isAnimationRunning = true;
         startAnimation();
       });
 
-      // ახალი toggle ღილაკის Event listener
       toggleAnimationBtn.addEventListener('click', () => {
         if (isAnimationRunning) {
           stopAnimation();
           toggleAnimationBtn.textContent = 'გაგრძელება';
         } else {
           isAnimationRunning = true;
-          // განახლებისას, აღადგინეთ წინა სიჩქარე/ანიმაცია ან დააყენეთ ნაგულისხმევზე (მაგ., სიარული)
-          currentAnimationType = 'walk'; 
+          currentAnimationType = 'walk';
           currentSpeed = walkSpeed;
           currentInterval = walkInterval;
-          animationFrame = 1; // კადრის გადატვირთვა
+          animationFrame = 1;
           startAnimation();
           toggleAnimationBtn.textContent = 'გაჩერება';
         }
       });
 
-      // პერსონაჟის პოზიციის რეგულირება ფანჯრის ზომის შეცვლისას
       window.addEventListener('resize', () => {
         const maxX = window.innerWidth - characterWidth;
         if (currentX > maxX) {
@@ -1004,7 +976,6 @@
         }
       });
     });
-    // --- ანიმაციური პერსონაჟის JavaScript-ის დასასრული ---
   </script>
 
 </body>
