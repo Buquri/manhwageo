@@ -28,6 +28,1024 @@
       position: relative; /* Needed for absolute positioning of the animation character */
     }
 
+        .main-grid {
+      display: grid;
+      /* Default for mobile (or very small screens): 1 column */
+      grid-template-columns: 1fr;
+      gap: 15px; /* სივრცე ყუთებს შორის (შეგიძლიათ დატოვოთ 10px თუ გსურთ) */
+      flex-grow: 1;
+      width: 100%;
+      max-width: 800px; /* შევამცირე max-width, რათა 2 სვეტი კარგად გამოიყურებოდეს */
+      margin: 0 auto;
+    }
+
+    /* დაამატეთ ან შეცვალეთ ეს @media query */
+    /* 600px-დან ზევით ეკრანებზე გვექნება 2 სვეტი */
+    @media (min-width: 600px) {
+      .main-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 სვეტი, თითოეული თანაბარი სიგანის */
+      }
+    }
+
+    /* თუ გინდათ, რომ ძალიან დიდ ეკრანებზეც არ გაიწელოს ზედმეტად: */
+    @media (min-width: 1024px) {
+      .main-grid {
+        /* აქ შეგიძლიათ დატოვოთ იგივე 2 სვეტი, თუ არ გინდათ 3 სვეტზე გადასვლა */
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 900px; /* კიდევ შეგიძლიათ ოდნავ გაზარდოთ ან შეამციროთ */
+      }
+
+    }
+
+    .box {
+      border: 2px solid #333;
+      /* padding: 15px; Removed padding to give more space to background image */
+      overflow: hidden;
+      position: relative;
+      background-color: #197;
+      background-size: cover; /* Use cover to fill the box */
+      background-position: left ; /* Center the image */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      border-radius: 6px;
+      min-height: 200px; /* Adjust as needed for mobile */
+      height: 45vh; /* Responsive height */
+      max-height: 400px; /* Max height for larger screens */
+    }
+
+    .box::before {
+      content: '';
+      position: absolute;
+      top: 20;
+      left: 10;
+      width: 100%;
+      height: 110%;
+      background-color: rgb(205, 92, 92));
+    }
+
+    .box.first {
+      background-image: url('images/bg-main.jpg');
+    }
+
+    .box.second {
+      background-image: url('images/bg-2.jpg');
+    }
+
+    .box.third {
+      background-image: url('images/bg-3.jpg');
+    }
+
+    .box.fourth {
+      background-image: url('images/bg-4.jpg');
+    }
+
+    /* --- New box background images for video manhwas --- */
+    .box.fifth {
+      background-image: url('images/bg-5.jpg'); /* Change to your desired image path */
+    }
+
+    .box.sixth {
+      background-image: url('images/bg-6.jpg'); /* Change to your desired image path */
+    }
+    /* --- End new box background images --- */
+
+    .box h2,
+    .box button {
+      position: relative;
+      z-index: 1;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 8px 12px;
+      border: none;
+      border-radius: 10px;
+      margin: 5px 10px 10px 15px; /* Adjusted margin to push from edges */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.8em; /* Smaller font for mobile */
+    }     /* Removed extra closing brace here: } */
+
+    
+
+    @media (min-width: 768px) {
+      .box h2, .box button {
+        font-size: 1em;
+      }
+    }
+
+    .box button:hover:not(:disabled) {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .box button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      background-color: rgba(50, 50, 50, 0.7);
+    }
+
+    /* Styles for Views Counter */
+    .views-counter {
+      position: relative;
+      z-index: 1;
+      color: #ccc;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 5px 10px;
+      border-radius: 8px;
+      margin: 0px 10px 5px 10px; /* Aligned above the button */
+      font-size: 0.8em;
+      display: flex; /* To align icon and text */
+      align-items: center;
+      gap: 5px; /* Space between icon and text */
+      align-self: flex-start; /* Align to the start of the flex container (bottom-left) */
+    }
+
+    .views-counter i {
+      color: #ff4444; /* Icon color */
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw; /* Changed to 100vw */
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 15px; /* Smaller padding for mobile */
+      border-radius: 8px;
+      max-width: 95vw; /* Wider for mobile */
+      max-height: 98vh; /* Taller for mobile */
+      display: flex;
+      flex-direction: column;
+    }
+
+    #chapterModal .overlay {
+      padding: 0; /* No padding for chapter images */
+      max-width: 100vw; /* Changed to 100vw */
+      max-height: 130vh;
+      border-radius: 0;
+      background-color: black; /* Ensure fully black background - Corrected invalid color */
+    }
+
+    .chapter-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Smaller min-width for mobile */
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .chapter-buttons button {
+      padding: 10px 15px;
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      font-size: 0.9em; /* Smaller font for mobile */
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.5s ease, transform 0.8s ease;
+    }
+
+    @media (min-width: 768px) {
+      .chapter-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+      .chapter-buttons button {
+        font-size: 1em;
+      }
+    }
+
+    .chapter-buttons button:hover {
+      background-color: #cc0000;
+      transform: scale(1.03);
+    }
+
+    .images-container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      overflow-y: scroll; /* Allow scrolling */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      margin-top: 0; /* No top margin */
+      background-color: black; /* Ensure background is black between images - Corrected invalid color */
+    }
+
+    .images-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .images-container img, .images-container video { /* Add video to this rule */
+      width: 100%; /* Changed to 100% to fill available width */
+      height: auto;
+      display: block; /* Remove extra space below images/videos */
+      border-radius: 0; /* No border-radius for full screen */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease forwards;
+      max-width: 100%;
+    }
+
+    .loading-indicator {
+        text-align: center;
+        padding: 20px;
+        font-size: 1.2em;
+        color: #ddd;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 15px; /* Padding for header content */
+        background-color: rgba(0, 0, 0, 1); /* Fully opaque */
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: opacity 0.3s ease-out, visibility 0.3s ease-out; /* Use opacity/visibility for smooth hide/show */
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #chapterModal .modal-header {
+      padding: 10px 15px; /* Smaller padding for chapter view header */
+      background-color: rgba(0, 0, 0, 1); /* Ensure it's fully opaque in chapter modal */
+    }
+
+    .modal-header.hidden {
+      opacity: 0;
+      visibility: hidden;
+      /* pointer-events: none; Optional: prevents interaction when hidden */
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.2em; /* Adjust font size */
+    }
+
+    .modal-description {
+      font-size: 0.9em;
+      color: #b3da06; /* Corrected to a valid color code */
+      margin-top: 5px;
+    }
+
+    .modal-controls {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 15px; /* Padding for controls */
+      background-color: rgba(0, 0, 0, 1); /* Fully opaque */
+      position: sticky;
+      bottom: 0;
+      z-index: 1000;
+      transition: opacity 0.3s ease-out, visibility 0.3s ease-out; /* Use opacity/visibility for smooth hide/show */
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #chapterModal .modal-controls {
+      background-color: rgba(0, 0, 0, 1); /* Ensure it's fully opaque in chapter modal */
+    }
+
+    .modal-controls.hidden {
+      opacity: 0;
+      visibility: hidden;
+      /* pointer-events: none; Optional: prevents interaction when hidden */
+    }
+
+    .modal-controls .close-btn,
+    .modal-controls .navigation-buttons button {
+      margin: 0; /* Remove extra margins */
+      padding: 8px 15px; /* Smaller padding */
+      font-size: 0.9em; /* Smaller font */
+      flex: 1; /* Make them fill space */
+    }
+
+    .modal-controls .close-btn {
+      margin-left: 10px; /* Space between nav and close */
+    }
+
+    .navigation-buttons {
+      display: flex;
+      gap: 10px;
+      flex-grow: 1;
+    }
+
+    .navigation-buttons button {
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .navigation-buttons button:hover:not(:disabled) {
+        background-color: #cc0000;
+        transform: scale(1.03);
+    }
+    .navigation-buttons button:disabled {
+        background-color: #555;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    /* --- Styles for the animated character --- */
+    #animated-character {
+      position: fixed;
+      bottom: 10px; /* Adjust as needed */
+      left: 0; /* Starts from the left edge */
+      width: 120px; /* Adjust character width */
+      height: 130px; /* Adjust character height */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: 99; /* Below modals, above main content */
+      transition: transform 0.1s linear; /* Smooth horizontal movement */
+      image-rendering: pixelated; /* Keeps pixel art sharp if applicable */
+    }
+
+    #character-controls {
+      position: fixed;
+      bottom: 3px;
+      right: 3px; /* Position controls on the right */
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    #character-controls button {
+      background-color: #6a5acd; /* Royal Blue */
+      color: white;
+      border: none;
+      padding: 3px 5px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.7em;
+    }
+
+    #character-controls button:hover {
+      background-color: #483d8b; /* Darker Royal Blue */
+    }
+
+    #character-controls button:disabled {
+      background-color: #777;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    /* --- End styles for animated character --- */
+  </style>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+    import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBRcdavGb1Pi2eQlN6T_UbNue2bEa-8t-g",
+      authDomain: "manhwageo.firebaseapp.com",
+      projectId: "manhwageo",
+      storageBucket: "manhwageo.firebasestorage.app",
+      messagingSenderId: "822450839137",
+      appId: "1:822450839137:web:7dcb516bf572ae08191420",
+      measurementId: "G-3KMGGLE821"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app); // Analytics is optional but good to have
+    export const db = getFirestore(app); // Initialize Firestore and export it
+
+    // This function updates (increments) views when a manhwa's "open" button is clicked
+    window.updateAndGetViews = async function(manhwaId) {
+      const docRef = doc(db, "manhwa_views", manhwaId);
+
+      try {
+        const docSnap = await getDoc(docRef);
+        let views = 0;
+
+        if (docSnap.exists()) {
+          views = docSnap.data().count + 1;
+          await updateDoc(docRef, { count: views });
+        } else {
+          views = 1;
+          await setDoc(docRef, { count: views });
+        }
+        return views;
+      } catch (error) {
+        console.error("ნახვების განახლების შეცდომა: ", error);
+        return "შეცდომა";
+      }
+    };
+
+    // This new function retrieves the current views without incrementing
+    window.getInitialViews = async function(manhwaId) {
+      const docRef = doc(db, "manhwa_views", manhwaId);
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          return docSnap.data().count; // Return the existing count
+        } else {
+          return 0; // If document doesn't exist yet, initial views are 0
+        }
+      } catch (error) {
+        console.error("საწყისი ნახვების წამოღების შეცდომა: ", error);
+        return "შეცდომა";
+      }
+    };
+
+    // This block runs when the page is fully loaded
+    // It fetches and displays the saved view counts for each manhwa
+    document.addEventListener('DOMContentLoaded', async () => {
+      const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
+      for (const box of manhwaBoxes) { // Use for...of for proper async/await handling in loop
+        const manhwaId = box.dataset.manhwaId;
+        if (manhwaId) {
+          const viewsElement = box.querySelector(`#views-${manhwaId}`);
+          if (viewsElement) {
+            // Fetch initial views from Firebase
+            const views = await window.getInitialViews(manhwaId);
+            viewsElement.textContent = views;
+          }
+        }
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <div class="main-grid">
+    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება </h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-ch">0</span>
+      </div>
+      <button onclick="openChapterSelect('ch')">გახსნა / დახურვა</button>
+    </div>
+
+    <div class="box second" data-manhwa-id="w2_ch"> <h2>რკინის სისხლიანი ხმლის მქონე მონადირე</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-w2_ch">0</span>
+      </div>
+      <button onclick="openChapterSelect('w2_ch')">გახსნა / დახურვა</button>
+    </div>
+
+    <div class="box third" data-manhwa-id="w3_ch"> <h2>მალე</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-w3_ch">0</span>
+      </div>
+      <button onclick="openChapterSelect('w3_ch')" disabled>გახსნა / დახურვა</button>
+    </div>
+
+    <div class="box fourth" data-manhwa-id="w4_ch"> <h2>მალეე</h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-w4_ch">0</span>
+      </div>
+      <button onclick="openChapterSelect('w4_ch')" disabled>გახსნა / დახურვა</button>
+    </div>
+
+    <div class="box fifth" data-manhwa-id="video_manhwa1">
+      <h2>მეხუთე </h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-video_manhwa1">0</span>
+      </div>
+      <button onclick="openChapterSelect('video_manhwa1')">გახსნა / დახურვა</button>
+    </div>
+
+    <div class="box sixth" data-manhwa-id="video_manhwa2">
+      <h2>მეექვსე </h2>
+      <div class="views-counter">
+        <i class="fas fa-eye"></i> <span id="views-video_manhwa2">0</span>
+      </div>
+      <button onclick="openChapterSelect('video_manhwa2')">გახსნა / დახურვა</button>
+    </div>
+    </div>
+
+  <div class="modal" id="chapterSelect">
+    <div class="overlay">
+      <div class="modal-header">
+        <h2 id="chapterSelectTitle">თავების არჩევა</h2>
+        <p id="manhwaDescription" class="modal-description"></p>
+      </div>
+      <div class="chapter-buttons" id="chapterButtons"></div>
+      <div class="modal-controls">
+        <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="chapterModal">
+    <div class="overlay">
+      <div class="modal-header" id="chapterModalHeader">
+        <h2 id="chapterTitle">თავი</h2>
+      </div>
+      <div class="images-container" id="imagesContainer">
+        <p class="loading-indicator">იტვირთება...</p>
+      </div>
+      <div class="modal-controls" id="chapterModalControls">
+        <div class="navigation-buttons">
+          <button id="prevChapterBtn" onclick="navigateChapter(-1)">წინა თავი</button>
+          <button id="nextChapterBtn" onclick="navigateChapter(1)">შემდეგი თავი</button>
+        </div>
+        <button class="close-btn" onclick="toggleModal('chapterModal')">დახურვა</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="animated-character"></div>
+  <div id="character-controls">
+    <button id="walkSpeedBtn">სიარული</button>
+    <button id="runSpeedBtn">სირბილი</button>
+    <button id="toggleAnimationBtn">გაჩერება / გაგრძელება</button> </div>
+  <script>
+    const manhwas = {
+      "ch": {
+        title: "ბნელი ჯადოქრის დაბრუნება 1",
+        folder: "images/",
+        description: "ამბავი ახალგაზრდა ჯადოქარზე, რომელიც წარსულიდან ბრუნდება, რათა შური იძიოს და სამყარო ბნელი ძალებისგან იხსნას. მისი გზა სავსეა გამოწვევებით და მოულოდნელი შეტაკებებით.",
+        type: 'image', // Added type for image manhwa
+        chapters: [
+          { id: 1, pages: 16 },
+          { id: 2, pages: 15 },
+          { id: 3, pages: 20 },
+          { id: 4, pages: 18 },
+          { id: 5, pages: 17 },
+          { id: 6, pages: 14 },   
+          { id: 7, pages: 12 },
+          { id: 8, pages: 15 },
+        ]
+      },
+      "w2_ch": {
+        title: "რკინის სისხლიანი ხმლის მქონე მონადირე",
+        folder: "images2/",
+        description: "მონადირე, რომელსაც რკინის სისხლიანი ხმალი აქვს, იწყებს სახიფათო მოგზაურობას მონსტრების სამყაროში. მას მრავალი ბრძოლა ელის თავისი ბედის ასასრულებლად.",
+        type: 'image', // Added type for image manhwa
+        chapters: [
+          { id: 1, pages: 10 },
+          { id: 2, pages: 10 },
+        ]
+      },
+      "w3_ch": {
+        title: "მალე",
+        folder: "images3/",
+        description: "ეს მანჰვა მალე დაემატება. თვალყური ადევნეთ განახლებებს!",
+        type: 'image', // Added type for image manhwa
+        chapters: []
+      },
+      "w4_ch": {
+        title: "მალეე",
+        folder: "images4/",
+        description: "უახლესი მანჰვა, რომელიც მალე იქნება ხელმისაწვდომი. მოემზადეთ ახალი თავგადასავლებისთვის!",
+        type: 'image', // Added type for image manhwa
+        chapters: []
+      },
+      // --- New entries for video manhwas ---
+      "video_manhwa1": {
+        title: "მეხუთე ",
+        folder: "videos/", // Path to your video files (e.g., 'videos/w5_v1.mp4')
+        description: "აქ ჯერ არაფერია თუმცა მალე ყველაფერი იქნება,თქვენგან მხოლოდ აქტიურობაა საჭირო .",
+        type: 'video', // Added type for video manhwa
+        chapters: [ // <--- This array was missing or incomplete!
+            { } // Example: Assuming this is a local video file in the 'videos' folder
+            // Add more video chapters here if needed
+        ]
+      },
+      "video_manhwa2": {
+        title: "მეექვსე  ",
+        folder: "videos/", // Path to your video files (e.g., 'videos/w6_v1.mp4')
+        description: "მთავარია თქვენი აქტიურობა ყველაფერი იქნება .",
+        type: 'video', // Added type for video manhwa
+        chapters: [ // <--- This array was missing or incomplete!
+            // { // Add actual video chapters here
+        ]
+      }
+      // --- End new entries ---
+    };
+
+    let currentManhwaId = null;
+    let currentChapterId = null;
+    let currentTotalPages = 0; // This variable will now be less relevant for video types
+
+    let currentOpenModalId = null;
+    let lastScrollTop = 0;
+    let scrollTimeout; // Define scrollTimeout globally
+
+    function toggleModal(id, doPushState = true) {
+      const modal = document.getElementById(id);
+      if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+        if (doPushState && currentOpenModalId === id) {
+          history.back();
+          currentOpenModalId = null;
+        }
+        // When chapterModal closes, ensure controls are visible again on next open
+        if (id === 'chapterModal') {
+          document.getElementById('chapterModalHeader').classList.remove('hidden');
+          document.getElementById('chapterModalControls').classList.remove('hidden');
+          clearTimeout(scrollTimeout); // Clear any pending hide timeouts
+        }
+      } else {
+        modal.style.display = 'flex';
+        currentOpenModalId = id;
+        if (doPushState) {
+          history.pushState({ modal: id }, '', `#${id}`);
+        }
+      }
+    }
+
+    function openChapterSelect(manhwaId) {
+      currentManhwaId = manhwaId;
+      const manhwaData = manhwas[manhwaId];
+
+      document.getElementById('chapterSelectTitle').textContent = manhwaData.title;
+      document.getElementById('manhwaDescription').textContent = manhwaData.description;
+
+      const chapterButtons = document.getElementById('chapterButtons');
+      chapterButtons.innerHTML = '';
+
+      if (manhwaData.chapters.length === 0) {
+        chapterButtons.innerHTML = '<p style="text-align:center; color:#aaa; font-size: 0.9em;">თავები ჯერ არ არის დამატებული.</p>';
+      } else {
+        manhwaData.chapters.forEach(chapter => {
+          const btn = document.createElement('button');
+          btn.textContent = `თავი ${chapter.id}`;
+          // --- Modified logic to pass correct parameter based on manhwa type ---
+          if (manhwaData.type === 'video') {
+            btn.onclick = () => openChapter(chapter.id, chapter.file); // Pass file name for video
+          } else {
+            btn.onclick = () => openChapter(chapter.id, chapter.pages); // Pass page count for image
+          }
+          // --- End of modification ---
+          chapterButtons.appendChild(btn);
+        });
+      }
+
+      // --- Views update logic (remains the same) ---
+      const viewsElement = document.querySelector(`.box[data-manhwa-id="${manhwaId}"] .views-counter span`);
+      if (viewsElement) {
+        window.updateAndGetViews(manhwaId).then(views => {
+          viewsElement.textContent = views;
+        }).catch(error => {
+          console.error("ნახვების განახლების შეცდომა openChapterSelect-დან: ", error);
+          viewsElement.textContent = "შეცდომა";
+        });
+      }
+      // --- End views update logic ---
+      toggleModal('chapterSelect');
+    }
+
+    function openChapter(chapterId, contentData) { // Renamed totalPages to contentData for clarity
+      currentChapterId = chapterId;
+      // currentTotalPages = totalPages; // This is no longer directly used for video type
+
+      const imagesContainer = document.getElementById('imagesContainer');
+      imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
+      imagesContainer.scrollTop = 0; // Reset scroll on new chapter
+
+      const chapterTitleElement = document.getElementById('chapterTitle');
+      const manhwaData = manhwas[currentManhwaId];
+      chapterTitleElement.textContent = `${manhwaData.title} - თავი ${chapterId}`;
+
+      toggleModal('chapterSelect', false);
+      toggleModal('chapterModal', true);
+
+      // Ensure controls are visible when a chapter opens
+      document.getElementById('chapterModalHeader').classList.remove('hidden');
+      document.getElementById('chapterModalControls').classList.remove('hidden');
+      clearTimeout(scrollTimeout); // Clear any old timeouts
+
+      setTimeout(() => {
+        imagesContainer.innerHTML = ''; // Clear loading indicator
+
+        if (manhwaData.type === 'image') {
+          // Logic for image manhwas
+          for (let i = 1; i <= contentData; i++) { // contentData is totalPages here
+            const img = document.createElement('img');
+            img.src = `${manhwaData.folder}${currentManhwaId}${chapterId}_page${i}.jpg`;
+            img.alt = `თავი ${chapterId}, გვერდი ${i}`;
+            img.loading = 'lazy';
+            img.onerror = function() {
+              this.src = 'images/placeholder.jpg';
+              this.alt = 'სურათი ვერ მოიძებნა';
+            };
+            imagesContainer.appendChild(img);
+          }
+        } else if (manhwaData.type === 'video') {
+          // Logic for video manhwas
+          const video = document.createElement('video');
+          video.src = `${manhwaData.folder}${contentData}`; // contentData is the file name here
+          video.controls = true; // Show video controls (play, pause, volume, etc.)
+          video.preload = 'auto'; // Preload video for faster playback
+          video.style.maxWidth = '100%'; // Ensure video fits container width
+          video.style.height = 'auto'; // Maintain aspect ratio
+          video.style.display = 'block'; // Remove extra space below video
+          video.autoplay = true; // Autoplay video when opened
+          video.onerror = function() {
+            console.error("ვიდეოს ჩატვირთვის შეცდომა: ", this.src);
+            const errorDiv = document.createElement('div');
+            errorDiv.textContent = 'ვიდეოს ჩატვირთვის შეცდომა.';
+            errorDiv.style.color = 'red';
+            errorDiv.style.textAlign = 'center';
+            imagesContainer.appendChild(errorDiv);
+          };
+          imagesContainer.appendChild(video);
+        }
+        updateNavigationButtons();
+      }, 500);
+    }
+
+    function updateNavigationButtons() {
+        const prevBtn = document.getElementById('prevChapterBtn');
+        const nextBtn = document.getElementById('nextChapterBtn');
+        const manhwaData = manhwas[currentManhwaId];
+        const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
+
+        prevBtn.disabled = currentChapterIndex <= 0;
+        nextBtn.disabled = currentChapterIndex >= manhwaData.chapters.length - 1;
+    }
+
+    function navigateChapter(direction) {
+        const manhwaData = manhwas[currentManhwaId];
+        const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
+        const newChapterIndex = currentChapterIndex + direction;
+
+        if (newChapterIndex >= 0 && newChapterIndex < manhwaData.chapters.length) {
+            const newChapter = manhwaData.chapters[newChapterIndex];
+            // --- Modified logic to pass correct parameter based on manhwa type ---
+            if (manhwaData.type === 'video') {
+              openChapter(newChapter.id, newChapter.file); // Pass file name for video
+            } else {
+              openChapter(newChapter.id, newChapter.pages); // Pass page count for image
+            }
+            // --- End of modification ---
+        }
+    }
+
+    window.onpopstate = function(event) {
+      if (document.getElementById('chapterModal').style.display === 'flex') {
+        toggleModal('chapterModal', false);
+        toggleModal('chapterSelect', true);
+      } else if (document.getElementById('chapterSelect').style.display === 'flex') {
+        toggleModal('chapterSelect', false);
+      }
+      currentOpenModalId = null;
+    };
+
+    window.onload = function() {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            if (hash === 'chapterSelect' || hash === 'chapterModal') {
+                history.replaceState({}, '', window.location.pathname + window.location.search);
+            }
+        }
+    };
+
+    // Handle scroll for chapter modal header and controls
+    document.getElementById('imagesContainer').addEventListener('scroll', function() {
+        const currentScrollTop = this.scrollTop;
+        const header = document.getElementById('chapterModalHeader');
+        const controls = document.getElementById('chapterModalControls');
+
+        clearTimeout(scrollTimeout); // Clear any existing timeout
+
+        if (currentScrollTop > lastScrollTop && currentScrollTop > 50) { // Scrolling down significantly
+            header.classList.add('hidden');
+            controls.classList.add('hidden');
+        } else { // Scrolling up or near top, or very little movement
+            header.classList.remove('hidden');
+            controls.classList.remove('hidden');
+            // Set a timeout to hide them after a brief delay if no further scroll
+            scrollTimeout = setTimeout(() => {
+                if (currentScrollTop === this.scrollTop) { // Check if scrolling has truly stopped
+                    header.classList.add('hidden');
+                    controls.classList.add('hidden');
+                }
+            }, 2000); // Hide after 2 seconds of inactivity
+        }
+        lastScrollTop = currentScrollTop;
+    });
+
+    // Show controls on tap/click if hidden
+    document.getElementById('imagesContainer').addEventListener('click', function() {
+      const header = document.getElementById('chapterModalHeader');
+      const controls = document.getElementById('chapterModalControls');
+      if (header.classList.contains('hidden')) {
+          header.classList.remove('hidden');
+          controls.classList.remove('hidden');
+          // Hide again after a delay if no further interaction
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+              header.classList.add('hidden');
+              controls.classList.add('hidden');
+          }, 2000);
+      }
+    });
+
+    // --- New/Modified JavaScript for the animated character ---
+    document.addEventListener('DOMContentLoaded', () => {
+      const character = document.getElementById('animated-character');
+      const walkSpeedBtn = document.getElementById('walkSpeedBtn');
+      const runSpeedBtn = document.getElementById('runSpeedBtn');
+      const toggleAnimationBtn = document.getElementById('toggleAnimationBtn'); // Get new button
+
+      // --- Configuration (Adjust these based on your actual images) ---
+      const animationFolderPath = 'images/'; // Make sure this path is correct
+
+      // IMPORTANT: Update these based on the ACTUAL number of frames you have for each animation
+      // If you only have ONE image for walk, run, idle, set frames to 1.
+      const idleFrames = 1; // Assuming you have 'animation_1_idle_1.png'
+      const walkFrames = 2; // Assuming you have 'animation_1_walk_1.png'
+      const runFrames = 2;  // Assuming you have 'animation_1_walk_2.png'
+
+      const characterWidth = 110; // Adjust character width
+      const characterHeight = 120; // Adjust character height
+      
+      const walkSpeed = 0.5;  // Pixels per animation frame for walking
+      const runSpeed = 3;  // Pixels per animation frame for running
+      
+      const idleInterval = 500; // Milliseconds between idle animation frames (if more than 1)
+      const walkInterval = 450; // Milliseconds between walk animation frames
+      const runInterval = 300;  // Milliseconds between run animation frames
+
+      let currentX = 0;
+      let direction = 1; // 1 for right, -1 for left
+      let animationFrame = 1;
+      let currentSpeed = 0; // Start with 0 speed (idle)
+      let currentInterval = idleInterval; // Start with idle interval
+      let currentAnimationType = 'idle'; // 'idle', 'walk', or 'run'
+
+      let animationIntervalId;
+      let movementIntervalId;
+      let isAnimationRunning = true; // Track animation state
+
+      // Set initial character size
+      character.style.width = `${characterWidth}px`;
+      character.style.height = `${characterHeight}px`;
+
+      // Function to update character image (sprite)
+      function updateCharacterImage() {
+        let maxFrames;
+        if (currentAnimationType === 'idle') {
+          maxFrames = idleFrames;
+        } else if (currentAnimationType === 'walk') {
+          maxFrames = walkFrames;
+        } else { // 'run'
+          maxFrames = runFrames;
+        }
+
+        character.style.backgroundImage = `url('${animationFolderPath}animation_1_${currentAnimationType}_${animationFrame}.png')`;
+        
+        animationFrame++;
+        if (animationFrame > maxFrames) {
+          animationFrame = 1;
+        }
+      }
+
+      // Function to move the character
+      function moveCharacter() {
+        if (!isAnimationRunning || currentAnimationType === 'idle') {
+          return; // Don't move if paused or idle
+        }
+
+        currentX += direction * currentSpeed;
+
+        // Check boundaries
+        const maxX = window.innerWidth - characterWidth;
+        const minX = 0;
+
+        if (currentX >= maxX) {
+          currentX = maxX;
+          direction = -1; // Change direction to left
+          character.style.transform = `translateX(${currentX}px) scaleX(-1)`; // Flip horizontally for left movement
+        } else if (currentX <= minX) {
+          currentX = minX;
+          direction = 1; // Change direction to right
+          character.style.transform = `translateX(${currentX}px) scaleX(1)`; // Flip horizontally back to normal
+        } else {
+          character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
+        }
+      }
+
+      // Function to start animation and movement
+      function startAnimation() {
+        // Clear any existing intervals
+        clearInterval(animationIntervalId);
+        clearInterval(movementIntervalId);
+
+        // Start new intervals with current settings
+        animationIntervalId = setInterval(updateCharacterImage, currentInterval);
+        movementIntervalId = setInterval(moveCharacter, 20); // Faster update for smooth movement
+      }
+
+      // Function to stop animation and set to idle
+      function stopAnimation() {
+        clearInterval(animationIntervalId);
+        clearInterval(movementIntervalId);
+        isAnimationRunning = false;
+        currentAnimationType = 'idle';
+        animationFrame = 1; // Reset to first idle frame
+        updateCharacterImage(); // Display idle image immediately
+      }
+
+      // Initial state: Start in idle mode if you have an idle image
+      updateCharacterImage(); // Display initial idle image
+      // Optionally start moving on page load, or wait for button click:
+      // startAnimation(); // Uncomment this line if you want it to move immediately
+
+      // Event listeners for speed control buttons
+      walkSpeedBtn.addEventListener('click', () => {
+        currentSpeed = walkSpeed;
+        currentInterval = walkInterval;
+        currentAnimationType = 'walk';
+        animationFrame = 1; // Reset animation frame when changing type
+        isAnimationRunning = true;
+        startAnimation();
+      });
+
+      runSpeedBtn.addEventListener('click', () => {
+        currentSpeed = runSpeed;
+        currentInterval = runInterval;
+        currentAnimationType = 'run';
+        animationFrame = 1; // Reset animation frame when changing type
+        isAnimationRunning = true;
+        startAnimation();
+      });
+
+      // Event listener for the new toggle button
+      toggleAnimationBtn.addEventListener('click', () => {
+        if (isAnimationRunning) {
+          stopAnimation();
+          toggleAnimationBtn.textContent = 'გაგრძელება';
+        } else {
+          isAnimationRunning = true;
+          // When resuming, restore previous speed/animation or set to a default (e.g., walk)
+          currentAnimationType = 'walk'; 
+          currentSpeed = walkSpeed;
+          currentInterval = walkInterval;
+          animationFrame = 1; // Reset frame
+          startAnimation();
+          toggleAnimationBtn.textContent = 'გაჩერება';
+        }
+      });
+
+      // Adjust character position on window resize
+      window.addEventListener('resize', () => {
+        const maxX = window.innerWidth - characterWidth;
+        if (currentX > maxX) {
+          currentX = maxX;
+          character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
+        }
+      });
+
+      // Initialize character state on load: set to idle
+     <!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <title>Manhwageo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manhwageo - ქართული მანჰვების ონლაინ ბიბლიოთეკა. წაიკითხეთ საუკეთესო მანჰვები ქართულ ენაზე.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Reset basic margins/paddings for consistency */
+    * {
+      box-sizing: border-box;
+      margin: 20;
+      padding: 10;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 5;
+      padding: 10px;
+      background-color: #E9967A;
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 50vh;
+      position: relative; /* Needed for absolute positioning of the animation character */
+    }
+
     .main-grid {
       display: grid;
       grid-template-columns: 1fr; /* Default to single column for mobile */
@@ -1001,6 +2019,13 @@
 
       // Initialize character state on load: set to idle
       stopAnimation(); // Start in stopped/idle state
+    });
+    // --- End New/Modified JavaScript for the animated character ---
+  </script>
+
+</body>
+</html>
+ stopAnimation(); // Start in stopped/idle state
     });
     // --- End New/Modified JavaScript for the animated character ---
   </script>
