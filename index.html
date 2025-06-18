@@ -1,1388 +1,1922 @@
 <!DOCTYPE html>
+
 <html lang="ka">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manhwageo</title>
-    <meta name="description" content="Manhwageo - ქართული მანჰვების ონლაინ ბიბლიოთეკა. წაიკითხეთ საუკეთესო მანჰვები ქართულ ენაზე.">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <meta charset="UTF-8">
+
+  <title>Manhwageo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Manhwageo - ქართული მანჰვების ონლაინ ბიბლიოთეკა. წაიკითხეთ საუკეთესო მანჰვები ქართულ ენაზე.">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+
+    /* სტილების გადატვირთვა კონსისტენტურობისთვის */
+
+    * {
+
+      box-sizing: border-box;
+
+      margin: 20;
+
+      padding: 10;
+
+    }
+
+
+
+    body {
+
+      font-family: 'Poppins', sans-serif;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 10px;
+
+      margin: 0;
+
+      padding: 10px;
+
+      background-color: #E9967A;
+
+      color: #fff;
+
+      overflow-x: hidden;
+
+      min-height: 100vh;
+
+      position: relative;
+
+    }
+
+
+
+    /* მთავარი გრიდი (განლაგება) - აღდგენილია თქვენს მიერ მოწოდებულ ვერსიაზე */
+
+    .main-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr; /* Default to single column for mobile */
+
+      gap: 10px;
+
+      flex-grow: 1;
+
+      /* removed max-width and margin: 0 auto from here to revert to original sizing */
+
+    }
+
+
+
+    @media (min-width: 768px) { /* Two columns for larger screens - აღდგენილია თქვენს მიერ მოწოდებულ ვერსიაზე */
+
+      .main-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+      }
+
+    }
+
+
+
+    /* ყუთების (ბოქსების) სტილები - აღდგენილია თქვენს მიერ მოწოდებულ ვერსიაზე (სინტაქსური შეცდომების შესწორებით) */
+
+    .box {
+
+      border: 2px solid #333;
+
+      /* padding: 15px; Removed padding to give more space to background image */
+
+      overflow: hidden;
+
+      position: relative;
+
+      background-color: #197; /* სარეზერვო ფერი, თუ ფონის სურათი არ იტვირთება */
+
+      background-size: cover; /* უზრუნველყოფს, რომ სურათი მთლიანად ფარავდეს ყუთს */
+
+      background-position: left; /* აღდგენილია left-ზე, როგორც თქვენ გქონდათ */
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: flex-end; /* კონტენტს ათავსებს ქვედა ნაწილში */
+
+      align-items: flex-start; /* კონტენტს ათავსებს მარცხენა ნაწილში */
+
+      border-radius: 6px;
+
+      min-height: 200px; /* აღდგენილია თქვენს ზომაზე */
+
+      height: 45vh; /* აღდგენილია თქვენს ზომაზე */
+
+      max-height: 400px; /* აღდგენილია თქვენს ზომაზე */
+
+    }
+
+
+
     
-    <style>
-        /* ძირითადი სტილები და CSS ცვლადები */
-        :root {
-            /* ფანჯრის ძირითადი ზომები (შეცვლილია Manhwageo კონტენტისთვის) */
-            --window-width: 45vw; /* ეკრანის სიგანის 45% */
-            --window-height: 22vh; /* ეკრანის სიმაღლის 22% - გაზრდილია კონტენტისთვის */
-            --window-margin: 1vw; /* ფანჯრებს შორის მანძილი */
-            --window-bg-color: #e0e0e0; 
-            --window-border-color: #ccc;
-            --window-text-color: #333;
 
-            /* მენიუს ღილაკის ფერები */
-            --menu-icon-color: #333;
 
-            /* Sidebar-ის ფერები */
-            --sidebar-bg-color: #333;
-            --sidebar-text-color: white;
-            --sidebar-hover-color: #555;
 
-            /* გახსნილი ფანჯრის სტილები (Modal Window) */
-            --modal-bg-color: rgba(0, 0, 0, 0.7); /* გამჭვირვალე შავი ფონი */
-            --modal-content-bg: #fefefe;
-            --modal-content-border: 1px solid #888;
+    /* ფონის სურათები თითოეული ყუთისთვის */
 
-            /* Manhwageo specific modal colors */
-            --manhwa-modal-bg: rgba(0, 0, 0, 0.95);
-            --manhwa-modal-header-bg: rgba(0, 0, 0, 1);
-            --manhwa-modal-text-color: white;
-            --manhwa-modal-description-color: #b3da06;
-            --manhwa-button-bg: #ff4444;
-            --manhwa-button-hover-bg: #cc0000;
+    .box.first {
+
+      background-image: url('images/bg-main.jpg');
+
+    }
+
+
+
+    .box.second {
+
+      background-image: url('images/bg-2.jpg');
+
+    }
+
+
+
+    .box.third {
+
+      background-image: url('images/bg-3.jpg');
+
+    }
+
+
+
+    .box.fourth {
+
+      background-image: url('images/bg-4.jpg');
+
+    }
+
+
+
+    /* --- ახალი ყუთების ფონის სურათები ვიდეო მანჰვებისთვის --- */
+
+    .box.fifth {
+
+      background-image: url('images/bg-5.jpg');
+
+    }
+
+
+
+    .box.sixth {
+
+      background-image: url('images/bg-6.jpg');
+
+    }
+
+    /* --- ახალი ყუთების ფონის სურათების დასასრული --- */
+
+
+
+    /* სათაურებისა და ღილაკების ძირითადი სტილები ყუთებში */
+
+    .box h2,
+
+    .box button {
+
+      position: relative;
+
+      z-index: 2; /* დარწმუნდით, რომ გადაფარვაზე მაღლაა */
+
+      color: white;
+
+      background-color: rgba(0, 0, 0, 0.7);
+
+      padding: 8px 12px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      margin: 5px 10px 10px 15px; /* მორგებული ზღვარი კიდეებიდან დაშორებისთვის */
+
+      cursor: pointer;
+
+      transition: background-color 0.3s ease;
+
+      font-size: 0.8em; /* პატარა შრიფტი მობილურისთვის */
+
+    }
+
+
+
+    @media (min-width: 768px) {
+
+      .box h2, .box button {
+
+        font-size: 1em;
+
+      }
+
+    }
+
+
+
+    .box button:hover:not(:disabled) {
+
+      background-color: rgba(0, 0, 0, 0.9);
+
+    }
+
+
+
+    .box button:disabled {
+
+      cursor: not-allowed;
+
+      opacity: 0.5;
+
+      background-color: rgba(50, 50, 50, 0.7);
+
+    }
+
+
+
+    /* ნახვების მრიცხველის სტილები */
+
+    .views-counter {
+
+      position: relative;
+
+      z-index: 2; /* დარწმუნდით, რომ გადაფარვაზე მაღლაა */
+
+      color: #ccc;
+
+      background-color: rgba(0, 0, 0, 0.7);
+
+      padding: 5px 10px;
+
+      border-radius: 8px;
+
+      margin: 0px 10px 5px 10px; /* ღილაკზე მაღლა გასწორება */
+
+      font-size: 0.8em;
+
+      display: flex; /* ხატულისა და ტექსტის გასასწორებლად */
+
+      align-items: center;
+
+      gap: 5px; /* სივრცე ხატულასა და ტექსტს შორის */
+
+      align-self: flex-start; /* მიმყვება ფლექს კონტეინერის დასაწყისს (ქვედა-მარცხენა) */
+
+    }
+
+
+
+    .views-counter i {
+
+      color: #ff4444; /* ხატულის ფერი */
+
+    }
+
+
+
+    /* მოდალური ფანჯრების სტილები (თავების არჩევა, თავის ნახვა) */
+
+    .modal {
+
+      position: fixed;
+
+      top: 0;
+
+      left: 0;
+
+      width: 100vw;
+
+      height: 100vh;
+
+      background-color: rgba(0, 0, 0, 0.95);
+
+      display: none; /* ნაგულისხმევად დამალულია */
+
+      justify-content: center;
+
+      align-items: center;
+
+      z-index: 999;
+
+    }
+
+
+
+    .overlay {
+
+      background-color: rgba(0, 0, 0, 0.85);
+
+      padding: 15px; /* პატარა padding მობილურისთვის */
+
+      border-radius: 8px;
+
+      max-width: 95vw; /* უფრო ფართო მობილურისთვის */
+
+      max-height: 98vh; /* უფრო მაღალი მობილურისთვის */
+
+      display: flex;
+
+      flex-direction: column;
+
+    }
+
+
+
+    #chapterModal .overlay {
+
+      padding: 0; /* padding არ აქვს თავების სურათებისთვის */
+
+      max-width: 100vw;
+
+      max-height: 130vh;
+
+      border-radius: 0;
+
+      background-color: black; /* უზრუნველყოფს სრულად შავ ფონს */
+
+    }
+
+
+
+    /* თავების ღილაკების სტილები */
+
+    .chapter-buttons {
+
+      display: grid;
+
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* პატარა min-width მობილურისთვის */
+
+      gap: 10px;
+
+      margin-top: 15px;
+
+    }
+
+
+
+    .chapter-buttons button {
+
+      padding: 10px 15px;
+
+      background-color: #ff4444;
+
+      border: none;
+
+      color: white;
+
+      font-size: 0.9em; /* პატარა შრიფტი მობილურისთვის */
+
+      cursor: pointer;
+
+      border-radius: 5px;
+
+      transition: background-color 0.5s ease, transform 0.8s ease;
+
+    }
+
+
+
+    @media (min-width: 768px) {
+
+      .chapter-buttons {
+
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+
+      }
+
+      .chapter-buttons button {
+
+        font-size: 1em;
+
+      }
+
+    }
+
+
+
+    .chapter-buttons button:hover {
+
+      background-color: #cc0000;
+
+      transform: scale(1.03);
+
+    }
+
+
+
+    /* სურათების/ვიდეოების კონტეინერი */
+
+    .images-container {
+
+      display: flex;
+
+      flex-direction: column;
+
+      flex-grow: 1;
+
+      overflow-y: scroll; /* სქროლის დაშვება */
+
+      -ms-overflow-style: none; /* IE და Edge-სთვის */
+
+      scrollbar-width: none; /* Firefox-ისთვის */
+
+      margin-top: 0;
+
+      background-color: black; /* უზრუნველყოფს შავ ფონს სურათებს შორის */
+
+    }
+
+
+
+    .images-container::-webkit-scrollbar {
+
+        display: none; /* Chrome, Safari, Opera-სთვის */
+
+    }
+
+
+
+    .images-container img, .images-container video { /* სურათებისა და ვიდეოების სტილები */
+
+      width: 100%;
+
+      height: auto;
+
+      display: block;
+
+      border-radius: 0;
+
+      opacity: 0;
+
+      transform: translateY(20px);
+
+      animation: fadeUp 0.5s ease forwards;
+
+      max-width: 100%;
+
+    }
+
+
+
+    .loading-indicator {
+
+        text-align: center;
+
+        padding: 20px;
+
+        font-size: 1.2em;
+
+        color: #ddd;
+
+    }
+
+
+
+    @keyframes fadeUp {
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
+
+    }
+
+
+
+    /* მოდალის სათაური */
+
+    .modal-header {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        width: 100%;
+
+        padding: 15px;
+
+        background-color: rgba(0, 0, 0, 1);
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 1000;
+
+        transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+
+        opacity: 1;
+
+        visibility: visible;
+
+    }
+
+
+
+    #chapterModal .modal-header {
+
+      padding: 10px 15px;
+
+      background-color: rgba(0, 0, 0, 1);
+
+    }
+
+
+
+    .modal-header.hidden {
+
+      opacity: 0;
+
+      visibility: hidden;
+
+      /* pointer-events: none; */
+
+    }
+
+
+
+    .modal-header h2 {
+
+      margin: 0;
+
+      font-size: 1.2em;
+
+    }
+
+
+
+    .modal-description {
+
+      font-size: 0.9em;
+
+      color: #b3da06;
+
+      margin-top: 5px;
+
+    }
+
+
+
+    /* მოდალის კონტროლები (ქვედა ღილაკები) */
+
+    .modal-controls {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      width: 100%;
+
+      padding: 15px;
+
+      background-color: rgba(0, 0, 0, 1);
+
+      position: sticky;
+
+      bottom: 0;
+
+      z-index: 1000;
+
+      transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+
+      opacity: 1;
+
+      visibility: visible;
+
+    }
+
+
+
+    #chapterModal .modal-controls {
+
+      background-color: rgba(0, 0, 0, 1);
+
+    }
+
+
+
+    .modal-controls.hidden {
+
+      opacity: 0;
+
+      visibility: hidden;
+
+    }
+
+
+
+    .modal-controls .close-btn,
+
+    .modal-controls .navigation-buttons button {
+
+      margin: 0;
+
+      padding: 8px 15px;
+
+      font-size: 0.9em;
+
+      flex: 1;
+
+    }
+
+
+
+    .modal-controls .close-btn {
+
+      margin-left: 10px;
+
+    }
+
+
+
+    .navigation-buttons {
+
+      display: flex;
+
+      gap: 10px;
+
+      flex-grow: 1;
+
+    }
+
+
+
+    .navigation-buttons button {
+
+      background-color: #ff4444;
+
+      border: none;
+
+      color: white;
+
+      cursor: pointer;
+
+      border-radius: 5px;
+
+      transition: background-color 0.3s ease, transform 0.2s ease;
+
+    }
+
+
+
+    .navigation-buttons button:hover:not(:disabled) {
+
+        background-color: #cc0000;
+
+        transform: scale(1.03);
+
+    }
+
+    .navigation-buttons button:disabled {
+
+        background-color: #555;
+
+        cursor: not-allowed;
+
+        opacity: 0.6;
+
+    }
+
+
+
+    /* --- ანიმაციური პერსონაჟისა და კონტროლების სტილები --- */
+
+    #animated-character {
+
+      position: fixed;
+
+      bottom: 10px;
+
+      left: 0;
+
+      width: 120px;
+
+      height: 130px;
+
+      background-size: contain;
+
+      background-repeat: no-repeat;
+
+      background-position: center;
+
+      z-index: 99;
+
+      image-rendering: pixelated;
+
+    }
+
+
+
+    #character-controls {
+
+      position: fixed;
+
+      bottom: 3px;
+
+      right: 3px;
+
+      z-index: 100;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 5px;
+
+    }
+
+
+
+    #character-controls button {
+
+      background-color: #6a5acd;
+
+      color: white;
+
+      border: none;
+
+      padding: 3px 5px;
+
+      border-radius: 3px;
+
+      cursor: pointer;
+
+      transition: background-color 0.3s ease;
+
+      font-size: 0.7em;
+
+    }
+
+
+
+    #character-controls button:hover {
+
+      background-color: #483d8b;
+
+    }
+
+
+
+    #character-controls button:disabled {
+
+      background-color: #777;
+
+      cursor: not-allowed;
+
+      opacity: 0.7;
+
+    }
+
+    /* --- ანიმაციური პერსონაჟის სტილების დასასრული --- */
+
+  </style>
+
+
+
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+
+    import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+
+
+    const firebaseConfig = {
+
+      apiKey: "AIzaSyBRcdavGb1Pi2eQlN6T_UbNue2bEa-8t-g",
+
+      authDomain: "manhwageo.firebaseapp.com",
+
+      projectId: "manhwageo",
+
+      storageBucket: "manhwageo.firebasestorage.app",
+
+      messagingSenderId: "822450839137",
+
+      appId: "1:822450839137:web:7dcb516bf572ae08191420",
+
+      measurementId: "G-3KMGGLE821"
+
+    };
+
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const analytics = getAnalytics(app);
+
+    export const db = getFirestore(app);
+
+
+
+    window.updateAndGetViews = async function(manhwaId) {
+
+      const docRef = doc(db, "manhwa_views", manhwaId);
+
+
+
+      try {
+
+        const docSnap = await getDoc(docRef);
+
+        let views = 0;
+
+
+
+        if (docSnap.exists()) {
+
+          views = docSnap.data().count + 1;
+
+          await updateDoc(docRef, { count: views });
+
+        } else {
+
+          views = 1;
+
+          await setDoc(docRef, { count: views });
+
         }
 
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif; /* Poppins-ზე შეცვლილი */
-            display: flex;
-            justify-content: center; /* ცენტრირება ჰორიზონტალურად */
-            align-items: flex-start; /* ზევით გასწორება ვერტიკალურად */
-            min-height: 100vh; /* მთელი ეკრანის სიმაღლე */
-            background-color: #E9967A; /* Manhwageo-ს ფონზე შეცვლილი */
-            color: #fff; /* Manhwageo-ს ტექსტის ფერზე შეცვლილი */
-            overflow-x: hidden; /* თავიდან აიცილეთ ჰორიზონტალური სქროლი */
-            position: relative; /* საჭიროა მენიუს ღილაკისთვის და Sidebar-ისთვის */
+        return views;
+
+      } catch (error) {
+
+        console.error("ნახვების განახლების შეცდომა: ", error);
+
+        return "შეცდომა";
+
+      }
+
+    };
+
+
+
+    window.getInitialViews = async function(manhwaId) {
+
+      const docRef = doc(db, "manhwa_views", manhwaId);
+
+      try {
+
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+
+          return docSnap.data().count;
+
+        } else {
+
+          return 0;
+
         }
 
-        .main-content {
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: var(--window-margin); 
-            width: 100%; 
-            padding: 10px; 
-            box-sizing: border-box; 
+      } catch (error) {
+
+        console.error("საწყისი ნახვების წამოღების შეცდომა: ", error);
+
+        return "შეცდომა";
+
+      }
+
+    };
+
+
+
+    document.addEventListener('DOMContentLoaded', async () => {
+
+      const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
+
+      for (const box of manhwaBoxes) {
+
+        const manhwaId = box.dataset.manhwaId;
+
+        if (manhwaId) {
+
+          const viewsElement = box.querySelector(`#views-${manhwaId}`);
+
+          if (viewsElement) {
+
+            const views = await window.getInitialViews(manhwaId);
+
+            viewsElement.textContent = views;
+
+          }
+
         }
 
-        /* კონტეინერები მარცხნივ და მარჯვნივ */
-        .container-left,
-        .container-right {
-            display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            width: 48%; /* Adjust for 2 columns */
-            max-width: 250px; /* Limits width on larger phones */
-            gap: var(--window-margin); 
-        }
+      }
 
-        /* ფანჯრების ძირითადი სტილი */
-        .window {
-            width: var(--window-width);
-            height: var(--window-height);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column; /* შიდა კონტენტისთვის */
-            justify-content: flex-end; /* კონტენტს ათავსებს ქვედა ნაწილში */
-            align-items: flex-start; /* კონტენტს ათავსებს მარცხენა ნაწილში */
-            font-size: 1.2em;
-            color: white; /* Manhwageo-ს ტექსტის ფერი */
-            box-sizing: border-box;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-            flex-shrink: 0; 
-            text-align: left; /* Manhwageo-ს კონტენტი მარცხნივ */
-            padding: 5px; 
-            cursor: pointer; /* ფანჯრებზე დაჭერადი რომ იყოს */
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative; /* For background images and content overlay */
-            overflow: hidden; /* Ensure content and image don't overflow */
-            background-size: cover; /* Manhwageo style */
-            background-position: center; /* Manhwageo style */
-            background-repeat: no-repeat; /* Manhwageo style */
-        }
+    });
 
-        .window:hover {
-            transform: translateY(-3px);
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
-        }
+  </script>
 
-        /* Manhwageo Content specific styling within .window */
-        .window h2,
-        .window button {
-            position: relative;
-            z-index: 2; /* Make sure they are above any potential overlay */
-            color: white;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 8px 12px;
-            border: none;
-            border-radius: 10px;
-            margin: 5px 10px 10px 15px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.7em; /* Adjusted for smaller window size */
-            line-height: 1.2;
-            text-align: left;
-        }
-        
-        .window h2 {
-            font-size: 0.9em; /* Larger for title */
-        }
-
-        @media (min-width: 768px) {
-            .window h2, .window button {
-                font-size: 0.9em;
-            }
-        }
-
-
-        .window button:hover:not(:disabled) {
-            background-color: rgba(0, 0, 0, 0.9);
-        }
-
-        .window button:disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-            background-color: rgba(50, 50, 50, 0.7);
-        }
-
-        /* Views Counter specific styling */
-        .views-counter {
-            position: relative;
-            z-index: 2;
-            color: #ccc;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 5px 10px;
-            border-radius: 8px;
-            margin: 0px 10px 5px 10px;
-            font-size: 0.7em; /* Adjusted for smaller window size */
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            align-self: flex-start;
-        }
-
-        .views-counter i {
-            color: #ff4444;
-        }
-
-        /* ********** მენიუს ღილაკი ********** */
-        .menu-icon {
-            position: fixed; 
-            top: 15px;
-            left: 15px;
-            width: 30px;
-            height: 24px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 1000; 
-        }
-
-        .menu-icon span {
-            display: block;
-            width: 100%;
-            height: 3px;
-            background-color: var(--menu-icon-color);
-            border-radius: 2px;
-        }
-
-        /* ********** Sidebar ********** */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -60%; 
-            width: 60%; 
-            height: 100%;
-            background-color: var(--sidebar-bg-color);
-            color: var(--sidebar-text-color);
-            padding: 20px 0;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-            transition: left 0.3s ease-in-out; 
-            z-index: 999; 
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-            overflow-y: auto; /* თუ ბევრი ელემენტია */
-        }
-
-        .sidebar.active {
-            left: 0; 
-        }
-
-        .sidebar h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-            color: var(--sidebar-text-color);
-        }
-
-        .sidebar-item {
-            color: var(--sidebar-text-color);
-            text-decoration: none;
-            padding: 15px 20px;
-            display: block;
-            width: 80%; 
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: background-color 0.2s ease;
-            cursor: pointer; /* Sidebar ელემენტებიც დაჭერადი იქნება */
-            margin-bottom: 5px; /* დაშორება sidebar item-ებს შორის */
-            border-radius: 5px;
-        }
-
-        .sidebar-item:last-child {
-            border-bottom: none;
-        }
-
-        .sidebar-item:hover {
-            background-color: var(--sidebar-hover-color);
-        }
-
-        /* ********** ცალკეული ფანჯრის სტილები (განსხვავებული ფერები და ჩარჩოები) ********** */
-        /* Manhwageo background images for the first 6 windows */
-        .window-1 { background-image: url('images/bg-main.jpg'); border: 2px solid #D32F2F; } 
-        .window-2 { background-image: url('images/bg-2.jpg'); border: 2px solid #7B1FA2; } 
-        .window-3 { background-image: url('images/bg-3.jpg'); border: 2px solid #303F9F; } 
-        .window-4 { background-image: url('images/bg-4.jpg'); border: 2px solid #1976D2; } 
-        .window-5 { background-image: url('images/bg-5.jpg'); border: 2px solid #0097A7; } 
-        .window-6 { background-image: url('images/bg-6.jpg'); border: 2px solid #388E3C; } 
-        
-        /* Original background colors and borders for windows 7-10 and inner windows */
-        .window-7 { background-color: #FFECB3; border: 2px solid #FFA000; } 
-        .window-8 { background-color: #FFE0B2; border: 2px solid #F57C00; } 
-        .window-9 { background-color: #FFCCBC; border: 2px solid #E64A19; } 
-        .window-10 { background-color: #D7CCC8; border: 2px solid #6D4C41; } 
-
-        /* ********** მოდალური (გახსნილი) ფანჯრის სტილები ********** */
-        .modal {
-            display: none; /* თავდაპირველად დამალული */
-            position: fixed; /* ეკრანზე ფიქსირებული */
-            z-index: 2000; /* ყველაფერზე მაღლა */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto; /* თუ კონტენტი დიდია */
-            background-color: var(--modal-bg-color); /* გამჭვირვალე შავი */
-            justify-content: center; /* ცენტრირება */
-            align-items: center; /* ცენტრირება */
-        }
-
-        .modal.active {
-            display: flex; /* გამოჩენისას flex-box-ად იქცევა */
-        }
-
-        .modal-content {
-            background-color: var(--modal-content-bg);
-            margin: 15% auto; /* ზევით/ქვევით დაშორება */
-            padding: 20px;
-            border: var(--modal-content-border);
-            width: 90%; /* მობილურისთვის */
-            max-width: 600px; /* დესკტოპისთვის */
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-            animation-name: animatetop;
-            animation-duration: 0.4s;
-            display: flex; /* შიდა ფანჯრებისთვის */
-            flex-direction: column;
-            gap: 10px; /* შიდა ფანჯრებს შორის დაშორება */
-        }
-        
-        /* Manhwageo Chapter Modal specific overrides */
-        #chapterSelectModal .modal-content,
-        #chapterDisplayModal .modal-content {
-            background-color: var(--manhwa-modal-bg); /* Manhwageo modal background */
-            padding: 0; /* No padding for full-screen image/video */
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            max-width: 100vw;
-            max-height: 100vh; /* Changed to 100vh for modals to fill screen */
-            border-radius: 0;
-            border: none;
-            overflow: hidden; /* Handle inner scrollable content */
-        }
-
-
-        @keyframes animatetop {
-            from {top: -300px; opacity: 0}
-            to {top: 0; opacity: 1}
-        }
-
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            cursor: pointer;
-            z-index: 2001; /* Ensure close button is above everything */
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .modal-inner-windows-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px; /* შიდა ფანჯრებს შორის დაშორება */
-            margin-top: 15px;
-        }
-
-        .inner-window {
-            width: 48%; /* 2 ფანჯარა ერთ ხაზზე მობილურზე */
-            height: 100px; /* შიდა ფანჯრის სიმაღლე */
-            border-radius: 6px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.9em;
-            color: #fff; /* თეთრი ტექსტი, რომ ფერებზე კარგად გამოჩნდეს */
-            box-sizing: border-box;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-
-        /* ********** შიდა ფანჯრების ფერები ********** */
-        .inner-window-1 { background-color: #8BC34A; border: 2px solid #558B2F; } /* ღია მწვანე */
-        .inner-window-2 { background-color: #CDDC39; border: 2px solid #AFB42B; } /* ლაიმი */
-        .inner-window-3 { background-color: #FFEB3B; border: 2px solid #FBC02D; } /* ყვითელი */
-        .inner-window-4 { background-color: #FFC107; border: 2px solid #FF8F00; } /* ქარვისფერი */
-        .inner-window-5 { background-color: #FF9800; border: 2px solid #F57C00; } /* ნარინჯისფერი */
-        .inner-window-6 { background-color: #FF5722; border: 2px solid #E64A19; } /* ღრმა ნარინჯისფერი */
-        /* შეგიძლიათ დაამატოთ მეტი ფერი, თუ შიდა ფანჯრების რაოდენობა გაიზრდება */
-
-        /* Manhwageo Chapter Select Modal specific styles */
-        #chapterSelectModal .modal-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
-            padding: 15px;
-            background-color: var(--manhwa-modal-header-bg);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            color: var(--manhwa-modal-text-color);
-        }
-
-        #chapterSelectModal .modal-description {
-            font-size: 0.9em;
-            color: var(--manhwa-modal-description-color);
-            margin-top: 5px;
-        }
-
-        #chapterSelectModal .chapter-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-            padding: 15px;
-            flex-grow: 1; /* Allow content to grow */
-            overflow-y: auto; /* Allow scrolling if many chapters */
-        }
-
-        #chapterSelectModal .chapter-buttons button {
-            padding: 10px 15px;
-            background-color: var(--manhwa-button-bg);
-            border: none;
-            color: white;
-            font-size: 0.9em;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.5s ease, transform 0.8s ease;
-        }
-
-        #chapterSelectModal .chapter-buttons button:hover {
-            background-color: var(--manhwa-button-hover-bg);
-            transform: scale(1.03);
-        }
-
-        #chapterSelectModal .modal-controls {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            padding: 15px;
-            background-color: var(--manhwa-modal-header-bg);
-            position: sticky;
-            bottom: 0;
-            z-index: 1000;
-        }
-
-        #chapterSelectModal .modal-controls button {
-            padding: 10px 20px;
-            background-color: var(--manhwa-button-bg);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-
-        /* Manhwageo Chapter Display Modal specific styles */
-        #chapterDisplayModal .modal-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
-            padding: 10px 15px;
-            background-color: var(--manhwa-modal-header-bg);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            color: var(--manhwa-modal-text-color);
-            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #chapterDisplayModal .modal-header.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        #chapterDisplayModal .images-container {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            overflow-y: scroll;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            background-color: black;
-        }
-
-        #chapterDisplayModal .images-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        #chapterDisplayModal .images-container img, 
-        #chapterDisplayModal .images-container video {
-            width: 100%;
-            height: auto;
-            display: block;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 0.5s ease forwards;
-            max-width: 100%;
-        }
-
-        .loading-indicator {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.2em;
-            color: #ddd;
-        }
-
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        #chapterDisplayModal .modal-controls {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 15px;
-            background-color: var(--manhwa-modal-header-bg);
-            position: sticky;
-            bottom: 0;
-            z-index: 1000;
-            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #chapterDisplayModal .modal-controls.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        #chapterDisplayModal .navigation-buttons {
-            display: flex;
-            gap: 10px;
-            flex-grow: 1;
-        }
-
-        #chapterDisplayModal .navigation-buttons button {
-            background-color: var(--manhwa-button-bg);
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            padding: 8px 15px;
-            font-size: 0.9em;
-            flex: 1;
-        }
-
-        #chapterDisplayModal .navigation-buttons button:hover:not(:disabled) {
-            background-color: var(--manhwa-button-hover-bg);
-            transform: scale(1.03);
-        }
-
-        #chapterDisplayModal .navigation-buttons button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        #chapterDisplayModal .close-btn {
-            background-color: var(--manhwa-button-bg);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-left: 10px;
-            padding: 8px 15px;
-            font-size: 0.9em;
-        }
-
-
-        /* მედია ქუერი დიდ ეკრანებზე გამართული ჩვენებისთვის (დესკტოპი/ტაბლეტი) */
-        @media (min-width: 768px) {
-            .main-content {
-                justify-content: center; 
-                flex-direction: row; 
-                max-width: 1000px; 
-            }
-
-            .container-left,
-            .container-right {
-                width: 45%; 
-                max-width: 400px; 
-            }
-
-            .window {
-                width: 100%; 
-                height: 200px; /* Adjusted height for larger screens */
-            }
-
-            .sidebar {
-                display: none; /* Sidebar არ გამოჩნდება დიდ ეკრანებზე */
-            }
-
-            .menu-icon {
-                display: none; /* მენიუს ღილაკიც არ გამოჩნდება დიდ ეკრანებზე */
-            }
-
-            .modal-content {
-                width: 70%; /* დესკტოპზე უფრო დიდი */
-            }
-            .modal-inner-windows-container {
-                justify-content: flex-start; /* Align inner windows to start */
-            }
-            .inner-window {
-                width: 30%; /* 3 ფანჯარა ერთ ხაზზე დესკტოპზე */
-            }
-            #chapterDisplayModal .images-container img, 
-            #chapterDisplayModal .images-container video {
-                max-width: 800px; /* Limits width of images/videos on very large screens */
-                margin: 0 auto; /* Center them */
-            }
-        }
-
-        /* --- Styles for the animated character --- */
-        #animated-character {
-            position: fixed;
-            bottom: 10px; /* Adjust as needed */
-            left: 0; /* Starts from the left edge */
-            width: 120px; /* Adjust character width */
-            height: 130px; /* Adjust character height */
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 99; /* Below modals, above main content */
-            transition: transform 0.1s linear; /* Smooth horizontal movement */
-            image-rendering: pixelated; /* Keeps pixel art sharp if applicable */
-        }
-
-        #character-controls {
-            position: fixed;
-            bottom: 3px;
-            right: 3px; /* Position controls on the right */
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        #character-controls button {
-            background-color: #6a5acd; /* Royal Blue */
-            color: white;
-            border: none;
-            padding: 3px 5px;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.7em;
-        }
-
-        #character-controls button:hover {
-            background-color: #483d8b; /* Darker Royal Blue */
-        }
-
-        #character-controls button:disabled {
-            background-color: #777;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        /* --- End styles for animated character --- */
-    </style>
 </head>
+
 <body>
 
-    <div class="menu-icon" id="menuIcon">
-        <span></span>
-        <span></span>
-        <span></span>
+
+
+  <div class="main-grid">
+
+    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება </h2>
+
+      <div class="views-counter">
+
+        <i class="fas fa-eye"></i> <span id="views-ch">0</span>
+
+      </div>
+
+      <button onclick="openChapterSelect('ch')">გახსნა / დახურვა</button>
+
     </div>
 
-    <div class="sidebar" id="sidebar">
-        <h2>ფანჯრების ჩამონათვალი</h2>
-        <a href="#" class="sidebar-item" data-modal-target="modal-sidebar-1">ფანჯარა A (მენიუდან)</a>
-        <a href="#" class="sidebar-item" data-modal-target="modal-sidebar-2">ფანჯარა B (მენიუდან)</a>
-        <a href="#" class="sidebar-item" data-modal-target="modal-sidebar-3">ფანჯარა C (მენიუდან)</a>
-        <a href="#" class="sidebar-item" data-modal-target="modal-sidebar-4">ფანჯარა D (მენიუდან)</a>
-        <a href="#" class="sidebar-item" data-modal-target="modal-sidebar-5">ფანჯარა E (მენიუდან)</a>
+
+
+    <div class="box second" data-manhwa-id="w2_ch"> <h2>რკინის სისხლიანი ხმლის მქონე მონადირე</h2>
+
+      <div class="views-counter">
+
+        <i class="fas fa-eye"></i> <span id="views-w2_ch">0</span>
+
+      </div>
+
+      <button onclick="openChapterSelect('w2_ch')">გახსნა / დახურვა</button>
+
     </div>
 
-    <div class="main-content">
-        <div class="container-left">
-            <div class="window window-1" data-manhwa-id="ch" data-modal-type="manhwa">
-                <h2>ბნელი ჯადოქრის დაბრუნება </h2>
-                <div class="views-counter">
-                    <i class="fas fa-eye"></i> <span id="views-ch">0</span>
-                </div>
-                <button onclick="openChapterSelect('ch')">გახსნა / დახურვა</button>
-            </div>
-            <div class="window window-2" data-manhwa-id="w2_ch" data-modal-type="manhwa">
-                <h2>რკინის სისხლიანი ხმლის მქონე მონადირე</h2>
-                <div class="views-counter">
-                    <i class="fas fa-eye"></i> <span id="views-w2_ch">0</span>
-                </div>
-                <button onclick="openChapterSelect('w2_ch')">გახსნა / დახურვა</button>
-            </div>
-            <div class="window window-3" data-manhwa-id="w3_ch" data-modal-type="manhwa">
-                <h2>მალე</h2>
-                <div class="views-counter">
-                    <i class="fas fa-eye"></i> <span id="views-w3_ch">0</span>
-                </div>
-                <button onclick="openChapterSelect('w3_ch')" disabled>გახსნა / დახურვა</button>
-            </div>
-            <div class="window window-4" data-manhwa-id="w4_ch" data-modal-type="manhwa">
-                <h2>მალეე</h2>
-                <div class="views-counter">
-                    <i class="fas fa-eye"></i> <span id="views-w4_ch">0</span>
-                </div>
-                <button onclick="openChapterSelect('w4_ch')" disabled>გახსნა / დახურვა</button>
-            </div>
-            <div class="window window-5" data-manhwa-id="video_manhwa1" data-modal-type="manhwa">
-                <h2>მეხუთე </h2>
-                <div class="views-counter">
-                    <i class="fas fa-eye"></i> <span id="views-video_manhwa1">0</span>
-                </div>
-                <button onclick="openChapterSelect('video_manhwa1')">გახსნა / დახურვა</button>
-            </div>
+
+
+    <div class="box third" data-manhwa-id="w3_ch"> <h2>მალე</h2>
+
+      <div class="views-counter">
+
+        <i class="fas fa-eye"></i> <span id="views-w3_ch">0</span>
+
+      </div>
+
+      <button onclick="openChapterSelect('w3_ch')" disabled>გახსნა / დახურვა</button>
+
+    </div>
+
+
+
+    <div class="box fourth" data-manhwa-id="w4_ch"> <h2>მალეე</h2>
+
+      <div class="views-counter">
+
+        <i class="fas fa-eye"></i> <span id="views-w4_ch">0</span>
+
+      </div>
+
+      <button onclick="openChapterSelect('w4_ch')" disabled>გახსნა / დახურვა</button>
+
+    </div>
+
+
+
+    <div class="box fifth" data-manhwa-id="video_manhwa1">
+
+      <h2>მეხუთე </h2>
+
+      <div class="views-counter">
+
+        <i class="fas fa-eye"></i> <span id="views-video_manhwa1">0</span>
+
+      </div>
+
+      <button onclick="openChapterSelect('video_manhwa1')">გახსნა / დახურვა</button>
+
+    </div>
+
+
+
+    <div class="box sixth" data-manhwa-id="video_manhwa2">
+
+      <h2>მეექვსე </h2>
+
+      <div class="views-counter">
+
+        <i class="fas fa-eye"></i> <span id="views-video_manhwa2">0</span>
+
+      </div>
+
+      <button onclick="openChapterSelect('video_manhwa2')">გახსნა / დახურვა</button>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="modal" id="chapterSelect">
+
+    <div class="overlay">
+
+      <div class="modal-header">
+
+        <h2 id="chapterSelectTitle">თავების არჩევა</h2>
+
+        <p id="manhwaDescription" class="modal-description"></p>
+
+      </div>
+
+      <div class="chapter-buttons" id="chapterButtons"></div>
+
+      <div class="modal-controls">
+
+        <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="modal" id="chapterModal">
+
+    <div class="overlay">
+
+      <div class="modal-header" id="chapterModalHeader">
+
+        <h2 id="chapterTitle">თავი</h2>
+
+      </div>
+
+      <div class="images-container" id="imagesContainer">
+
+        <p class="loading-indicator">იტვირთება...</p>
+
+      </div>
+
+      <div class="modal-controls" id="chapterModalControls">
+
+        <div class="navigation-buttons">
+
+          <button id="prevChapterBtn" onclick="navigateChapter(-1)">წინა თავი</button>
+
+          <button id="nextChapterBtn" onclick="navigateChapter(1)">შემდეგი თავი</button>
+
         </div>
-        <div class="container-right">
-            <div class="window window-6" data-manhwa-id="video_manhwa2" data-modal-type="manhwa">
-                <h2>მეექვსე </h2>
-                <div class="views-counter">
-                    <i class="fas fa-eye"></i> <span id="views-video_manhwa2">0</span>
-                </div>
-                <button onclick="openChapterSelect('video_manhwa2')">გახსნა / დახურვა</button>
-            </div>
-            <div class="window window-7" data-modal-target="modal-main-7">ფანჯარა 7</div>
-            <div class="window window-8" data-modal-target="modal-main-8">ფანჯარა 8</div>
-            <div class="window window-9" data-modal-target="modal-main-9">ფანჯარა 9</div>
-            <div class="window window-10" data-modal-target="modal-main-10">ფანჯარა 10</div>
-        </div>
+
+        <button class="close-btn" onclick="toggleModal('chapterModal')">დახურვა</button>
+
+      </div>
+
     </div>
 
-    <!-- Modals for Sidebar Items (Generic) -->
-    <div id="modal-sidebar-1" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა A (მენიუდან)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 1.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 1.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 1.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 1.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 1.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 1.6</div>
-            </div>
-        </div>
-    </div>
+  </div>
 
-    <div id="modal-sidebar-2" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა B (მენიუდან)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 2.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 2.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 2.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 2.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 2.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 2.6</div>
-            </div>
-        </div>
-    </div>
 
-    <div id="modal-sidebar-3" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა C (მენიუდან)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 3.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 3.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 3.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 3.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 3.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 3.6</div>
-            </div>
-        </div>
-    </div>
 
-    <div id="modal-sidebar-4" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა D (მენიუდან)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 4.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 4.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 4.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 4.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 4.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 4.6</div>
-            </div>
-        </div>
-    </div>
+  <div id="animated-character"></div>
 
-    <div id="modal-sidebar-5" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა E (მენიუდან)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 5.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 5.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 5.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 5.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 5.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 5.6</div>
-            </div>
-        </div>
-    </div>
+  <div id="character-controls">
 
-    <!-- Modals for Main Content Windows (Generic 7-10) -->
-    <div id="modal-main-7" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა 7 (გახსნილი)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 7.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 7.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 7.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 7.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 7.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 7.6</div>
-            </div>
-        </div>
-    </div>
-    <div id="modal-main-8" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა 8 (გახსნილი)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 8.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 8.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 8.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 8.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 8.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 8.6</div>
-            </div>
-        </div>
-    </div>
-    <div id="modal-main-9" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა 9 (გახსნილი)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 9.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 9.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 9.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 9.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 9.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 9.6</div>
-            </div>
-        </div>
-    </div>
-    <div id="modal-main-10" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>ფანჯარა 10 (გახსნილი)</h2>
-            <div class="modal-inner-windows-container">
-                <div class="inner-window inner-window-1">შიდა ფანჯარა 10.1</div>
-                <div class="inner-window inner-window-2">შიდა ფანჯარა 10.2</div>
-                <div class="inner-window inner-window-3">შიდა ფანჯარა 10.3</div>
-                <div class="inner-window inner-window-4">შიდა ფანჯარა 10.4</div>
-                <div class="inner-window inner-window-5">შიდა ფანჯარა 10.5</div>
-                <div class="inner-window inner-window-6">შიდა ფანჯარა 10.6</div>
-            </div>
-        </div>
-    </div>
+    <button id="walkSpeedBtn">სიარული</button>
 
-    <!-- Manhwageo Chapter Select Modal (Integrated) -->
-    <div id="chapterSelectModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <div class="modal-header">
-                <h2 id="chapterSelectTitle">თავების არჩევა</h2>
-                <p id="manhwaDescription" class="modal-description"></p>
-            </div>
-            <div class="chapter-buttons" id="chapterButtons"></div>
-            <div class="modal-controls">
-                <button class="close-btn" onclick="closeModal(document.getElementById('chapterSelectModal'))">დახურვა</button>
-            </div>
-        </div>
-    </div>
+    <button id="runSpeedBtn">სირბილი</button>
 
-    <!-- Manhwageo Chapter Display Modal (Integrated) -->
-    <div id="chapterDisplayModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <div class="modal-header" id="chapterDisplayModalHeader">
-                <h2 id="chapterTitle">თავი</h2>
-            </div>
-            <div class="images-container" id="imagesContainer">
-                <p class="loading-indicator">იტვირთება...</p>
-            </div>
-            <div class="modal-controls" id="chapterDisplayModalControls">
-                <div class="navigation-buttons">
-                    <button id="prevChapterBtn">წინა თავი</button>
-                    <button id="nextChapterBtn">შემდეგი თავი</button>
-                </div>
-                <button class="close-btn" onclick="closeModal(document.getElementById('chapterDisplayModal'))">დახურვა</button>
-            </div>
-        </div>
-    </div>
+    <button id="toggleAnimationBtn">გაჩერება / გაგრძელება</button>
 
-    <!-- Animated Character HTML and Controls -->
-    <div id="animated-character"></div>
-    <div id="character-controls">
-        <button id="walkSpeedBtn">სიარული</button>
-        <button id="runSpeedBtn">სირბილი</button>
-        <button id="toggleAnimationBtn">გაჩერება / გაგრძელება</button>
-    </div>
+  </div>
 
-    <script type="module">
-        // Firebase SDK imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-        import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBRcdavGb1Pi2eQlN6T_UbNue2bEa-8t-g",
-            authDomain: "manhwageo.firebaseapp.com",
-            projectId: "manhwageo",
-            storageBucket: "manhwageo.firebasestorage.app",
-            messagingSenderId: "822450839137",
-            appId: "1:822450839137:web:7dcb516bf572ae08191420",
-            measurementId: "G-3KMGGLE821"
-        };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        export const db = getFirestore(app);
+  <script>
 
-        // Firebase functions for views
-        window.updateAndGetViews = async function(manhwaId) {
-            const docRef = doc(db, "manhwa_views", manhwaId);
-            try {
-                const docSnap = await getDoc(docRef);
-                let views = 0;
-                if (docSnap.exists()) {
-                    views = docSnap.data().count + 1;
-                    await updateDoc(docRef, { count: views });
-                } else {
-                    views = 1;
-                    await setDoc(docRef, { count: views });
-                }
-                return views;
-            } catch (error) {
-                console.error("ნახვების განახლების შეცდომა: ", error);
-                return "შეცდომა";
-            }
-        };
+    const manhwas = {
 
-        window.getInitialViews = async function(manhwaId) {
-            const docRef = doc(db, "manhwa_views", manhwaId);
-            try {
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    return docSnap.data().count;
-                } else {
-                    return 0;
-                }
-            } catch (error) {
-                console.error("საწყისი ნახვების წამოღების შეცდომა: ", error);
-                return "შეცდომა";
-            }
-        };
+      "ch": {
 
-        // Existing Manhwa data
-        const manhwas = {
-            "ch": {
-                title: "ბნელი ჯადოქრის დაბრუნება 1",
-                folder: "images/",
-                description: "ამბავი ახალგაზრდა ჯადოქარზე, რომელიც წარსულიდან ბრუნდება, რათა შური იძიოს და სამყარო ბნელი ძალებისგან იხსნას. მისი გზა სავსეა გამოწვევებით და მოულოდნელი შეტაკებებით.",
-                type: 'image',
-                chapters: [
-                    { id: 1, pages: 16 }, { id: 2, pages: 15 }, { id: 3, pages: 20 },
-                    { id: 4, pages: 18 }, { id: 5, pages: 17 }, { id: 6, pages: 14 },
-                    { id: 7, pages: 12 }, { id: 8, pages: 15 },
-                ]
-            },
-            "w2_ch": {
-                title: "რკინის სისხლიანი ხმლის მქონე მონადირე",
-                folder: "images2/",
-                description: "მონადირე, რომელსაც რკინის სისხლიანი ხმალი აქვს, იწყებს სახიფათო მოგზაურობას მონსტრების სამყაროში. მას მრავალი ბრძოლა ელის თავისი ბედის ასასრულებლად.",
-                type: 'image',
-                chapters: [
-                    { id: 1, pages: 10 }, { id: 2, pages: 10 },
-                ]
-            },
-            "w3_ch": {
-                title: "მალე",
-                folder: "images3/",
-                description: "ეს მანჰვა მალე დაემატება. თვალყური ადევნეთ განახლებებს!",
-                type: 'image',
-                chapters: []
-            },
-            "w4_ch": {
-                title: "მალეე",
-                folder: "images4/",
-                description: "უახლესი მანჰვა, რომელიც მალე იქნება ხელმისაწვდომი. მოემზადეთ ახალი თავგადასავლებისთვის!",
-                type: 'image',
-                chapters: []
-            },
-            "video_manhwa1": {
-                title: "მეხუთე ",
-                folder: "videos/",
-                description: "აქ ჯერ არაფერია თუმცა მალე ყველაფერი იქნება,თქვენგან მხოლოდ აქტიურობაა საჭირო .",
-                type: 'video',
-                chapters: [ { id: 1, file: "w5_v1.mp4" } ]
-            },
-            "video_manhwa2": {
-                title: "მეექვსე  ",
-                folder: "videos/",
-                description: "მთავარია თქვენი აქტიურობა ყველაფერი იქნება .",
-                type: 'video',
-                chapters: [ { id: 1, file: "w6_v1.mp4" } ]
-            }
-        };
+        title: "ბნელი ჯადოქრის დაბრუნება 1",
 
-        let currentManhwaId = null;
-        let currentChapterId = null;
-        let lastScrollTop = 0;
-        let scrollTimeout;
+        folder: "images/",
 
-        // General Modal Functions
-        function openModal(modalElement) {
-            if (modalElement) {
-                modalElement.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Disable body scroll
-            }
+        description: "ამბავი ახალგაზრდა ჯადოქარზე, რომელიც წარსულიდან ბრუნდება, რათა შური იძიოს და სამყარო ბნელი ძალებისგან იხსნას. მისი გზა სავსეა გამოწვევებით და მოულოდნელი შეტაკებებით.",
+
+        type: 'image',
+
+        chapters: [
+
+          { id: 1, pages: 16 },
+
+          { id: 2, pages: 15 },
+
+          { id: 3, pages: 20 },
+
+          { id: 4, pages: 18 },
+
+          { id: 5, pages: 17 },
+
+          { id: 6, pages: 14 },
+
+          { id: 7, pages: 12 },
+
+          { id: 8, pages: 15 },
+
+        ]
+
+      },
+
+      "w2_ch": {
+
+        title: "რკინის სისხლიანი ხმლის მქონე მონადირე",
+
+        folder: "images2/",
+
+        description: "მონადირე, რომელსაც რკინის სისხლიანი ხმალი აქვს, იწყებს სახიფათო მოგზაურობას მონსტრების სამყაროში. მას მრავალი ბრძოლა ელის თავისი ბედის ასასრულებლად.",
+
+        type: 'image',
+
+        chapters: [
+
+          { id: 1, pages: 10 },
+
+          { id: 2, pages: 10 },
+
+        ]
+
+      },
+
+      "w3_ch": {
+
+        title: "მალე",
+
+        folder: "images3/",
+
+        description: "ეს მანჰვა მალე დაემატება. თვალყური ადევნეთ განახლებებს!",
+
+        type: 'image',
+
+        chapters: []
+
+      },
+
+      "w4_ch": {
+
+        title: "მალეე",
+
+        folder: "images4/",
+
+        description: "უახლესი მანჰვა, რომელიც მალე იქნება ხელმისაწვდომი. მოემზადეთ ახალი თავგადასავლებისთვის!",
+
+        type: 'image',
+
+        chapters: []
+
+      },
+
+      "video_manhwa1": {
+
+        title: "მეხუთე ",
+
+        folder: "videos/",
+
+        description: "აქ ჯერ არაფერია თუმცა მალე ყველაფერი იქნება,თქვენგან მხოლოდ აქტიურობაა საჭირო .",
+
+        type: 'video',
+
+        chapters: [
+
+            { id: 1, file: "w5_v1.mp4" }
+
+        ]
+
+      },
+
+      "video_manhwa2": {
+
+        title: "მეექვსე  ",
+
+        folder: "videos/",
+
+        description: "მთავარია თქვენი აქტიურობა ყველაფერი იქნება .",
+
+        type: 'video',
+
+        chapters: [
+
+            { id: 1, file: "w6_v1.mp4" }
+
+        ]
+
+      }
+
+    };
+
+
+
+    let currentManhwaId = null;
+
+    let currentChapterId = null;
+
+    let currentTotalPages = 0;
+
+
+
+    let currentOpenModalId = null;
+
+    let lastScrollTop = 0;
+
+    let scrollTimeout;
+
+
+
+    function toggleModal(id, doPushState = true) {
+
+      const modal = document.getElementById(id);
+
+      if (modal.style.display === 'flex') {
+
+        modal.style.display = 'none';
+
+        if (doPushState && currentOpenModalId === id) {
+
+          history.back();
+
+          currentOpenModalId = null;
+
         }
 
-        window.closeModal = function(modalElement) { // Made global for onclick
-            if (modalElement) {
-                modalElement.classList.remove('active');
-                document.body.style.overflow = 'auto'; // Enable body scroll
-                if (modalElement.id === 'chapterDisplayModal') {
-                    // Ensure controls are visible if re-opening chapter select
-                    document.getElementById('chapterDisplayModalHeader').classList.remove('hidden');
-                    document.getElementById('chapterDisplayModalControls').classList.remove('hidden');
-                    clearTimeout(scrollTimeout);
-                }
-            }
+        if (id === 'chapterModal') {
+
+          document.getElementById('chapterModalHeader').classList.remove('hidden');
+
+          document.getElementById('chapterModalControls').classList.remove('hidden');
+
+          clearTimeout(scrollTimeout);
+
         }
 
-        // --- Manhwageo Specific Modal Functions ---
-        window.openChapterSelect = async function(manhwaId) {
-            currentManhwaId = manhwaId;
-            const manhwaData = manhwas[manhwaId];
-            const chapterSelectModal = document.getElementById('chapterSelectModal');
+      } else {
 
-            document.getElementById('chapterSelectTitle').textContent = manhwaData.title;
-            document.getElementById('manhwaDescription').textContent = manhwaData.description;
+        modal.style.display = 'flex';
 
-            const chapterButtonsContainer = document.getElementById('chapterButtons');
-            chapterButtonsContainer.innerHTML = ''; // Clear previous buttons
+        currentOpenModalId = id;
 
-            if (manhwaData.chapters.length === 0) {
-                chapterButtonsContainer.innerHTML = '<p style="text-align:center; color:#aaa; font-size: 0.9em;">თავები ჯერ არ არის დამატებული.</p>';
+        if (doPushState) {
+
+          history.pushState({ modal: id }, '', `#${id}`);
+
+        }
+
+      }
+
+    }
+
+
+
+    function openChapterSelect(manhwaId) {
+
+      currentManhwaId = manhwaId;
+
+      const manhwaData = manhwas[manhwaId];
+
+
+
+      document.getElementById('chapterSelectTitle').textContent = manhwaData.title;
+
+      document.getElementById('manhwaDescription').textContent = manhwaData.description;
+
+
+
+      const chapterButtons = document.getElementById('chapterButtons');
+
+      chapterButtons.innerHTML = '';
+
+
+
+      if (manhwaData.chapters.length === 0) {
+
+        chapterButtons.innerHTML = '<p style="text-align:center; color:#aaa; font-size: 0.9em;">თავები ჯერ არ არის დამატებული.</p>';
+
+      } else {
+
+        manhwaData.chapters.forEach(chapter => {
+
+          const btn = document.createElement('button');
+
+          btn.textContent = `თავი ${chapter.id}`;
+
+          if (manhwaData.type === 'video') {
+
+            btn.onclick = () => openChapter(chapter.id, chapter.file);
+
+          } else {
+
+            btn.onclick = () => openChapter(chapter.id, chapter.pages);
+
+          }
+
+          chapterButtons.appendChild(btn);
+
+        });
+
+      }
+
+
+
+      const viewsElement = document.querySelector(`.box[data-manhwa-id="${manhwaId}"] .views-counter span`);
+
+      if (viewsElement) {
+
+        window.updateAndGetViews(manhwaId).then(views => {
+
+          viewsElement.textContent = views;
+
+        }).catch(error => {
+
+          console.error("ნახვების განახლების შეცდომა openChapterSelect-დან: ", error);
+
+          viewsElement.textContent = "შეცდომა";
+
+        });
+
+      }
+
+      toggleModal('chapterSelect');
+
+    }
+
+
+
+    function openChapter(chapterId, contentData) {
+
+      currentChapterId = chapterId;
+
+
+
+      const imagesContainer = document.getElementById('imagesContainer');
+
+      imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
+
+      imagesContainer.scrollTop = 0;
+
+
+
+      const chapterTitleElement = document.getElementById('chapterTitle');
+
+      const manhwaData = manhwas[currentManhwaId];
+
+      chapterTitleElement.textContent = `${manhwaData.title} - თავი ${chapterId}`;
+
+
+
+      toggleModal('chapterSelect', false);
+
+      toggleModal('chapterModal', true);
+
+
+
+      document.getElementById('chapterModalHeader').classList.remove('hidden');
+
+      document.getElementById('chapterModalControls').classList.remove('hidden');
+
+      clearTimeout(scrollTimeout);
+
+
+
+      setTimeout(() => {
+
+        imagesContainer.innerHTML = '';
+
+
+
+        if (manhwaData.type === 'image') {
+
+          for (let i = 1; i <= contentData; i++) {
+
+            const img = document.createElement('img');
+
+            img.src = `${manhwaData.folder}${currentManhwaId}${chapterId}_page${i}.jpg`;
+
+            img.alt = `თავი ${chapterId}, გვერდი ${i}`;
+
+            img.loading = 'lazy';
+
+            img.onerror = function() {
+
+              this.src = 'images/placeholder.jpg';
+
+              this.alt = 'სურათი ვერ მოიძებნა';
+
+            };
+
+            imagesContainer.appendChild(img);
+
+          }
+
+        } else if (manhwaData.type === 'video') {
+
+          const video = document.createElement('video');
+
+          video.src = `${manhwaData.folder}${contentData}`;
+
+          video.controls = true;
+
+          video.preload = 'auto';
+
+          video.style.maxWidth = '100%';
+
+          video.style.height = 'auto';
+
+          video.style.display = 'block';
+
+          video.autoplay = true;
+
+          video.onerror = function() {
+
+            console.error("ვიდეოს ჩატვირთვის შეცდომა: ", this.src);
+
+            const errorDiv = document.createElement('div');
+
+            errorDiv.textContent = 'ვიდეოს ჩატვირთვის შეცდომა.';
+
+            errorDiv.style.color = 'red';
+
+            errorDiv.style.textAlign = 'center';
+
+            imagesContainer.appendChild(errorDiv);
+
+          };
+
+          imagesContainer.appendChild(video);
+
+        }
+
+        updateNavigationButtons();
+
+      }, 500);
+
+    }
+
+
+
+    function updateNavigationButtons() {
+
+        const prevBtn = document.getElementById('prevChapterBtn');
+
+        const nextBtn = document.getElementById('nextChapterBtn');
+
+        const manhwaData = manhwas[currentManhwaId];
+
+        const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
+
+
+
+        prevBtn.disabled = currentChapterIndex <= 0;
+
+        nextBtn.disabled = currentChapterIndex >= manhwaData.chapters.length - 1;
+
+    }
+
+
+
+    function navigateChapter(direction) {
+
+        const manhwaData = manhwas[currentManhwaId];
+
+        const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
+
+        const newChapterIndex = currentChapterIndex + direction;
+
+
+
+        if (newChapterIndex >= 0 && newChapterIndex < manhwaData.chapters.length) {
+
+            const newChapter = manhwaData.chapters[newChapterIndex];
+
+            if (manhwaData.type === 'video') {
+
+              openChapter(newChapter.id, newChapter.file);
+
             } else {
-                manhwaData.chapters.forEach(chapter => {
-                    const btn = document.createElement('button');
-                    btn.textContent = `თავი ${chapter.id}`;
-                    btn.onclick = () => openChapter(chapter.id, manhwaData.type === 'video' ? chapter.file : chapter.pages);
-                    chapterButtonsContainer.appendChild(btn);
-                });
+
+              openChapter(newChapter.id, newChapter.pages);
+
             }
 
-            // Update views
-            const viewsElement = document.querySelector(`.window[data-manhwa-id="${manhwaId}"] .views-counter span`);
-            if (viewsElement) {
-                const views = await window.updateAndGetViews(manhwaId);
-                viewsElement.textContent = views;
-            }
-            
-            openModal(chapterSelectModal);
-        };
-
-        window.openChapter = function(chapterId, contentData) {
-            currentChapterId = chapterId;
-            const chapterDisplayModal = document.getElementById('chapterDisplayModal');
-            const imagesContainer = document.getElementById('imagesContainer');
-            const manhwaData = manhwas[currentManhwaId];
-
-            imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
-            imagesContainer.scrollTop = 0; // Reset scroll position
-
-            document.getElementById('chapterTitle').textContent = `${manhwaData.title} - თავი ${chapterId}`;
-
-            closeModal(document.getElementById('chapterSelectModal')); // Close chapter select modal
-            openModal(chapterDisplayModal); // Open chapter display modal
-
-            // Ensure controls are visible when opening a new chapter
-            document.getElementById('chapterDisplayModalHeader').classList.remove('hidden');
-            document.getElementById('chapterDisplayModalControls').classList.remove('hidden');
-            clearTimeout(scrollTimeout);
-
-            setTimeout(() => { // Simulate loading delay
-                imagesContainer.innerHTML = ''; // Clear loading indicator
-
-                if (manhwaData.type === 'image') {
-                    for (let i = 1; i <= contentData; i++) {
-                        const img = document.createElement('img');
-                        img.src = `${manhwaData.folder}${currentManhwaId}${chapterId}_page${i}.jpg`;
-                        img.alt = `თავი ${chapterId}, გვერდი ${i}`;
-                        img.loading = 'lazy';
-                        img.onerror = function() {
-                            this.src = 'images/placeholder.jpg'; // Fallback image
-                            this.alt = 'სურათი ვერ მოიძებნა';
-                        };
-                        imagesContainer.appendChild(img);
-                    }
-                } else if (manhwaData.type === 'video') {
-                    const video = document.createElement('video');
-                    video.src = `${manhwaData.folder}${contentData}`;
-                    video.controls = true;
-                    video.preload = 'auto';
-                    video.style.maxWidth = '100%';
-                    video.style.height = 'auto';
-                    video.style.display = 'block';
-                    video.autoplay = true;
-                    video.onerror = function() {
-                        console.error("ვიდეოს ჩატვირთვის შეცდომა: ", this.src);
-                        const errorDiv = document.createElement('div');
-                        errorDiv.textContent = 'ვიდეოს ჩატვირთვის შეცდომა.';
-                        errorDiv.style.color = 'red';
-                        errorDiv.style.textAlign = 'center';
-                        imagesContainer.appendChild(errorDiv);
-                    };
-                    imagesContainer.appendChild(video);
-                }
-                updateNavigationButtons();
-            }, 500);
-        };
-
-        window.navigateChapter = function(direction) {
-            const manhwaData = manhwas[currentManhwaId];
-            const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
-            const newChapterIndex = currentChapterIndex + direction;
-
-            if (newChapterIndex >= 0 && newChapterIndex < manhwaData.chapters.length) {
-                const newChapter = manhwaData.chapters[newChapterIndex];
-                window.openChapter(newChapter.id, manhwaData.type === 'video' ? newChapter.file : newChapter.pages);
-            }
-        };
-
-        function updateNavigationButtons() {
-            const prevBtn = document.getElementById('prevChapterBtn');
-            const nextBtn = document.getElementById('nextChapterBtn');
-            const manhwaData = manhwas[currentManhwaId];
-            const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
-
-            prevBtn.disabled = currentChapterIndex <= 0;
-            nextBtn.disabled = currentChapterIndex >= manhwaData.chapters.length - 1;
         }
 
-        // --- Event Listeners for new design ---
-        document.getElementById('menuIcon').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('active');
-        });
+    }
 
-        document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('sidebar');
-            const menuIcon = document.getElementById('menuIcon');
 
-            if (sidebar.classList.contains('active') && !sidebar.contains(event.target) && !menuIcon.contains(event.target)) {
-                sidebar.classList.remove('active');
+
+    window.onpopstate = function(event) {
+
+      if (document.getElementById('chapterModal').style.display === 'flex') {
+
+        toggleModal('chapterModal', false);
+
+        toggleModal('chapterSelect', true);
+
+      } else if (document.getElementById('chapterSelect').style.display === 'flex') {
+
+        toggleModal('chapterSelect', false);
+
+      }
+
+      currentOpenModalId = null;
+
+    };
+
+
+
+    window.onload = function() {
+
+        if (window.location.hash) {
+
+            const hash = window.location.hash.substring(1);
+
+            if (hash === 'chapterSelect' || hash === 'chapterModal') {
+
+                history.replaceState({}, '', window.location.pathname + window.location.search);
+
             }
-        });
 
-        // Open generic modals
-        document.querySelectorAll('.window[data-modal-target]:not([data-modal-type="manhwa"]), .sidebar-item[data-modal-target]').forEach(button => {
-            button.addEventListener('click', () => {
-                const modalId = button.dataset.modalTarget;
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    openModal(modal);
-                    if (button.classList.contains('sidebar-item')) {
-                        document.getElementById('sidebar').classList.remove('active');
-                    }
-                }
-            });
-        });
+        }
 
-        // Close buttons for all modals
-        document.querySelectorAll('.close-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const modal = button.closest('.modal');
-                if (modal) {
-                    closeModal(modal);
-                }
-            });
-        });
+    };
 
-        // Close modal when clicking outside content
-        window.addEventListener('click', (event) => {
-            document.querySelectorAll('.modal').forEach(modal => {
-                // Check if the clicked element is the modal itself (not its content)
-                if (event.target === modal && modal.classList.contains('active')) {
-                    closeModal(modal);
-                }
-            });
-        });
 
-        // --- Manhwageo Chapter Display Modal scroll/click behavior ---
-        document.getElementById('imagesContainer').addEventListener('scroll', function() {
-            const currentScrollTop = this.scrollTop;
-            const header = document.getElementById('chapterDisplayModalHeader');
-            const controls = document.getElementById('chapterDisplayModalControls');
 
-            clearTimeout(scrollTimeout);
+    document.getElementById('imagesContainer').addEventListener('scroll', function() {
 
-            if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
-                header.classList.add('hidden');
-                controls.classList.add('hidden');
-            } else {
-                header.classList.remove('hidden');
-                controls.classList.remove('hidden');
-                scrollTimeout = setTimeout(() => {
-                    if (currentScrollTop === this.scrollTop) {
-                        header.classList.add('hidden');
-                        controls.classList.add('hidden');
-                    }
-                }, 2000);
-            }
-            lastScrollTop = currentScrollTop;
-        });
+        const currentScrollTop = this.scrollTop;
 
-        document.getElementById('imagesContainer').addEventListener('click', function() {
-            const header = document.getElementById('chapterDisplayModalHeader');
-            const controls = document.getElementById('chapterDisplayModalControls');
-            if (header.classList.contains('hidden')) {
-                header.classList.remove('hidden');
-                controls.classList.remove('hidden');
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
+        const header = document.getElementById('chapterModalHeader');
+
+        const controls = document.getElementById('chapterModalControls');
+
+
+
+        clearTimeout(scrollTimeout);
+
+
+
+        if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
+
+            header.classList.add('hidden');
+
+            controls.classList.add('hidden');
+
+        } else {
+
+            header.classList.remove('hidden');
+
+            controls.classList.remove('hidden');
+
+            scrollTimeout = setTimeout(() => {
+
+                if (currentScrollTop === this.scrollTop) {
+
                     header.classList.add('hidden');
+
                     controls.classList.add('hidden');
-                }, 2000);
-            }
-        });
 
-        // --- Animated Character JavaScript ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const character = document.getElementById('animated-character');
-            const walkSpeedBtn = document.getElementById('walkSpeedBtn');
-            const runSpeedBtn = document.getElementById('runSpeedBtn');
-            const toggleAnimationBtn = document.getElementById('toggleAnimationBtn');
-
-            const animationFolderPath = 'images/'; // Ensure this path is correct
-
-            const idleFrames = 1; 
-            const walkFrames = 2; 
-            const runFrames = 2; 
-
-            const characterWidth = 110; 
-            const characterHeight = 120; 
-            
-            const walkSpeed = 0.5;  
-            const runSpeed = 3;  
-            
-            const idleInterval = 500; 
-            const walkInterval = 450; 
-            const runInterval = 300; 
-
-            let currentX = 0;
-            let direction = 1; // 1 for right, -1 for left
-            let animationFrame = 1;
-            let currentSpeed = 0; // Starts with 0 speed (idle)
-            let currentInterval = idleInterval; // Starts with idle interval
-            let currentAnimationType = 'idle'; // 'idle', 'walk', or 'run'
-
-            let animationIntervalId;
-            let movementIntervalId;
-            let isAnimationRunning = false; // Starts as false (stopped initially)
-
-            // Set initial character size
-            character.style.width = `${characterWidth}px`;
-            character.style.height = `${characterHeight}px`;
-
-            function updateCharacterImage() {
-                let maxFrames;
-                if (currentAnimationType === 'idle') {
-                    maxFrames = idleFrames;
-                } else if (currentAnimationType === 'walk') {
-                    maxFrames = walkFrames;
-                } else { // 'run'
-                    maxFrames = runFrames;
                 }
 
-                character.style.backgroundImage = `url('${animationFolderPath}animation_1_${currentAnimationType}_${animationFrame}.png')`;
-                
-                animationFrame++;
-                if (animationFrame > maxFrames) {
-                    animationFrame = 1;
-                }
-            }
+            }, 2000);
 
-            function moveCharacter() {
-                if (!isAnimationRunning || currentAnimationType === 'idle') {
-                    return; // Don't move if stopped or in idle state
-                }
+        }
 
-                currentX += direction * currentSpeed;
+        lastScrollTop = currentScrollTop;
 
-                // Boundary checking
-                const maxX = window.innerWidth - characterWidth;
-                const minX = 0;
+    });
 
-                if (currentX >= maxX) {
-                    currentX = maxX;
-                    direction = -1; // Change direction to left
-                    character.style.transform = `translateX(${currentX}px) scaleX(-1)`; // Flip horizontally for left movement
-                } else if (currentX <= minX) {
-                    currentX = minX;
-                    direction = 1; // Change direction to right
-                    character.style.transform = `translateX(${currentX}px) scaleX(1)`; // Flip horizontally back to normal
-                } else {
-                    character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
-                }
-            }
 
-            function startAnimation() {
-                // Clear existing intervals
-                clearInterval(animationIntervalId);
-                clearInterval(movementIntervalId);
 
-                // Start new intervals with current parameters
-                animationIntervalId = setInterval(updateCharacterImage, currentInterval);
-                movementIntervalId = setInterval(moveCharacter, 20); // Faster update for smoother movement
-            }
+    document.getElementById('imagesContainer').addEventListener('click', function() {
 
-            function stopAnimation() {
-                clearInterval(animationIntervalId);
-                clearInterval(movementIntervalId);
-                isAnimationRunning = false;
-                currentAnimationType = 'idle';
-                animationFrame = 1; // Set to first idle frame
-                updateCharacterImage(); // Display idle image immediately
-            }
+      const header = document.getElementById('chapterModalHeader');
 
-            // Initial state: Start in idle/stopped mode
-            stopAnimation(); // Starts in stopped/idle state when page loads
+      const controls = document.getElementById('chapterModalControls');
 
-            // Event listeners for speed control buttons
-            walkSpeedBtn.addEventListener('click', () => {
-                currentSpeed = walkSpeed;
-                currentInterval = walkInterval;
-                currentAnimationType = 'walk';
-                animationFrame = 1; // Reset animation frame when type changes
-                isAnimationRunning = true;
-                startAnimation();
-            });
+      if (header.classList.contains('hidden')) {
 
-            runSpeedBtn.addEventListener('click', () => {
-                currentSpeed = runSpeed;
-                currentInterval = runInterval;
-                currentAnimationType = 'run';
-                animationFrame = 1; // Reset animation frame when type changes
-                isAnimationRunning = true;
-                startAnimation();
-            });
+          header.classList.remove('hidden');
 
-            // Event listener for the new toggle button
-            toggleAnimationBtn.addEventListener('click', () => {
-                if (isAnimationRunning) {
-                    stopAnimation();
-                    toggleAnimationBtn.textContent = 'გაგრძელება';
-                } else {
-                    isAnimationRunning = true;
-                    // When resuming, restore previous speed/animation or default to walk
-                    currentAnimationType = 'walk'; 
-                    currentSpeed = walkSpeed;
-                    currentInterval = walkInterval;
-                    animationFrame = 1; // Reset frame
-                    startAnimation();
-                    toggleAnimationBtn.textContent = 'გაჩერება';
-                }
-            });
+          controls.classList.remove('hidden');
 
-            // Adjust character position on window resize
-            window.addEventListener('resize', () => {
-                const maxX = window.innerWidth - characterWidth;
-                if (currentX > maxX) {
-                    currentX = maxX;
-                    character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
-                }
-            });
-        });
+          clearTimeout(scrollTimeout);
 
-        // Initialize views on page load for Manhwageo content
-        document.addEventListener('DOMContentLoaded', async () => {
-            const manhwaWindows = document.querySelectorAll('.window[data-manhwa-id]');
-            for (const windowElem of manhwaWindows) {
-                const manhwaId = windowElem.dataset.manhwaId;
-                if (manhwaId) {
-                    const viewsElement = windowElem.querySelector(`#views-${manhwaId}`);
-                    if (viewsElement) {
-                        const views = await window.getInitialViews(manhwaId);
-                        viewsElement.textContent = views;
-                    }
-                }
-            }
-        });
-    </script>
+          scrollTimeout = setTimeout(() => {
+
+              header.classList.add('hidden');
+
+              controls.classList.add('hidden');
+
+          }, 2000);
+
+      }
+
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      const character = document.getElementById('animated-character');
+
+      const walkSpeedBtn = document.getElementById('walkSpeedBtn');
+
+      const runSpeedBtn = document.getElementById('runSpeedBtn');
+
+      const toggleAnimationBtn = document.getElementById('toggleAnimationBtn');
+
+
+
+      const animationFolderPath = 'images/';
+
+
+
+      const idleFrames = 1;
+
+      const walkFrames = 2;
+
+      const runFrames = 2;
+
+
+
+      const characterWidth = 110;
+
+      const characterHeight = 120;
+
+      
+
+      const walkSpeed = 0.5;
+
+      const runSpeed = 3;
+
+      
+
+      const idleInterval = 500;
+
+      const walkInterval = 450;
+
+      const runInterval = 300;
+
+
+
+      let currentX = 0;
+
+      let direction = 1;
+
+      let animationFrame = 1;
+
+      let currentSpeed = 0;
+
+      let currentInterval = idleInterval;
+
+      let currentAnimationType = 'idle';
+
+
+
+      let animationIntervalId;
+
+      let movementIntervalId;
+
+      let isAnimationRunning = false;
+
+
+
+      character.style.width = `${characterWidth}px`;
+
+      character.style.height = `${characterHeight}px`;
+
+
+
+      function updateCharacterImage() {
+
+        let maxFrames;
+
+        if (currentAnimationType === 'idle') {
+
+          maxFrames = idleFrames;
+
+        } else if (currentAnimationType === 'walk') {
+
+          maxFrames = walkFrames;
+
+        } else {
+
+          maxFrames = runFrames;
+
+        }
+
+
+
+        character.style.backgroundImage = `url('${animationFolderPath}animation_1_${currentAnimationType}_${animationFrame}.png')`;
+
+        
+
+        animationFrame++;
+
+        if (animationFrame > maxFrames) {
+
+          animationFrame = 1;
+
+        }
+
+      }
+
+
+
+      function moveCharacter() {
+
+        if (!isAnimationRunning || currentAnimationType === 'idle') {
+
+          return;
+
+        }
+
+
+
+        currentX += direction * currentSpeed;
+
+
+
+        const maxX = window.innerWidth - characterWidth;
+
+        const minX = 0;
+
+
+
+        if (currentX >= maxX) {
+
+          currentX = maxX;
+
+          direction = -1;
+
+          character.style.transform = `translateX(${currentX}px) scaleX(-1)`;
+
+        } else if (currentX <= minX) {
+
+          currentX = minX;
+
+          direction = 1;
+
+          character.style.transform = `translateX(${currentX}px) scaleX(1)`;
+
+        } else {
+
+          character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
+
+        }
+
+      }
+
+
+
+      function startAnimation() {
+
+        clearInterval(animationIntervalId);
+
+        clearInterval(movementIntervalId);
+
+
+
+        animationIntervalId = setInterval(updateCharacterImage, currentInterval);
+
+        movementIntervalId = setInterval(moveCharacter, 20);
+
+      }
+
+
+
+      function stopAnimation() {
+
+        clearInterval(animationIntervalId);
+
+        clearInterval(movementIntervalId);
+
+        isAnimationRunning = false;
+
+        currentAnimationType = 'idle';
+
+        animationFrame = 1;
+
+        updateCharacterImage();
+
+      }
+
+
+
+      stopAnimation();
+
+
+
+      walkSpeedBtn.addEventListener('click', () => {
+
+        currentSpeed = walkSpeed;
+
+        currentInterval = walkInterval;
+
+        currentAnimationType = 'walk';
+
+        animationFrame = 1;
+
+        isAnimationRunning = true;
+
+        startAnimation();
+
+      });
+
+
+
+      runSpeedBtn.addEventListener('click', () => {
+
+        currentSpeed = runSpeed;
+
+        currentInterval = runInterval;
+
+        currentAnimationType = 'run';
+
+        animationFrame = 1;
+
+        isAnimationRunning = true;
+
+        startAnimation();
+
+      });
+
+
+
+      toggleAnimationBtn.addEventListener('click', () => {
+
+        if (isAnimationRunning) {
+
+          stopAnimation();
+
+          toggleAnimationBtn.textContent = 'გაგრძელება';
+
+        } else {
+
+          isAnimationRunning = true;
+
+          currentAnimationType = 'walk';
+
+          currentSpeed = walkSpeed;
+
+          currentInterval = walkInterval;
+
+          animationFrame = 1;
+
+          startAnimation();
+
+          toggleAnimationBtn.textContent = 'გაჩერება';
+
+        }
+
+      });
+
+
+
+      window.addEventListener('resize', () => {
+
+        const maxX = window.innerWidth - characterWidth;
+
+        if (currentX > maxX) {
+
+          currentX = maxX;
+
+          character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
+
+        }
+
+      });
+
+    });
+
+  </script>
+
+
 
 </body>
+
 </html>
 
