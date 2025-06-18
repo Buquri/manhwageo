@@ -59,22 +59,25 @@
     }
 
     .box {
+        .box {
       border: 2px solid #333;
       /* padding: 15px; Removed padding to give more space to background image */
       overflow: hidden;
       position: relative;
       background-color: #197;
       background-size: cover; /* Use cover to fill the box */
-      background-position: left ; /* Center the image */
+      background-position: center; /* Center the image */
+      background-repeat: no-repeat; /* დაამატეთ ესეც */
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-start;
       border-radius: 6px;
-      min-height: 200px; /* Adjust as needed for mobile */
-      height: 45vh; /* Responsive height */
-      max-height: 400px; /* Max height for larger screens */
+      min-height: 180px; /* ოდნავ შევამცირე */
+      height: 35vh; /* Changed */
+      max-height: 300px; /* Changed */
     }
+
 
     .box::before {
       content: '';
