@@ -1,312 +1,154 @@
 <!DOCTYPE html>
 
-
-
 <html lang="ka">
-
-
 
 <head>
 
-
-
   <meta charset="UTF-8">
-
-
 
   <title>Manhwageo</title>
 
-
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
 
   <meta name="description" content="Manhwageo - ქართული მანჰვების ონლაინ ბიბლიოთეკა. წაიკითხეთ საუკეთესო მანჰვები ქართულ ენაზე.">
 
-
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
-
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-
-
   <style>
-
-
 
     /* სტილების გადატვირთვა კონსისტენტურობისთვის */
 
-
-
     * {
-
-
 
       box-sizing: border-box;
 
-
-
       margin: 0; /* შესწორებულია: CSS თვისებებს სჭირდებათ ერთეულები */
-
-
 
       padding: 0; /* შესწორებულია: CSS თვისებებს სჭირდებათ ერთეულები */
 
-
-
     }
-
-
-
-
 
 
 
     body {
 
-
-
       font-family: 'Poppins', sans-serif;
-
-
 
       display: flex;
 
-
-
       flex-direction: column;
-
-
 
       gap: 10px;
 
-
-
       margin: 0;
-
-
 
       padding: 10px; /* დავტოვე მცირე padding body-ზე */
 
-
-
       background-color: #E9967A;
-
-
 
       color: #fff;
 
-
-
       overflow-x: hidden;
-
-
 
       min-height: 100vh;
 
-
-
       position: relative;
 
-
-
     }
-
-
-
-
 
 
 
     /* მთავარი გრიდი (განლაგება) */
 
-
-
     .main-grid {
-
-
 
       display: grid;
 
-
-
       grid-template-columns: 1fr; /* Default to single column for mobile */
-
-
 
       gap: 10px;
 
-
-
       flex-grow: 1;
 
-
-
     }
-
-
-
-
 
 
 
     @media (min-width: 768px) { /* Two columns for larger screens */
 
-
-
       .main-grid {
-
-
 
         grid-template-columns: repeat(2, 1fr);
 
-
-
         max-width: 1000px; /* ზღუდავს გრიდის მაქსიმალურ სიგანეს დესკტოპზე */
-
-
 
         margin: 0 auto; /* ცენტრირებს გრიდს */
 
-
-
       }
 
-
-
     }
-
-
-
-
 
 
 
     /* ყუთების (ბოქსების) სტილები */
 
-
-
     .box {
-
-
 
       border: 2px solid #333;
 
-
-
       overflow: hidden;
-
-
 
       position: relative;
 
-
-
       background-color: #197; /* სარეზერვო ფერი, თუ ფონის სურათი არ იტვირთება */
-
-
 
       background-size: cover; /* უზრუნველყოფს, რომ სურათი მთლიანად ფარავდეს ყუთს */
 
-
-
       background-position: left; /* აღდგენილია left-ზე, როგორც თქვენ გქონდათ */
-
-
 
       background-repeat: no-repeat; /* ხელს უშლის სურათის გამეორებას */
 
-
-
       display: flex;
-
-
 
       flex-direction: column;
 
-
-
       justify-content: flex-end; /* კონტენტს ათავსებს ქვედა ნაწილში */
-
-
 
       align-items: flex-start; /* კონტენტს ათავსებს მარცხენა ნაწილში */
 
-
-
       border-radius: 6px;
-
-
 
       
 
-
-
       width: 100%; /* ყუთი იკავებს მისი სვეტის 100%-ს */
 
-
-
       aspect-ratio: 730 / 1050; /* 730px სიგანე, 1050px სიმაღლე - ასპექტის თანაფარდობის შენარჩუნება */
-
-
 
       /* min-height, height, max-height ამოღებულია, რადგან aspect-ratio ზრუნავს სიმაღლეზე */
 
 
 
-
-
-
-
       box-sizing: border-box; /* დარწმუნდით, რომ padding და border არ ზრდის საერთო ზომას */
-
-
 
       padding: 5px; /* მცირე შიდა დაშორება ტექსტისა და ღილაკებისთვის */
 
-
-
       cursor: pointer;
-
-
 
       transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-
-
     }
-
-
-
-
 
 
 
     .box:hover {
 
-
-
       transform: translateY(-3px);
-
-
 
       box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
 
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -315,14 +157,6 @@
 
 
     
-
-
-
-
-
-
-
-
 
 
 
@@ -334,15 +168,7 @@
 
 
 
-
-
-
-
     .box.first {
-
-
-
-
 
 
 
@@ -350,19 +176,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -374,27 +188,11 @@
 
 
 
-
-
-
-
       background-image: url('images/bg-2.jpg');
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -406,27 +204,11 @@
 
 
 
-
-
-
-
       background-image: url('images/bg-3.jpg');
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -438,27 +220,11 @@
 
 
 
-
-
-
-
       background-image: url('images/bg-4.jpg');
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -470,15 +236,7 @@
 
 
 
-
-
-
-
     .box.fifth {
-
-
-
-
 
 
 
@@ -486,19 +244,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -510,23 +256,11 @@
 
 
 
-
-
-
-
       background-image: url('images/bg-6.jpg');
 
 
 
-
-
-
-
     }
-
-
-
-
 
 
 
@@ -538,19 +272,7 @@
 
 
 
-
-
-
-
-
-
-
-
     /* სათაურებისა და ღილაკების ძირითადი სტილები ყუთებში */
-
-
-
-
 
 
 
@@ -558,15 +280,7 @@
 
 
 
-
-
-
-
     .box button {
-
-
-
-
 
 
 
@@ -574,15 +288,7 @@
 
 
 
-
-
-
-
       z-index: 2; /* დარწმუნდით, რომ გადაფარვაზე მაღლაა */
-
-
-
-
 
 
 
@@ -590,15 +296,7 @@
 
 
 
-
-
-
-
       background-color: rgba(0, 0, 0, 0.7);
-
-
-
-
 
 
 
@@ -606,15 +304,7 @@
 
 
 
-
-
-
-
       border: none;
-
-
-
-
 
 
 
@@ -622,15 +312,7 @@
 
 
 
-
-
-
-
       margin: 5px 10px 10px 15px; /* მორგებული ზღვარი კიდეებიდან დაშორებისთვის */
-
-
-
-
 
 
 
@@ -638,15 +320,7 @@
 
 
 
-
-
-
-
       transition: background-color 0.3s ease;
-
-
-
-
 
 
 
@@ -654,19 +328,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -678,15 +340,7 @@
 
 
 
-
-
-
-
       .box h2, .box button {
-
-
-
-
 
 
 
@@ -694,27 +348,11 @@
 
 
 
-
-
-
-
       }
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -726,27 +364,11 @@
 
 
 
-
-
-
-
       background-color: rgba(0, 0, 0, 0.9);
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -758,15 +380,7 @@
 
 
 
-
-
-
-
       cursor: not-allowed;
-
-
-
-
 
 
 
@@ -774,27 +388,11 @@
 
 
 
-
-
-
-
       background-color: rgba(50, 50, 50, 0.7);
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -806,15 +404,7 @@
 
 
 
-
-
-
-
     .views-counter {
-
-
-
-
 
 
 
@@ -822,15 +412,7 @@
 
 
 
-
-
-
-
       z-index: 2; /* დარწმუნდით, რომ გადაფარვაზე მაღლაა */
-
-
-
-
 
 
 
@@ -838,15 +420,7 @@
 
 
 
-
-
-
-
       background-color: rgba(0, 0, 0, 0.7);
-
-
-
-
 
 
 
@@ -854,15 +428,7 @@
 
 
 
-
-
-
-
       border-radius: 8px;
-
-
-
-
 
 
 
@@ -870,15 +436,7 @@
 
 
 
-
-
-
-
       font-size: 0.8em;
-
-
-
-
 
 
 
@@ -886,15 +444,7 @@
 
 
 
-
-
-
-
       align-items: center;
-
-
-
-
 
 
 
@@ -902,27 +452,11 @@
 
 
 
-
-
-
-
       align-self: flex-start; /* მიმყვება ფლექს კონტეინერის დასაწყისს (ქვედა-მარცხენა) */
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -934,27 +468,11 @@
 
 
 
-
-
-
-
       color: #ff4444; /* ხატულის ფერი */
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -966,15 +484,7 @@
 
 
 
-
-
-
-
     .modal {
-
-
-
-
 
 
 
@@ -982,15 +492,7 @@
 
 
 
-
-
-
-
       top: 0;
-
-
-
-
 
 
 
@@ -998,15 +500,7 @@
 
 
 
-
-
-
-
       width: 100vw;
-
-
-
-
 
 
 
@@ -1014,15 +508,7 @@
 
 
 
-
-
-
-
       background-color: rgba(0, 0, 0, 0.95);
-
-
-
-
 
 
 
@@ -1030,15 +516,7 @@
 
 
 
-
-
-
-
       justify-content: center;
-
-
-
-
 
 
 
@@ -1046,27 +524,11 @@
 
 
 
-
-
-
-
       z-index: 999;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1078,15 +540,7 @@
 
 
 
-
-
-
-
       background-color: rgba(0, 0, 0, 0.85);
-
-
-
-
 
 
 
@@ -1094,15 +548,7 @@
 
 
 
-
-
-
-
       border-radius: 8px;
-
-
-
-
 
 
 
@@ -1110,15 +556,7 @@
 
 
 
-
-
-
-
       max-height: 98vh; /* უფრო მაღალი მობილურისთვის */
-
-
-
-
 
 
 
@@ -1126,27 +564,11 @@
 
 
 
-
-
-
-
       flex-direction: column;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1158,15 +580,7 @@
 
 
 
-
-
-
-
       padding: 0; /* padding არ აქვს თავების სურათებისთვის */
-
-
-
-
 
 
 
@@ -1174,15 +588,7 @@
 
 
 
-
-
-
-
       max-height: 130vh;
-
-
-
-
 
 
 
@@ -1190,27 +596,11 @@
 
 
 
-
-
-
-
       background-color: black; /* უზრუნველყოფს სრულად შავ ფონს */
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1222,15 +612,7 @@
 
 
 
-
-
-
-
     .chapter-buttons {
-
-
-
-
 
 
 
@@ -1238,15 +620,7 @@
 
 
 
-
-
-
-
       grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* პატარა min-width მობილურისთვის */
-
-
-
-
 
 
 
@@ -1254,27 +628,11 @@
 
 
 
-
-
-
-
       margin-top: 15px;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1286,15 +644,7 @@
 
 
 
-
-
-
-
       padding: 10px 15px;
-
-
-
-
 
 
 
@@ -1302,15 +652,7 @@
 
 
 
-
-
-
-
       border: none;
-
-
-
-
 
 
 
@@ -1318,15 +660,7 @@
 
 
 
-
-
-
-
       font-size: 0.9em; /* პატარა შრიფტი მობილურისთვის */
-
-
-
-
 
 
 
@@ -1334,15 +668,7 @@
 
 
 
-
-
-
-
       border-radius: 5px;
-
-
-
-
 
 
 
@@ -1350,19 +676,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1374,15 +688,7 @@
 
 
 
-
-
-
-
       .chapter-buttons {
-
-
-
-
 
 
 
@@ -1390,15 +696,7 @@
 
 
 
-
-
-
-
       }
-
-
-
-
 
 
 
@@ -1406,15 +704,7 @@
 
 
 
-
-
-
-
         font-size: 1em;
-
-
-
-
 
 
 
@@ -1422,19 +712,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1446,15 +724,7 @@
 
 
 
-
-
-
-
       background-color: #cc0000;
-
-
-
-
 
 
 
@@ -1462,19 +732,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1486,15 +744,7 @@
 
 
 
-
-
-
-
     .images-container {
-
-
-
-
 
 
 
@@ -1502,15 +752,7 @@
 
 
 
-
-
-
-
       flex-direction: column;
-
-
-
-
 
 
 
@@ -1518,15 +760,7 @@
 
 
 
-
-
-
-
       overflow-y: scroll; /* სქროლის დაშვება */
-
-
-
-
 
 
 
@@ -1534,15 +768,7 @@
 
 
 
-
-
-
-
       scrollbar-width: none; /* Firefox-ისთვის */
-
-
-
-
 
 
 
@@ -1550,27 +776,11 @@
 
 
 
-
-
-
-
       background-color: black; /* უზრუნველყოფს შავ ფონს სურათებს შორის */
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1582,27 +792,11 @@
 
 
 
-
-
-
-
         display: none; /* Chrome, Safari, Opera-სთვის */
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1614,15 +808,7 @@
 
 
 
-
-
-
-
       width: 100%;
-
-
-
-
 
 
 
@@ -1630,15 +816,7 @@
 
 
 
-
-
-
-
       display: block;
-
-
-
-
 
 
 
@@ -1646,15 +824,7 @@
 
 
 
-
-
-
-
       opacity: 0;
-
-
-
-
 
 
 
@@ -1662,15 +832,7 @@
 
 
 
-
-
-
-
       animation: fadeUp 0.5s ease forwards;
-
-
-
-
 
 
 
@@ -1678,19 +840,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1702,15 +852,7 @@
 
 
 
-
-
-
-
         text-align: center;
-
-
-
-
 
 
 
@@ -1718,15 +860,7 @@
 
 
 
-
-
-
-
         font-size: 1.2em;
-
-
-
-
 
 
 
@@ -1734,19 +868,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1758,15 +880,7 @@
 
 
 
-
-
-
-
       to {
-
-
-
-
 
 
 
@@ -1774,15 +888,7 @@
 
 
 
-
-
-
-
         transform: translateY(0);
-
-
-
-
 
 
 
@@ -1790,19 +896,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1814,15 +908,7 @@
 
 
 
-
-
-
-
     .modal-header {
-
-
-
-
 
 
 
@@ -1830,15 +916,7 @@
 
 
 
-
-
-
-
         flex-direction: column;
-
-
-
-
 
 
 
@@ -1846,15 +924,7 @@
 
 
 
-
-
-
-
         width: 100%;
-
-
-
-
 
 
 
@@ -1862,15 +932,7 @@
 
 
 
-
-
-
-
         background-color: rgba(0, 0, 0, 1);
-
-
-
-
 
 
 
@@ -1878,15 +940,7 @@
 
 
 
-
-
-
-
         top: 0;
-
-
-
-
 
 
 
@@ -1894,15 +948,7 @@
 
 
 
-
-
-
-
         transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-
-
-
-
 
 
 
@@ -1910,27 +956,11 @@
 
 
 
-
-
-
-
         visibility: visible;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1942,15 +972,7 @@
 
 
 
-
-
-
-
       padding: 10px 15px;
-
-
-
-
 
 
 
@@ -1958,19 +980,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -1982,15 +992,7 @@
 
 
 
-
-
-
-
       opacity: 0;
-
-
-
-
 
 
 
@@ -1998,27 +1000,11 @@
 
 
 
-
-
-
-
       /* pointer-events: none; */
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2030,15 +1016,7 @@
 
 
 
-
-
-
-
       margin: 0;
-
-
-
-
 
 
 
@@ -2046,23 +1024,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2074,11 +1036,7 @@
 
 
 
-      
-
       font-size: 0.9em;
-
-      
 
 
 
@@ -2086,117 +1044,11 @@
 
 
 
-      
-
       margin-top: 5px;
 
 
 
-      
-
-      max-height: 20vh;
-
-
-
-      
-
-      overflow-y: auto; /*
-
-
-
-      
-
-      pading-right: 5px; /*
-
-
-
-      
-
-      /* custom scrollbar for webkit browsers */
-
-
-
-      
-
-      .modal-description::-webkit-scrollbar
-
-
-
-      {
-
-        width: 8px;
-
-    
-
-      }
-
-
-
-      .modal-description::-w ebkit-scrollbar-track
-
-    
-
-      {
-
-      background: #333;
-
-        
-
-      border-radius: 10px;
-
-        
-
     }
-
-      
-
-      .modal-description::-w
-
-    ekbit-scrollbar-thumb
-
-      
-
-      {
-
-        
-
-        background: #888;
-
-        border-radius: 10px;
-
-        
-
-      }
-
-      
-
-      .modal-description::-webk
-
-      it-scrollbar-thumb:hover
-
-      
-
-      {
-
-        
-
-        background: #555;
-
-      
-
-      }
-
-
-
-    }
-
-
-
-
-
-
-
-
 
 
 
@@ -2208,15 +1060,7 @@
 
 
 
-
-
-
-
     .modal-controls {
-
-
-
-
 
 
 
@@ -2224,15 +1068,7 @@
 
 
 
-
-
-
-
       justify-content: space-between;
-
-
-
-
 
 
 
@@ -2240,15 +1076,7 @@
 
 
 
-
-
-
-
       padding: 15px;
-
-
-
-
 
 
 
@@ -2256,15 +1084,7 @@
 
 
 
-
-
-
-
       position: sticky;
-
-
-
-
 
 
 
@@ -2272,15 +1092,7 @@
 
 
 
-
-
-
-
       z-index: 1000;
-
-
-
-
 
 
 
@@ -2288,15 +1100,7 @@
 
 
 
-
-
-
-
       opacity: 1;
-
-
-
-
 
 
 
@@ -2304,19 +1108,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2328,27 +1120,11 @@
 
 
 
-
-
-
-
       background-color: rgba(0, 0, 0, 1);
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2360,15 +1136,7 @@
 
 
 
-
-
-
-
       opacity: 0;
-
-
-
-
 
 
 
@@ -2376,19 +1144,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2400,15 +1156,7 @@
 
 
 
-
-
-
-
     .modal-controls .navigation-buttons button {
-
-
-
-
 
 
 
@@ -2416,15 +1164,7 @@
 
 
 
-
-
-
-
       padding: 8px 15px;
-
-
-
-
 
 
 
@@ -2432,27 +1172,11 @@
 
 
 
-
-
-
-
       flex: 1;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2464,27 +1188,11 @@
 
 
 
-
-
-
-
       margin-left: 10px;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2496,15 +1204,7 @@
 
 
 
-
-
-
-
       display: flex;
-
-
-
-
 
 
 
@@ -2512,27 +1212,11 @@
 
 
 
-
-
-
-
       flex-grow: 1;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2544,15 +1228,7 @@
 
 
 
-
-
-
-
       background-color: #ff4444;
-
-
-
-
 
 
 
@@ -2560,15 +1236,7 @@
 
 
 
-
-
-
-
       color: white;
-
-
-
-
 
 
 
@@ -2576,15 +1244,7 @@
 
 
 
-
-
-
-
       border-radius: 5px;
-
-
-
-
 
 
 
@@ -2592,19 +1252,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2616,15 +1264,7 @@
 
 
 
-
-
-
-
         background-color: #cc0000;
-
-
-
-
 
 
 
@@ -2632,15 +1272,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
 
 
 
@@ -2648,15 +1280,7 @@
 
 
 
-
-
-
-
         background-color: #555;
-
-
-
-
 
 
 
@@ -2664,27 +1288,11 @@
 
 
 
-
-
-
-
         opacity: 0.6;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2696,15 +1304,7 @@
 
 
 
-
-
-
-
     #animated-character {
-
-
-
-
 
 
 
@@ -2712,15 +1312,7 @@
 
 
 
-
-
-
-
       bottom: 10px;
-
-
-
-
 
 
 
@@ -2728,15 +1320,7 @@
 
 
 
-
-
-
-
       width: 120px;
-
-
-
-
 
 
 
@@ -2744,15 +1328,7 @@
 
 
 
-
-
-
-
       background-size: contain;
-
-
-
-
 
 
 
@@ -2760,15 +1336,7 @@
 
 
 
-
-
-
-
       background-position: center;
-
-
-
-
 
 
 
@@ -2776,27 +1344,11 @@
 
 
 
-
-
-
-
       image-rendering: pixelated;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2808,15 +1360,7 @@
 
 
 
-
-
-
-
       position: fixed;
-
-
-
-
 
 
 
@@ -2824,15 +1368,7 @@
 
 
 
-
-
-
-
       right: 3px;
-
-
-
-
 
 
 
@@ -2840,15 +1376,7 @@
 
 
 
-
-
-
-
       display: flex;
-
-
-
-
 
 
 
@@ -2856,27 +1384,11 @@
 
 
 
-
-
-
-
       gap: 5px;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2888,15 +1400,7 @@
 
 
 
-
-
-
-
       background-color: #6a5acd;
-
-
-
-
 
 
 
@@ -2904,15 +1408,7 @@
 
 
 
-
-
-
-
       border: none;
-
-
-
-
 
 
 
@@ -2920,15 +1416,7 @@
 
 
 
-
-
-
-
       border-radius: 3px;
-
-
-
-
 
 
 
@@ -2936,15 +1424,7 @@
 
 
 
-
-
-
-
       transition: background-color 0.3s ease;
-
-
-
-
 
 
 
@@ -2952,19 +1432,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -2976,27 +1444,11 @@
 
 
 
-
-
-
-
       background-color: #483d8b;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -3008,15 +1460,7 @@
 
 
 
-
-
-
-
       background-color: #777;
-
-
-
-
 
 
 
@@ -3024,15 +1468,7 @@
 
 
 
-
-
-
-
       opacity: 0.7;
-
-
-
-
 
 
 
@@ -3040,15 +1476,7 @@
 
 
 
-
-
-
-
     /* --- ანიმაციური პერსონაჟის სტილების დასასრული --- */
-
-
-
-
 
 
 
@@ -3060,19 +1488,7 @@
 
 
 
-
-
-
-
-
-
-
-
   <script type="module">
-
-
-
-
 
 
 
@@ -3080,15 +1496,7 @@
 
 
 
-
-
-
-
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-
-
-
-
 
 
 
@@ -3100,19 +1508,7 @@
 
 
 
-
-
-
-
-
-
-
-
     const firebaseConfig = {
-
-
-
-
 
 
 
@@ -3120,15 +1516,7 @@
 
 
 
-
-
-
-
       authDomain: "manhwageo.firebaseapp.com",
-
-
-
-
 
 
 
@@ -3136,15 +1524,7 @@
 
 
 
-
-
-
-
       storageBucket: "manhwageo.firebasestorage.app",
-
-
-
-
 
 
 
@@ -3152,15 +1532,7 @@
 
 
 
-
-
-
-
       appId: "1:822450839137:web:7dcb516bf572ae08191420",
-
-
-
-
 
 
 
@@ -3168,19 +1540,7 @@
 
 
 
-
-
-
-
     };
-
-
-
-
-
-
-
-
 
 
 
@@ -3192,15 +1552,7 @@
 
 
 
-
-
-
-
     const analytics = getAnalytics(app);
-
-
-
-
 
 
 
@@ -3212,19 +1564,7 @@
 
 
 
-
-
-
-
-
-
-
-
     window.updateAndGetViews = async function(manhwaId) {
-
-
-
-
 
 
 
@@ -3236,27 +1576,11 @@
 
 
 
-
-
-
-
-
-
-
-
       try {
 
 
 
-
-
-
-
         const docSnap = await getDoc(docRef);
-
-
-
-
 
 
 
@@ -3268,19 +1592,7 @@
 
 
 
-
-
-
-
-
-
-
-
         if (docSnap.exists()) {
-
-
-
-
 
 
 
@@ -3288,15 +1600,7 @@
 
 
 
-
-
-
-
           await updateDoc(docRef, { count: views });
-
-
-
-
 
 
 
@@ -3304,15 +1608,7 @@
 
 
 
-
-
-
-
           views = 1;
-
-
-
-
 
 
 
@@ -3320,15 +1616,7 @@
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -3336,15 +1624,7 @@
 
 
 
-
-
-
-
       } catch (error) {
-
-
-
-
 
 
 
@@ -3352,15 +1632,7 @@
 
 
 
-
-
-
-
         return "შეცდომა";
-
-
-
-
 
 
 
@@ -3368,19 +1640,7 @@
 
 
 
-
-
-
-
     };
-
-
-
-
-
-
-
-
 
 
 
@@ -3392,15 +1652,7 @@
 
 
 
-
-
-
-
       const docRef = doc(db, "manhwa_views", manhwaId);
-
-
-
-
 
 
 
@@ -3408,15 +1660,7 @@
 
 
 
-
-
-
-
         const docSnap = await getDoc(docRef);
-
-
-
-
 
 
 
@@ -3424,15 +1668,7 @@
 
 
 
-
-
-
-
           return docSnap.data().count;
-
-
-
-
 
 
 
@@ -3440,15 +1676,7 @@
 
 
 
-
-
-
-
           return 0;
-
-
-
-
 
 
 
@@ -3456,15 +1684,7 @@
 
 
 
-
-
-
-
       } catch (error) {
-
-
-
-
 
 
 
@@ -3472,15 +1692,7 @@
 
 
 
-
-
-
-
         return "შეცდომა";
-
-
-
-
 
 
 
@@ -3488,19 +1700,7 @@
 
 
 
-
-
-
-
     };
-
-
-
-
-
-
-
-
 
 
 
@@ -3512,15 +1712,7 @@
 
 
 
-
-
-
-
       const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
-
-
-
-
 
 
 
@@ -3528,15 +1720,7 @@
 
 
 
-
-
-
-
         const manhwaId = box.dataset.manhwaId;
-
-
-
-
 
 
 
@@ -3544,15 +1728,7 @@
 
 
 
-
-
-
-
           const viewsElement = box.querySelector(`#views-${manhwaId}`);
-
-
-
-
 
 
 
@@ -3560,15 +1736,7 @@
 
 
 
-
-
-
-
             const views = await window.getInitialViews(manhwaId);
-
-
-
-
 
 
 
@@ -3576,15 +1744,7 @@
 
 
 
-
-
-
-
           }
-
-
-
-
 
 
 
@@ -3592,15 +1752,7 @@
 
 
 
-
-
-
-
       }
-
-
-
-
 
 
 
@@ -3608,23 +1760,11 @@
 
 
 
-
-
-
-
   </script>
 
 
 
-
-
-
-
 </head>
-
-
-
-
 
 
 
@@ -3636,19 +1776,7 @@
 
 
 
-
-
-
-
-
-
-
-
   <div class="main-grid">
-
-
-
-
 
 
 
@@ -3656,15 +1784,7 @@
 
 
 
-
-
-
-
       <div class="views-counter">
-
-
-
-
 
 
 
@@ -3672,15 +1792,7 @@
 
 
 
-
-
-
-
       </div>
-
-
-
-
 
 
 
@@ -3688,19 +1800,7 @@
 
 
 
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -3712,15 +1812,7 @@
 
 
 
-
-
-
-
       <div class="views-counter">
-
-
-
-
 
 
 
@@ -3728,15 +1820,7 @@
 
 
 
-
-
-
-
       </div>
-
-
-
-
 
 
 
@@ -3744,19 +1828,7 @@
 
 
 
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -3768,15 +1840,7 @@
 
 
 
-
-
-
-
       <div class="views-counter">
-
-
-
-
 
 
 
@@ -3784,15 +1848,7 @@
 
 
 
-
-
-
-
       </div>
-
-
-
-
 
 
 
@@ -3800,19 +1856,7 @@
 
 
 
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -3824,15 +1868,7 @@
 
 
 
-
-
-
-
       <div class="views-counter">
-
-
-
-
 
 
 
@@ -3840,15 +1876,7 @@
 
 
 
-
-
-
-
       </div>
-
-
-
-
 
 
 
@@ -3856,19 +1884,7 @@
 
 
 
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -3880,15 +1896,7 @@
 
 
 
-
-
-
-
       <h2>მეხუთე </h2>
-
-
-
-
 
 
 
@@ -3896,15 +1904,7 @@
 
 
 
-
-
-
-
         <i class="fas fa-eye"></i> <span id="views-video_manhwa1">0</span>
-
-
-
-
 
 
 
@@ -3912,27 +1912,11 @@
 
 
 
-
-
-
-
       <button onclick="openChapterSelect('video_manhwa1')">გახსნა / დახურვა</button>
 
 
 
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -3944,15 +1928,7 @@
 
 
 
-
-
-
-
       <h2>მეექვსე </h2>
-
-
-
-
 
 
 
@@ -3960,15 +1936,7 @@
 
 
 
-
-
-
-
         <i class="fas fa-eye"></i> <span id="views-video_manhwa2">0</span>
-
-
-
-
 
 
 
@@ -3976,15 +1944,7 @@
 
 
 
-
-
-
-
       <button onclick="openChapterSelect('video_manhwa2')">გახსნა / დახურვა</button>
-
-
-
-
 
 
 
@@ -3992,19 +1952,7 @@
 
 
 
-
-
-
-
   </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -4016,15 +1964,7 @@
 
 
 
-
-
-
-
     <div class="overlay">
-
-
-
-
 
 
 
@@ -4032,15 +1972,7 @@
 
 
 
-
-
-
-
         <h2 id="chapterSelectTitle">თავების არჩევა</h2>
-
-
-
-
 
 
 
@@ -4048,15 +1980,7 @@
 
 
 
-
-
-
-
       </div>
-
-
-
-
 
 
 
@@ -4064,15 +1988,7 @@
 
 
 
-
-
-
-
       <div class="modal-controls">
-
-
-
-
 
 
 
@@ -4080,15 +1996,7 @@
 
 
 
-
-
-
-
       </div>
-
-
-
-
 
 
 
@@ -4096,19 +2004,7 @@
 
 
 
-
-
-
-
   </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -4120,15 +2016,7 @@
 
 
 
-
-
-
-
     <div class="overlay">
-
-
-
-
 
 
 
@@ -4136,23 +2024,11 @@
 
 
 
-
-
-
-
         <h2 id="chapterTitle">თავი</h2>
 
 
 
-
-
-
-
       </div>
-
-
-
-
 
 
 
@@ -4160,23 +2036,11 @@
 
 
 
-
-
-
-
         <p class="loading-indicator">იტვირთება...</p>
 
 
 
-
-
-
-
       </div>
-
-
-
-
 
 
 
@@ -4184,15 +2048,7 @@
 
 
 
-
-
-
-
         <div class="navigation-buttons">
-
-
-
-
 
 
 
@@ -4200,15 +2056,7 @@
 
 
 
-
-
-
-
           <button id="nextChapterBtn" onclick="navigateChapter(1)">შემდეგი თავი</button>
-
-
-
-
 
 
 
@@ -4216,15 +2064,7 @@
 
 
 
-
-
-
-
         <button class="close-btn" onclick="toggleModal('chapterModal')">დახურვა</button>
-
-
-
-
 
 
 
@@ -4232,27 +2072,11 @@
 
 
 
-
-
-
-
     </div>
 
 
 
-
-
-
-
   </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -4264,15 +2088,7 @@
 
 
 
-
-
-
-
   <div id="character-controls">
-
-
-
-
 
 
 
@@ -4280,23 +2096,11 @@
 
 
 
-
-
-
-
     <button id="runSpeedBtn">სირბილი</button>
 
 
 
-
-
-
-
     <button id="toggleAnimationBtn">გაჩერება / გაგრძელება</button>
-
-
-
-
 
 
 
@@ -4308,19 +2112,7 @@
 
 
 
-
-
-
-
-
-
-
-
   <script>
-
-
-
-
 
 
 
@@ -4328,15 +2120,7 @@
 
 
 
-
-
-
-
       "ch": {
-
-
-
-
 
 
 
@@ -4344,25 +2128,11 @@
 
 
 
-
-
-
-
         folder: "images/",
 
 
 
-
-
-
-
-        description: 
-
-"მინჯუნ კიმი, უმაღლესი სკოლის ჩვეულებრივი მოსწავლე კორეადან, ერთ დღეს გამოიძახეს სხვა სამყაროში, სადაც  ბნელი ჯადოქარი გახდა.  იბრძვის იმის მოლოდინში რომ დაბრუნდება თავის სამყაროში, ამისთვის სჭირდება რომ გადაარჩინოს ეს სამყარო თავისი ბნელი ჯადოქრობით. ყველაფრის დამთავრების შემდეგ ბრუნდება თავის სამყაროში, თუმცა ამისთვის მოუწევს დატოვოს მისი დიდება და მიღწევები. როდესაც დაბრუნდება და ჩათვლის რომ ყველაფერი დამთავრდა და გადაწყვეტს ცხოვრებით სიამოვნებას, პრობლემები თავს იჩენს. იმ დროში, როცა ის სხვა სამყაროში იბრძოდა, მის რეალურ სამყაროში მიწისქვეშეთები გამოჩნდა და მათგან მონსტრებმა დაიწყეს გადმოსვლა. ძლივს უკან დაბრუნებულ, ბრძოლით დაღლილ მინჯუნს, თავს ახალი პრობლემები დაატყდება. მას ახლა უკვე თავისი სამყაროს დაცვა მოუწევს და ყოველდღიური ბრძოლა მონსტრებთან, სანამ მშვიდ ცხოვრებას დაუბრუნდება.",
-
-
-
-
+        description: "ამბავი ახალგაზრდა ჯადოქარზე, რომელიც წარსულიდან ბრუნდება, რათა შური იძიოს და სამყარო ბნელი ძალებისგან იხსნას. მისი გზა სავსეა გამოწვევებით და მოულოდნელი შეტაკებებით.",
 
 
 
@@ -4370,15 +2140,7 @@
 
 
 
-
-
-
-
         chapters: [
-
-
-
-
 
 
 
@@ -4386,15 +2148,7 @@
 
 
 
-
-
-
-
           { id: 2, pages: 15 },
-
-
-
-
 
 
 
@@ -4402,15 +2156,7 @@
 
 
 
-
-
-
-
           { id: 4, pages: 18 },
-
-
-
-
 
 
 
@@ -4418,15 +2164,7 @@
 
 
 
-
-
-
-
           { id: 6, pages: 14 },
-
-
-
-
 
 
 
@@ -4434,15 +2172,7 @@
 
 
 
-
-
-
-
           { id: 8, pages: 15 },
-
-
-
-
 
 
 
@@ -4450,15 +2180,7 @@
 
 
 
-
-
-
-
       },
-
-
-
-
 
 
 
@@ -4466,15 +2188,7 @@
 
 
 
-
-
-
-
         title: "რკინის სისხლიანი ხმლის მქონე მონადირე",
-
-
-
-
 
 
 
@@ -4482,17 +2196,7 @@
 
 
 
-
-
-
-
-        description: 
-
-        "რკინისსისხლიანი, ხმლიანი მონადირის შურისძიება ის ბასკერვილების ოჯახის მონადირე იყო: ვიკირი. თუმცა, მისი ერთგულება დაჯილდოვდა ბინძური ცილისწამებით და   გილიოტინის პირით.„მე აღარასდროს ვიცხოვრებ ისე, როგორც მონადირე ძაღლი, რომელიც კურდღლის დაჭერის შემდეგ თვითონ ხდება მსხვერპლი.“სიკვდილის ნაცვლად, მას მოულოდნელი შესაძლებლობა ელის.ვიკირის თვალები წითლად უბრწყინავდა, როდესაც სიბნელეში ეშვებს ილესავდა. „ცოტაც დამელოდე, ჰუგო. ამჯერად ყელს გამოგგლეჯ.“დროა, მონადირემ  შური იძიოს თავის პატრონზე. „სისხლიანი კლანის მონადირის, შურისძიება.“,
-
-
-
-
+        description: "მონადირე, რომელსაც რკინის სისხლიანი ხმალი აქვს, იწყებს სახიფათო მოგზაურობას მონსტრების სამყაროში. მას მრავალი ბრძოლა ელის თავისი ბედის ასასრულებლად.",
 
 
 
@@ -4500,15 +2204,7 @@
 
 
 
-
-
-
-
         chapters: [
-
-
-
-
 
 
 
@@ -4516,15 +2212,7 @@
 
 
 
-
-
-
-
           { id: 2, pages: 10 },
-
-
-
-
 
 
 
@@ -4532,15 +2220,7 @@
 
 
 
-
-
-
-
       },
-
-
-
-
 
 
 
@@ -4548,15 +2228,7 @@
 
 
 
-
-
-
-
         title: "მალე",
-
-
-
-
 
 
 
@@ -4564,15 +2236,7 @@
 
 
 
-
-
-
-
         description: "ეს მანჰვა მალე დაემატება. თვალყური ადევნეთ განახლებებს!",
-
-
-
-
 
 
 
@@ -4580,23 +2244,11 @@
 
 
 
-
-
-
-
         chapters: []
 
 
 
-
-
-
-
       },
-
-
-
-
 
 
 
@@ -4604,15 +2256,7 @@
 
 
 
-
-
-
-
         title: "მალეე",
-
-
-
-
 
 
 
@@ -4620,15 +2264,7 @@
 
 
 
-
-
-
-
         description: "უახლესი მანჰვა, რომელიც მალე იქნება ხელმისაწვდომი. მოემზადეთ ახალი თავგადასავლებისთვის!",
-
-
-
-
 
 
 
@@ -4636,23 +2272,11 @@
 
 
 
-
-
-
-
         chapters: []
 
 
 
-
-
-
-
       },
-
-
-
-
 
 
 
@@ -4660,23 +2284,11 @@
 
 
 
-
-
-
-
         title: "მეხუთე ",
 
 
 
-
-
-
-
         folder: "videos/",
-
-
-
-
 
 
 
@@ -4684,23 +2296,11 @@
 
 
 
-
-
-
-
         type: 'video',
 
 
 
-
-
-
-
         chapters: [
-
-
-
-
 
 
 
@@ -4708,15 +2308,7 @@
 
 
 
-
-
-
-
         ]
-
-
-
-
 
 
 
@@ -4724,15 +2316,7 @@
 
 
 
-
-
-
-
       "video_manhwa2": {
-
-
-
-
 
 
 
@@ -4740,15 +2324,7 @@
 
 
 
-
-
-
-
         folder: "videos/",
-
-
-
-
 
 
 
@@ -4756,15 +2332,7 @@
 
 
 
-
-
-
-
         type: 'video',
-
-
-
-
 
 
 
@@ -4772,15 +2340,7 @@
 
 
 
-
-
-
-
             { id: 1, file: "w6_v1.mp4" }
-
-
-
-
 
 
 
@@ -4788,27 +2348,11 @@
 
 
 
-
-
-
-
       }
 
 
 
-
-
-
-
     };
-
-
-
-
-
-
-
-
 
 
 
@@ -4820,15 +2364,7 @@
 
 
 
-
-
-
-
     let currentChapterId = null;
-
-
-
-
 
 
 
@@ -4840,27 +2376,11 @@
 
 
 
-
-
-
-
-
-
-
-
     let currentOpenModalId = null;
 
 
 
-
-
-
-
     let lastScrollTop = 0;
-
-
-
-
 
 
 
@@ -4872,19 +2392,7 @@
 
 
 
-
-
-
-
-
-
-
-
     function toggleModal(id, doPushState = true) {
-
-
-
-
 
 
 
@@ -4892,15 +2400,7 @@
 
 
 
-
-
-
-
       if (modal.style.display === 'flex') {
-
-
-
-
 
 
 
@@ -4908,15 +2408,7 @@
 
 
 
-
-
-
-
         if (doPushState && currentOpenModalId === id) {
-
-
-
-
 
 
 
@@ -4924,23 +2416,11 @@
 
 
 
-
-
-
-
           currentOpenModalId = null;
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -4948,15 +2428,7 @@
 
 
 
-
-
-
-
           document.getElementById('chapterModalHeader').classList.remove('hidden');
-
-
-
-
 
 
 
@@ -4964,23 +2436,11 @@
 
 
 
-
-
-
-
           clearTimeout(scrollTimeout);
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -4988,15 +2448,7 @@
 
 
 
-
-
-
-
         modal.style.display = 'flex';
-
-
-
-
 
 
 
@@ -5004,15 +2456,7 @@
 
 
 
-
-
-
-
         if (doPushState) {
-
-
-
-
 
 
 
@@ -5020,15 +2464,7 @@
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -5036,19 +2472,7 @@
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -5060,15 +2484,7 @@
 
 
 
-
-
-
-
       currentManhwaId = manhwaId;
-
-
-
-
 
 
 
@@ -5080,19 +2496,7 @@
 
 
 
-
-
-
-
-
-
-
-
       document.getElementById('chapterSelectTitle').textContent = manhwaData.title;
-
-
-
-
 
 
 
@@ -5104,19 +2508,7 @@
 
 
 
-
-
-
-
-
-
-
-
       const chapterButtons = document.getElementById('chapterButtons');
-
-
-
-
 
 
 
@@ -5128,19 +2520,7 @@
 
 
 
-
-
-
-
-
-
-
-
       if (manhwaData.chapters.length === 0) {
-
-
-
-
 
 
 
@@ -5148,15 +2528,7 @@
 
 
 
-
-
-
-
       } else {
-
-
-
-
 
 
 
@@ -5164,15 +2536,7 @@
 
 
 
-
-
-
-
           const btn = document.createElement('button');
-
-
-
-
 
 
 
@@ -5180,15 +2544,7 @@
 
 
 
-
-
-
-
           if (manhwaData.type === 'video') {
-
-
-
-
 
 
 
@@ -5196,15 +2552,7 @@
 
 
 
-
-
-
-
           } else {
-
-
-
-
 
 
 
@@ -5212,15 +2560,7 @@
 
 
 
-
-
-
-
           }
-
-
-
-
 
 
 
@@ -5228,27 +2568,11 @@
 
 
 
-
-
-
-
         });
 
 
 
-
-
-
-
       }
-
-
-
-
-
-
-
-
 
 
 
@@ -5260,15 +2584,7 @@
 
 
 
-
-
-
-
       if (viewsElement) {
-
-
-
-
 
 
 
@@ -5276,15 +2592,7 @@
 
 
 
-
-
-
-
           viewsElement.textContent = views;
-
-
-
-
 
 
 
@@ -5292,15 +2600,7 @@
 
 
 
-
-
-
-
           console.error("ნახვების განახლების შეცდომა openChapterSelect-დან: ", error);
-
-
-
-
 
 
 
@@ -5308,15 +2608,7 @@
 
 
 
-
-
-
-
         });
-
-
-
-
 
 
 
@@ -5324,27 +2616,11 @@
 
 
 
-
-
-
-
       toggleModal('chapterSelect');
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -5356,19 +2632,7 @@
 
 
 
-
-
-
-
       currentChapterId = chapterId;
-
-
-
-
-
-
-
-
 
 
 
@@ -5380,15 +2644,7 @@
 
 
 
-
-
-
-
       imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
-
-
-
-
 
 
 
@@ -5400,27 +2656,11 @@
 
 
 
-
-
-
-
-
-
-
-
       const chapterTitleElement = document.getElementById('chapterTitle');
 
 
 
-
-
-
-
       const manhwaData = manhwas[currentManhwaId];
-
-
-
-
 
 
 
@@ -5432,19 +2672,7 @@
 
 
 
-
-
-
-
-
-
-
-
       toggleModal('chapterSelect', false);
-
-
-
-
 
 
 
@@ -5456,27 +2684,11 @@
 
 
 
-
-
-
-
-
-
-
-
       document.getElementById('chapterModalHeader').classList.remove('hidden');
 
 
 
-
-
-
-
       document.getElementById('chapterModalControls').classList.remove('hidden');
-
-
-
-
 
 
 
@@ -5488,19 +2700,7 @@
 
 
 
-
-
-
-
-
-
-
-
       setTimeout(() => {
-
-
-
-
 
 
 
@@ -5512,19 +2712,7 @@
 
 
 
-
-
-
-
-
-
-
-
         if (manhwaData.type === 'image') {
-
-
-
-
 
 
 
@@ -5532,15 +2720,7 @@
 
 
 
-
-
-
-
             const img = document.createElement('img');
-
-
-
-
 
 
 
@@ -5548,15 +2728,7 @@
 
 
 
-
-
-
-
             img.alt = `თავი ${chapterId}, გვერდი ${i}`;
-
-
-
-
 
 
 
@@ -5564,15 +2736,7 @@
 
 
 
-
-
-
-
             img.onerror = function() {
-
-
-
-
 
 
 
@@ -5580,15 +2744,7 @@
 
 
 
-
-
-
-
               this.alt = 'სურათი ვერ მოიძებნა';
-
-
-
-
 
 
 
@@ -5596,15 +2752,7 @@
 
 
 
-
-
-
-
             imagesContainer.appendChild(img);
-
-
-
-
 
 
 
@@ -5612,15 +2760,7 @@
 
 
 
-
-
-
-
         } else if (manhwaData.type === 'video') {
-
-
-
-
 
 
 
@@ -5628,15 +2768,7 @@
 
 
 
-
-
-
-
           video.src = `${manhwaData.folder}${contentData}`;
-
-
-
-
 
 
 
@@ -5644,15 +2776,7 @@
 
 
 
-
-
-
-
           video.preload = 'auto';
-
-
-
-
 
 
 
@@ -5660,15 +2784,7 @@
 
 
 
-
-
-
-
           video.style.height = 'auto';
-
-
-
-
 
 
 
@@ -5676,15 +2792,7 @@
 
 
 
-
-
-
-
           video.autoplay = true;
-
-
-
-
 
 
 
@@ -5692,15 +2800,7 @@
 
 
 
-
-
-
-
             console.error("ვიდეოს ჩატვირთვის შეცდომა: ", this.src);
-
-
-
-
 
 
 
@@ -5708,15 +2808,7 @@
 
 
 
-
-
-
-
             errorDiv.textContent = 'ვიდეოს ჩატვირთვის შეცდომა.';
-
-
-
-
 
 
 
@@ -5724,15 +2816,7 @@
 
 
 
-
-
-
-
             errorDiv.style.textAlign = 'center';
-
-
-
-
 
 
 
@@ -5740,15 +2824,7 @@
 
 
 
-
-
-
-
           };
-
-
-
-
 
 
 
@@ -5756,15 +2832,7 @@
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -5772,27 +2840,11 @@
 
 
 
-
-
-
-
       }, 500);
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -5804,15 +2856,7 @@
 
 
 
-
-
-
-
         const prevBtn = document.getElementById('prevChapterBtn');
-
-
-
-
 
 
 
@@ -5820,27 +2864,11 @@
 
 
 
-
-
-
-
         const manhwaData = manhwas[currentManhwaId];
 
 
 
-
-
-
-
         const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
-
-
-
-
-
-
-
-
 
 
 
@@ -5852,27 +2880,11 @@
 
 
 
-
-
-
-
         nextBtn.disabled = currentChapterIndex >= manhwaData.chapters.length - 1;
 
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -5884,23 +2896,11 @@
 
 
 
-
-
-
-
         const manhwaData = manhwas[currentManhwaId];
 
 
 
-
-
-
-
         const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
-
-
-
-
 
 
 
@@ -5912,19 +2912,7 @@
 
 
 
-
-
-
-
-
-
-
-
         if (newChapterIndex >= 0 && newChapterIndex < manhwaData.chapters.length) {
-
-
-
-
 
 
 
@@ -5932,15 +2920,7 @@
 
 
 
-
-
-
-
             if (manhwaData.type === 'video') {
-
-
-
-
 
 
 
@@ -5948,15 +2928,7 @@
 
 
 
-
-
-
-
             } else {
-
-
-
-
 
 
 
@@ -5964,23 +2936,11 @@
 
 
 
-
-
-
-
             }
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -5992,19 +2952,7 @@
 
 
 
-
-
-
-
-
-
-
-
     window.onpopstate = function(event) {
-
-
-
-
 
 
 
@@ -6012,15 +2960,7 @@
 
 
 
-
-
-
-
         toggleModal('chapterModal', false);
-
-
-
-
 
 
 
@@ -6028,15 +2968,7 @@
 
 
 
-
-
-
-
       } else if (document.getElementById('chapterSelect').style.display === 'flex') {
-
-
-
-
 
 
 
@@ -6044,15 +2976,7 @@
 
 
 
-
-
-
-
       }
-
-
-
-
 
 
 
@@ -6060,19 +2984,7 @@
 
 
 
-
-
-
-
     };
-
-
-
-
-
-
-
-
 
 
 
@@ -6084,15 +2996,7 @@
 
 
 
-
-
-
-
         if (window.location.hash) {
-
-
-
-
 
 
 
@@ -6100,15 +3004,7 @@
 
 
 
-
-
-
-
             if (hash === 'chapterSelect' || hash === 'chapterModal') {
-
-
-
-
 
 
 
@@ -6116,23 +3012,11 @@
 
 
 
-
-
-
-
             }
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -6144,19 +3028,7 @@
 
 
 
-
-
-
-
-
-
-
-
     document.getElementById('imagesContainer').addEventListener('scroll', function() {
-
-
-
-
 
 
 
@@ -6164,27 +3036,11 @@
 
 
 
-
-
-
-
         const header = document.getElementById('chapterModalHeader');
 
 
 
-
-
-
-
         const controls = document.getElementById('chapterModalControls');
-
-
-
-
-
-
-
-
 
 
 
@@ -6200,19 +3056,7 @@
 
 
 
-
-
-
-
-
-
-
-
         if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
-
-
-
-
 
 
 
@@ -6220,15 +3064,7 @@
 
 
 
-
-
-
-
             controls.classList.add('hidden');
-
-
-
-
 
 
 
@@ -6236,15 +3072,7 @@
 
 
 
-
-
-
-
             header.classList.remove('hidden');
-
-
-
-
 
 
 
@@ -6252,15 +3080,7 @@
 
 
 
-
-
-
-
             scrollTimeout = setTimeout(() => {
-
-
-
-
 
 
 
@@ -6268,15 +3088,7 @@
 
 
 
-
-
-
-
                     header.classList.add('hidden');
-
-
-
-
 
 
 
@@ -6284,15 +3096,7 @@
 
 
 
-
-
-
-
                 }
-
-
-
-
 
 
 
@@ -6300,15 +3104,7 @@
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -6316,19 +3112,7 @@
 
 
 
-
-
-
-
     });
-
-
-
-
-
-
-
-
 
 
 
@@ -6340,15 +3124,7 @@
 
 
 
-
-
-
-
       const header = document.getElementById('chapterModalHeader');
-
-
-
-
 
 
 
@@ -6356,15 +3132,7 @@
 
 
 
-
-
-
-
       if (header.classList.contains('hidden')) {
-
-
-
-
 
 
 
@@ -6372,15 +3140,7 @@
 
 
 
-
-
-
-
           controls.classList.remove('hidden');
-
-
-
-
 
 
 
@@ -6388,15 +3148,7 @@
 
 
 
-
-
-
-
           scrollTimeout = setTimeout(() => {
-
-
-
-
 
 
 
@@ -6404,15 +3156,7 @@
 
 
 
-
-
-
-
               controls.classList.add('hidden');
-
-
-
-
 
 
 
@@ -6420,15 +3164,7 @@
 
 
 
-
-
-
-
       }
-
-
-
-
 
 
 
@@ -6440,19 +3176,7 @@
 
 
 
-
-
-
-
-
-
-
-
     document.addEventListener('DOMContentLoaded', () => {
-
-
-
-
 
 
 
@@ -6460,15 +3184,7 @@
 
 
 
-
-
-
-
       const walkSpeedBtn = document.getElementById('walkSpeedBtn');
-
-
-
-
 
 
 
@@ -6476,19 +3192,7 @@
 
 
 
-
-
-
-
       const toggleAnimationBtn = document.getElementById('toggleAnimationBtn');
-
-
-
-
-
-
-
-
 
 
 
@@ -6504,27 +3208,11 @@
 
 
 
-
-
-
-
-
-
-
-
       const idleFrames = 1;
 
 
 
-
-
-
-
       const walkFrames = 2;
-
-
-
-
 
 
 
@@ -6536,19 +3224,7 @@
 
 
 
-
-
-
-
-
-
-
-
       const characterWidth = 110;
-
-
-
-
 
 
 
@@ -6556,15 +3232,7 @@
 
 
 
-
-
-
-
       
-
-
-
-
 
 
 
@@ -6572,15 +3240,7 @@
 
 
 
-
-
-
-
       const runSpeed = 3;
-
-
-
-
 
 
 
@@ -6588,23 +3248,11 @@
 
 
 
-
-
-
-
       const idleInterval = 500;
 
 
 
-
-
-
-
       const walkInterval = 450;
-
-
-
-
 
 
 
@@ -6616,19 +3264,7 @@
 
 
 
-
-
-
-
-
-
-
-
       let currentX = 0;
-
-
-
-
 
 
 
@@ -6636,15 +3272,7 @@
 
 
 
-
-
-
-
       let animationFrame = 1;
-
-
-
-
 
 
 
@@ -6652,15 +3280,7 @@
 
 
 
-
-
-
-
       let currentInterval = idleInterval;
-
-
-
-
 
 
 
@@ -6672,27 +3292,11 @@
 
 
 
-
-
-
-
-
-
-
-
       let animationIntervalId;
 
 
 
-
-
-
-
       let movementIntervalId;
-
-
-
-
 
 
 
@@ -6704,19 +3308,7 @@
 
 
 
-
-
-
-
-
-
-
-
       character.style.width = `${characterWidth}px`;
-
-
-
-
 
 
 
@@ -6728,19 +3320,7 @@
 
 
 
-
-
-
-
-
-
-
-
       function updateCharacterImage() {
-
-
-
-
 
 
 
@@ -6748,15 +3328,7 @@
 
 
 
-
-
-
-
         if (currentAnimationType === 'idle') {
-
-
-
-
 
 
 
@@ -6764,15 +3336,7 @@
 
 
 
-
-
-
-
         } else if (currentAnimationType === 'walk') {
-
-
-
-
 
 
 
@@ -6780,15 +3344,7 @@
 
 
 
-
-
-
-
         } else {
-
-
-
-
 
 
 
@@ -6796,19 +3352,7 @@
 
 
 
-
-
-
-
         }
-
-
-
-
-
-
-
-
 
 
 
@@ -6820,15 +3364,7 @@
 
 
 
-
-
-
-
         
-
-
-
-
 
 
 
@@ -6836,15 +3372,7 @@
 
 
 
-
-
-
-
         if (animationFrame > maxFrames) {
-
-
-
-
 
 
 
@@ -6852,15 +3380,7 @@
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -6872,19 +3392,7 @@
 
 
 
-
-
-
-
-
-
-
-
       function moveCharacter() {
-
-
-
-
 
 
 
@@ -6892,27 +3400,11 @@
 
 
 
-
-
-
-
           return;
 
 
 
-
-
-
-
         }
-
-
-
-
-
-
-
-
 
 
 
@@ -6928,19 +3420,7 @@
 
 
 
-
-
-
-
-
-
-
-
         const maxX = window.innerWidth - characterWidth;
-
-
-
-
 
 
 
@@ -6952,19 +3432,7 @@
 
 
 
-
-
-
-
-
-
-
-
         if (currentX >= maxX) {
-
-
-
-
 
 
 
@@ -6972,15 +3440,7 @@
 
 
 
-
-
-
-
           direction = -1;
-
-
-
-
 
 
 
@@ -6988,15 +3448,7 @@
 
 
 
-
-
-
-
         } else if (currentX <= minX) {
-
-
-
-
 
 
 
@@ -7004,15 +3456,7 @@
 
 
 
-
-
-
-
           direction = 1;
-
-
-
-
 
 
 
@@ -7020,15 +3464,7 @@
 
 
 
-
-
-
-
         } else {
-
-
-
-
 
 
 
@@ -7036,27 +3472,11 @@
 
 
 
-
-
-
-
         }
 
 
 
-
-
-
-
       }
-
-
-
-
-
-
-
-
 
 
 
@@ -7068,27 +3488,11 @@
 
 
 
-
-
-
-
         clearInterval(animationIntervalId);
 
 
 
-
-
-
-
         clearInterval(movementIntervalId);
-
-
-
-
-
-
-
-
 
 
 
@@ -7100,27 +3504,11 @@
 
 
 
-
-
-
-
         movementIntervalId = setInterval(moveCharacter, 20);
 
 
 
-
-
-
-
       }
-
-
-
-
-
-
-
-
 
 
 
@@ -7132,15 +3520,7 @@
 
 
 
-
-
-
-
         clearInterval(animationIntervalId);
-
-
-
-
 
 
 
@@ -7148,15 +3528,7 @@
 
 
 
-
-
-
-
         isAnimationRunning = false;
-
-
-
-
 
 
 
@@ -7164,15 +3536,7 @@
 
 
 
-
-
-
-
         animationFrame = 1;
-
-
-
-
 
 
 
@@ -7180,19 +3544,7 @@
 
 
 
-
-
-
-
       }
-
-
-
-
-
-
-
-
 
 
 
@@ -7208,19 +3560,7 @@
 
 
 
-
-
-
-
-
-
-
-
       walkSpeedBtn.addEventListener('click', () => {
-
-
-
-
 
 
 
@@ -7228,15 +3568,7 @@
 
 
 
-
-
-
-
         currentInterval = walkInterval;
-
-
-
-
 
 
 
@@ -7244,15 +3576,7 @@
 
 
 
-
-
-
-
         animationFrame = 1;
-
-
-
-
 
 
 
@@ -7260,27 +3584,11 @@
 
 
 
-
-
-
-
         startAnimation();
 
 
 
-
-
-
-
       });
-
-
-
-
-
-
-
-
 
 
 
@@ -7292,15 +3600,7 @@
 
 
 
-
-
-
-
         currentSpeed = runSpeed;
-
-
-
-
 
 
 
@@ -7308,15 +3608,7 @@
 
 
 
-
-
-
-
         currentAnimationType = 'run';
-
-
-
-
 
 
 
@@ -7324,15 +3616,7 @@
 
 
 
-
-
-
-
         isAnimationRunning = true;
-
-
-
-
 
 
 
@@ -7340,19 +3624,7 @@
 
 
 
-
-
-
-
       });
-
-
-
-
-
-
-
-
 
 
 
@@ -7364,15 +3636,7 @@
 
 
 
-
-
-
-
         if (isAnimationRunning) {
-
-
-
-
 
 
 
@@ -7380,15 +3644,7 @@
 
 
 
-
-
-
-
           toggleAnimationBtn.textContent = 'გაგრძელება';
-
-
-
-
 
 
 
@@ -7396,15 +3652,7 @@
 
 
 
-
-
-
-
           isAnimationRunning = true;
-
-
-
-
 
 
 
@@ -7412,15 +3660,7 @@
 
 
 
-
-
-
-
           currentSpeed = walkSpeed;
-
-
-
-
 
 
 
@@ -7428,15 +3668,7 @@
 
 
 
-
-
-
-
           animationFrame = 1;
-
-
-
-
 
 
 
@@ -7444,15 +3676,7 @@
 
 
 
-
-
-
-
           toggleAnimationBtn.textContent = 'გაჩერება';
-
-
-
-
 
 
 
@@ -7460,19 +3684,7 @@
 
 
 
-
-
-
-
       });
-
-
-
-
-
-
-
-
 
 
 
@@ -7484,15 +3696,7 @@
 
 
 
-
-
-
-
         const maxX = window.innerWidth - characterWidth;
-
-
-
-
 
 
 
@@ -7500,15 +3704,7 @@
 
 
 
-
-
-
-
           currentX = maxX;
-
-
-
-
 
 
 
@@ -7516,15 +3712,7 @@
 
 
 
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -7532,15 +3720,7 @@
 
 
 
-
-
-
-
     });
-
-
-
-
 
 
 
@@ -7552,19 +3732,7 @@
 
 
 
-
-
-
-
-
-
-
-
 </body>
-
-
-
-
 
 
 
