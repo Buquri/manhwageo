@@ -1032,21 +1032,66 @@
 
 
 
+
+
     .modal-description {
 
-
-
+      
       font-size: 0.9em;
-
-
+      
 
       color: #b3da06;
 
-
-
+      
       margin-top: 5px;
 
+      
+      max-height: 20vh;
 
+      
+      overflow-y: auto; /*
+
+      
+      pading-right: 5px; /*
+
+      
+      /* custom scrollbar for webkit browsers */
+
+      
+      .modal-description::-webkit-scrollbar
+
+      {
+        width: 8px;
+    
+      }
+
+      .modal-description::-w ebkit-scrollbar-track
+    
+      {
+      background: #333;
+        
+      border-radius: 10px;
+        
+    }
+      
+      .modal-description::-w
+    ekbit-scrollbar-thumb
+      
+      {
+        
+        background: #888;
+        border-radius: 10px;
+        
+      }
+      
+      .modal-description::-webk
+      it-scrollbar-thumb:hover
+      
+      {
+        
+        background: #555;
+      
+      }
 
     }
 
