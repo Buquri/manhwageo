@@ -299,8 +299,8 @@
       color: #b3da06;
       margin-top: 5px;
       max-height: 20vh;
-      overflow-y: auto; /* Corrected: Missing semicolon after this line */
-      padding-right: 5px; /* Corrected: This line was commented out incorrectly */
+      overflow-y: auto; 
+      padding-right: 5px; 
     }
     
     /* Custom scrollbar for webkit browsers */
@@ -432,6 +432,7 @@
 
   <script type="module"> /* კრიტიკული შესწორება: დამატებულია type="module" */
     // Firebase SDK imports - NEED type="module" in script tag
+    // Corrected URLs by removing markdown link formatting
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
     import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
@@ -863,44 +864,46 @@
             character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
           }
         });
+        
+        // Moved imagesContainer event listeners inside window.onload
+        document.getElementById('imagesContainer').addEventListener('scroll', function() {
+            const currentScrollTop = this.scrollTop;
+            const header = document.getElementById('chapterModalHeader');
+            const controls = document.getElementById('chapterModalControls');
+
+            clearTimeout(scrollTimeout);
+
+            if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
+                header.classList.add('hidden');
+                controls.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+                controls.classList.remove('hidden');
+                scrollTimeout = setTimeout(() => {
+                    if (currentScrollTop === this.scrollTop) {
+                        header.classList.add('hidden');
+                        controls.classList.add('hidden');
+                    }
+                }, 2000);
+            }
+            lastScrollTop = currentScrollTop;
+        });
+
+        document.getElementById('imagesContainer').addEventListener('click', function() {
+          const header = document.getElementById('chapterModalHeader');
+          const controls = document.getElementById('chapterModalControls');
+          if (header.classList.contains('hidden')) {
+              header.classList.remove('hidden');
+              controls.classList.remove('hidden');
+              clearTimeout(scrollTimeout);
+              scrollTimeout = setTimeout(() => {
+                  header.classList.add('hidden');
+                  controls.classList.add('hidden');
+              }, 2000);
+          }
+        });
+
     };
-
-    document.getElementById('imagesContainer').addEventListener('scroll', function() {
-        const currentScrollTop = this.scrollTop;
-        const header = document.getElementById('chapterModalHeader');
-        const controls = document.getElementById('chapterModalControls');
-
-        clearTimeout(scrollTimeout);
-
-        if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
-            header.classList.add('hidden');
-            controls.classList.add('hidden');
-        } else {
-            header.classList.remove('hidden');
-            controls.classList.remove('hidden');
-            scrollTimeout = setTimeout(() => {
-                if (currentScrollTop === this.scrollTop) {
-                    header.classList.add('hidden');
-                    controls.classList.add('hidden');
-                }
-            }, 2000);
-        }
-        lastScrollTop = currentScrollTop;
-    });
-
-    document.getElementById('imagesContainer').addEventListener('click', function() {
-      const header = document.getElementById('chapterModalHeader');
-      const controls = document.getElementById('chapterModalControls');
-      if (header.classList.contains('hidden')) {
-          header.classList.remove('hidden');
-          controls.classList.remove('hidden');
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
-              header.classList.add('hidden');
-              controls.classList.add('hidden');
-          }, 2000);
-      }
-    });
 
   </script>
 </body>
