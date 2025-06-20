@@ -1797,6 +1797,39 @@
 
 
 
+      // --- სრული ეკრანის რეჟიმის ლოგიკა ---
+
+// ეს ფუნქცია რთავს/თიშავს სრული ეკრანის რეჟიმს
+function toggleFullscreen() {
+  const elem = document.getElementById('chapterModal'); // ელემენტი, რომელიც უნდა გაიხსნას სრულ ეკრანზე
+
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) { // ვამოწმებთ, ხომ არ არის უკვე ჩართული
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari, Chrome */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+      elem.msRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { /* Safari, Chrome */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE11 */
+      document.msExitFullscreen();
+    }
+  }
+}
+
+// ვამატებთ ივენთს ჩვენს ახალ ღილაკზე
+document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
+
+// --- ლოგიკის დასასრული ---
+
+
+
+
       window.addEventListener('resize', () => {
 
         const maxX = window.innerWidth - characterWidth;
