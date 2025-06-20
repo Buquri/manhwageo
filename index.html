@@ -156,27 +156,27 @@
       flex-direction: column;
     }
 
+    /* --- CSS-ის ცვლილება: კითხვის რეჟიმისთვის --- */
     #chapterModal .overlay {
+      position: relative; /* საჭიროა absolute შვილებისთვის */
+      display: block; /* Flex-ის გაუქმება */
       padding: 0;
       max-width: 100vw;
-      max-height: 128vh; /* შევცვალე 100vh-ზე */
+      max-height: 100vh;
       border-radius: 0;
       background-color: black;
     }
     
-    /* --- CSS-ის ცვლილება: ახალი სტილები სქროლვადი კონტენტისთვის --- */
     .modal-scrollable-content {
-        flex-grow: 1; /* იკავებს ხელმისაწვდომ სივრცეს */
-        overflow-y: auto; /* ამატებს სქროლს, მხოლოდ თუ კონტენტი არ ეტევა */
-        padding: 0 15px; /* ჰორიზონტალური დაშორება */
-        -ms-overflow-style: none;  /* სქროლის დამალვა IE და Edge-სთვის */
-        scrollbar-width: none;  /* სქროლის დამალვა Firefox-ისთვის */
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 0 15px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
     .modal-scrollable-content::-webkit-scrollbar {
-        display: none; /* სქროლის დამალვა Chrome, Safari, Opera-სთვის */
+        display: none;
     }
-    /* --- ახალი სტილების დასასრული --- */
-
 
     /* თავების ღილაკების სტილები */
     .chapter-buttons {
@@ -215,7 +215,7 @@
     .images-container {
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
+      height: 100%; /* --- CSS-ის ცვლილება: იკავებს მთლიან სიმაღლეს */
       overflow-y: scroll;
       -ms-overflow-style: none;
       scrollbar-width: none;
@@ -252,25 +252,27 @@
       }
     }
 
-    /* მოდალის სათაური */
+    /* --- CSS-ის ცვლილება: მოდალის სათაური კითხვის რეჟიმისთვის --- */
     .modal-header {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
         padding: 15px;
-        background-color: rgba(0, 0, 0, 1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.8); /* ფონი გამჭვირვალე გავხადე */
         transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
         opacity: 1;
         visibility: visible;
     }
 
     #chapterModal .modal-header {
+      position: absolute; /* შეიცვალა sticky -> absolute */
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1001;
       padding: 10px 15px;
-      background-color: rgba(0, 0, 0, 1);
+      background-color: rgba(0, 0, 0, 0.8);
     }
 
     .modal-header.hidden {
@@ -286,29 +288,30 @@
     .modal-description {
       font-size: 0.9em;
       color: #b3da06;
-      margin-top: 10px; /* დაშორება სათაურსა და აღწერას შორის */
-      margin-bottom: 15px; /* დაშორება აღწერასა და თავებს შორის */
+      margin-top: 10px;
+      margin-bottom: 15px;
     }
 
-    /* მოდალის კონტროლები */
+    /* --- CSS-ის ცვლილება: მოდალის კონტროლები კითხვის რეჟიმისთვის --- */
     .modal-controls {
       display: flex;
       justify-content: space-between;
       width: 100%;
       padding: 15px;
       background-color: rgba(0, 0, 0, 1);
-      /* position: sticky და bottom: 0 ამოღებულია chapterSelect-ისთვის */
       z-index: 1000;
       transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
       opacity: 1;
       visibility: visible;
-      margin-top: auto; /* აფიქსირებს ქვედა ნაწილში */
+      margin-top: auto;
     }
 
     #chapterModal .modal-controls {
-      background-color: rgba(0, 0, 0, 1);
-      position: sticky; /* ვაბრუნებთ sticky-ს თავების ფანჯრისთვის */
+      position: absolute; /* შეიცვალა sticky -> absolute */
       bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.8);
     }
 
     .modal-controls.hidden {
@@ -517,13 +520,11 @@
     </div>
   </div>
 
-  <!-- HTML-ის ცვლილება: განახლებული სტრუქტურა სქროლვის დასამატებლად -->
   <div class="modal" id="chapterSelect">
     <div class="overlay">
       <div class="modal-header">
         <h2 id="chapterSelectTitle">თავების არჩევა</h2>
       </div>
-      <!-- ეს არის ახალი ბლოკი, რომელიც დასქროლვას უზრუნველყოფს -->
       <div class="modal-scrollable-content">
         <p id="manhwaDescription" class="modal-description"></p>
         <div class="chapter-buttons" id="chapterButtons"></div>
@@ -564,7 +565,6 @@
       "ch": {
         title: "ბნელი ჯადოქრის დაბრუნება 1",
         folder: "images/",
-        // --- JS-ის ცვლილება: განახლებული აღწერა ---
         description: "მინჯუნ კიმი, უმაღლესი სკოლის ჩვეულებრივი მოსწავლე კორეადან, ერთ დღეს გამოიძახეს სხვა სამყაროში, სადაც ბნელი ჯადოქარი გახდა. იბრძვის იმის მოლოდინში რომ დაბრუნდება თავის სამყაროში, ამისთვის სჭირდება რომ გადაარჩინოს ეს სამყარო თავისი ბნელი ჯადოქრობით. ყველაფრის დამთავრების შემდეგ ბრუნდება თავის სამყაროში, თუმცა ამისთვის მოუწევს დატოვოს მისი დიდება და მიღწევები. როდესაც დაბრუნდება და ჩათვლის რომ ყველაფერი დამთავრდა და გადაწყვეტს ცხოვრებით სიამოვნებას, პრობლემები თავს იჩენს. იმ დროში, როცა ის სხვა სამყაროში იბრძოდა, მის რეალურ სამყაროში მიწისქვეშეთები გამოჩნდა და მათგან მონსტრებმა დაიწყეს გადმოსვლა. ძლივს უკან დაბრუნებულ, ბრძოლით დაღლილ მინჯუნს, თავს ახალი პრობლემები დაატყდება. მას ახლა უკვე თავისი სამყაროს დაცვა მოუწევს და ყოველდღიური ბრძოლა მონსტრებთან, სანამ მშვიდ ცხოვრებას დაუბრუნდება.",
         type: 'image',
         chapters: [
@@ -576,9 +576,9 @@
       "w2_ch": {
         title: "რკინის სისხლიანი ხმლის მქონე მონადირე",
         folder: "images2/",
-        description: "ის ბასკერვილების ოჯახის მონადირე იყო: ვიკირი. თუმცა, მისი ერთგულება დაჯილდოვდა ცილისწამებით და გილიოტინის პირით. „მე არასდროს ვიცხოვრებ ისე, როგორც მონადირე ძაღლი, რომელიც კურდღლის დაჭერის შემდეგ თვითონ ხდება მსხვერპლი.“ სიკვდილის ნაცვლად, მას მოულოდნელი შესაძლებლობა ელის. ვიკირის თვალები წითლად უბრწყინავდა, როდესაც სიბნელეში ეშვებს ილესავდა. „ცოტაც დამელოდე, ჰუგო. ამჯერად ყელს გამოგგლეჯ.“ დროა, მონადირემ შური იძიოს თავის პატრონზე. სისხლიანი კლანის მონადირის, შურისძიება",
+        description: "მონადირე, რომელსაც რკინის სისხლიანი ხმალი აქვს, იწყებს სახიფათო მოგზაურობას მონსტრების სამყაროში. მას მრავალი ბრძოლა ელის თავისი ბედის ასასრულებლად.",
         type: 'image',
-        chapters: [ { id: 1, pages: 10 }, { id: 2, pages: 10 },  { id: 3, pages: 10 }, ]
+        chapters: [ { id: 1, pages: 10 }, { id: 2, pages: 10 }, ]
       },
       "w3_ch": {
         title: "მალე",
@@ -691,6 +691,12 @@
       document.getElementById('chapterModalHeader').classList.remove('hidden');
       document.getElementById('chapterModalControls').classList.remove('hidden');
       clearTimeout(scrollTimeout);
+      
+      // --- JS-ის ცვლილება: პანელების ავტომატური დამალვა 3 წამში ---
+      scrollTimeout = setTimeout(() => {
+        document.getElementById('chapterModalHeader').classList.add('hidden');
+        document.getElementById('chapterModalControls').classList.add('hidden');
+      }, 3000);
 
       setTimeout(() => {
         imagesContainer.innerHTML = '';
@@ -787,7 +793,7 @@
                     header.classList.add('hidden');
                     controls.classList.add('hidden');
                 }
-            }, 2000);
+            }, 3000); // შეიცვალა 2-დან 3 წამზე
         }
         lastScrollTop = currentScrollTop;
     });
@@ -795,14 +801,17 @@
     document.getElementById('imagesContainer').addEventListener('click', function() {
       const header = document.getElementById('chapterModalHeader');
       const controls = document.getElementById('chapterModalControls');
-      if (header.classList.contains('hidden')) {
-          header.classList.remove('hidden');
-          controls.classList.remove('hidden');
-          clearTimeout(scrollTimeout);
+      // Toggle visibility of controls on click
+      header.classList.toggle('hidden');
+      controls.classList.toggle('hidden');
+
+      clearTimeout(scrollTimeout);
+      // If controls are now visible, set a timeout to hide them again
+      if (!header.classList.contains('hidden')) {
           scrollTimeout = setTimeout(() => {
               header.classList.add('hidden');
               controls.classList.add('hidden');
-          }, 2000);
+          }, 3000);
       }
     });
 
@@ -907,3 +916,4 @@
   </script>
 </body>
 </html>
+
