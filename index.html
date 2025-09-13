@@ -584,7 +584,7 @@
         description: "ის ბასკერვილების ოჯახის მონადირე იყო: ვიკირი. თუმცა, მისი ერთგულება დაჯილდოვდა ცილისწამებით და გილიოტინის პირით. „მე არასდროს ვიცხოვრებ ისე, როგორც მონადირე ძაღლი, რომელიც კურდღლის დაჭერის შემდეგ თვითონ ხდება მსხვერპლი.“ სიკვდილის ნაცვლად, მას მოულოდნელი შესაძლებლობა ელის. ვიკირის თვალები წითლად უბრწყინავდა, როდესაც სიბნელეში ეშვებს ილესავდა. „ცოტაც დამელოდე, ჰუგო. ამჯერად ყელს გამოგგლეჯ.“ დროა, მონადირემ შური იძიოს თავის პატრონზე. სისხლიანი კლანის მონადირის, შურისძიება",
         type: 'image',
         chapters: [ { id: 1, pages: 10 }, { id: 2, pages: 10 },  { id: 3, pages: 10 },   { id: 4, pages: 10 },  { id: 5, pages: 11 },  { id: 6, pages: 12 },  { id: 7, pages: 12 },
-                    { id: 8, pages: 11 }, { id: 9, pages: 1 },
+                    { id: 8, pages: 11 },
          ]
       },
       "w3_ch": {
@@ -797,10 +797,10 @@
         const header = document.getElementById('chapterModalHeader');
         const controls = document.getElementById('chapterModalControls');
         clearTimeout(scrollTimeout);
-        if (currentScrollTop > lastScrollTop && currentScrollTop > 80) { // თუ ვსქროლავთ ქვემოთ
+        if (currentScrollTop > lastScrollTop && currentScrollTop > 50) { // თუ ვსქროლავთ ქვემოთ
             header.classList.add('hidden');
             controls.classList.add('hidden');
-        } else { // თუ ვსქროლავთ ზემოთ
+        } else if (lastScrollTop - currentScrollTop > 30) { // თუ ვსქროლავთ ზემოთ
             header.classList.remove('hidden');
             controls.classList.remove('hidden');
         }
@@ -928,6 +928,7 @@
   </script>
 </body>
 </html>
+
 
 
 
