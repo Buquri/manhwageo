@@ -693,17 +693,6 @@
     // --- ახალი ფუნქცია (შესწორების ნაწილი 1) ---
     // ეს ფუნქცია მხოლოდ თავის შიგთავსის ჩატვირთვაზეა პასუხისმგებელი.
     function loadChapterContent(chapterId, contentData) {
-       const chapterTitleElement = document.getElementById('chapterTitle');
-    const manhwaData = manhwas[currentManhwaId];
-
-    // --- ADDED: SEO-სთვის სათაურის და აღწერის შეცვლა ---
-    document.title = `${manhwaData.title} - თავი ${chapterId} | Manhwageo`;
-    const metaDescription = `წაიკითხეთ ${manhwaData.title}-ის ${chapterId} თავი ქართულად. ${manhwaData.description.substring(0, 100)}...`;
-    document.querySelector('meta[name="description"]').setAttribute('content', metaDescription);
-    // --- END OF ADDED CODE ---
-
-    chapterTitleElement.textContent = `${manhwaData.title} - თავი ${chapterId}`;
-    // ... დანარჩენი კოდი
         currentChapterId = chapterId;
         const imagesContainer = document.getElementById('imagesContainer');
         imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
@@ -943,6 +932,7 @@
   </script>
 </body>
 </html>
+
 
 
 
