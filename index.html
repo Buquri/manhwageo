@@ -695,6 +695,17 @@
     function loadChapterContent(chapterId, contentData) {
         currentChapterId = chapterId;
         const imagesContainer = document.getElementById('imagesContainer');
+         const chapterTitleElement = document.getElementById('chapterTitle');
+    const manhwaData = manhwas[currentManhwaId];
+
+    // --- ADDED: SEO-სთვის სათაურის და აღწერის შეცვლა ---
+    document.title = `${manhwaData.title} - თავი ${chapterId} | Manhwageo`;
+    const metaDescription = `წაიკითხეთ ${manhwaData.title}-ის ${chapterId} თავი ქართულად. ${manhwaData.description.substring(0, 100)}...`;
+    document.querySelector('meta[name="description"]').setAttribute('content', metaDescription);
+    // --- END OF ADDED CODE ---
+
+    chapterTitleElement.textContent = `${manhwaData.title} - თავი ${chapterId}`;
+    // ... დანარჩენი კოდი
         imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
         imagesContainer.scrollTop = 0; // ყოველი ახალი თავი იწყება ზემოდან
 
@@ -933,6 +944,7 @@
   </script>
 </body>
 </html>
+
 
 
 
