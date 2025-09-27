@@ -332,7 +332,8 @@
 
     #chapterModal .modal-controls {
   background-color: #121212;
-  /* position: sticky; - ამოღებულია */
+  width: 100%; /* აუცილებელია, რომ მთელ სიგანეზე გაიშალოს */
+  position: fixed; /* <--- გამოიყენეთ 'fixed' ნაცვლად 'sticky'-ის */
   bottom: 0;
     }
 
@@ -1130,5 +1131,6 @@
   </script>
 </body>
 </html>
+
 
 
