@@ -9,14 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-
-    }
-  <style>
-    /* ***************************************************
-    *** შესწორებული CSS კოდი (ზომები უცვლელია, ფერები მუქი თემა) ***
-    ***************************************************
-    */
-    
     /* სტილების გადატვირთვა კონსისტენტურობისთვის */
     * {
       box-sizing: border-box;
@@ -31,15 +23,14 @@
       gap: 10px;
       margin: 0;
       padding: 10px;
-      /* ფონის ფერი: მუქი ნაცრისფერი/შავი */
-      background-color: #121212; 
-      color: #E0E0E0; /* ღია ტექსტი */
+      background-color: #E9967A;
+      color: #fff;
       overflow-x: hidden;
       min-height: 100vh;
       position: relative;
     }
 
-    /* მთავარი გრიდი (განლაგება) - ზომები უცვლელია */
+    /* მთავარი გრიდი (განლაგება) */
     .main-grid {
       display: grid;
       grid-template-columns: 1fr; /* Default to single column for mobile */
@@ -50,7 +41,7 @@
     @media (min-width: 768px) { /* Two columns for larger screens */
       .main-grid {
         grid-template-columns: repeat(2, 1fr);
-        max-width: 750px; /* ORIGINAL: ზღუდავს გრიდის მაქსიმალურ სიგანეს დესკტოპზე */
+        max-width: 750px; /* ზღუდავს გრიდის მაქსიმალურ სიგანეს დესკტოპზე */
         margin: 0 auto; /* ცენტრირებს გრიდს */
       }
     }
@@ -60,8 +51,7 @@
       border: 2px solid #333;
       overflow: hidden;
       position: relative;
-      /* ყუთის ფონი: ოდნავ ღია მუქი */
-      background-color: #1F1F1F; 
+      background-color: #197;
       background-size: cover;
       background-position: left;
       background-repeat: no-repeat;
@@ -79,8 +69,8 @@
     }
 
     .box:hover {
-      transform: translateY(-3px); /* ORIGINAL */
-      box-shadow: 4px 4px 10px rgba(0,0,0,0.5); /* მუქი ჩრდილი */
+      transform: translateY(-3px);
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
     }
 
     /* ფონის სურათები თითოეული ყუთისთვის */
@@ -114,7 +104,7 @@
     }
 
     .box button:hover:not(:disabled) {
-      background-color: rgba(255, 69, 0, 0.9); /* აქცენტირებული ფერი: OrangeRed */
+      background-color: rgba(0, 0, 0, 0.9);
     }
 
     .box button:disabled {
@@ -140,32 +130,8 @@
     }
 
     .views-counter i {
-      color: #FF4500; /* აქცენტირებული ფერი */
+      color: #ff4444; /* ხატულის ფერი */
     }
-    
-    /* პროგრესის აღნიშვნის სტილები ყუთებზე */
-    .box .progress-indicator {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: #FF4500; 
-        color: white;
-        padding: 5px 10px;
-        font-size: 0.7em;
-        border-bottom-left-radius: 6px;
-        font-weight: bold;
-        z-index: 10;
-        text-transform: uppercase;
-    }
-    
-    .box .progress-indicator.read {
-        background-color: #008000; /* წაკითხული - მწვანე */
-    }
-    
-    .box .progress-indicator.new {
-        background-color: #6A5ACD; /* ახალი თავი - ლავანდისფერი */
-    }
-
 
     /* მოდალური ფანჯრების სტილები (ORIGINAL STYLES RESTORED) */
     .modal {
@@ -173,7 +139,7 @@
       top: 0;
       left: 0;
       width: 100vw;
-      height: 85vh; /* ORIGINAL */
+      height: 85vh;
       background-color: rgba(0, 0, 0, 0.95);
       display: none;
       justify-content: center;
@@ -182,7 +148,7 @@
     }
 
     .overlay {
-      background-color: #1F1F1F; /* მოდალის მუქი ფონი */
+      background-color: rgba(0, 0, 0, 0.85);
       padding: 15px;
       border-radius: 8px;
       max-width: 95vw;
@@ -194,9 +160,9 @@
     #chapterModal .overlay {
       padding: 0;
       max-width: 100vw;
-      max-height: 124vh; /* ORIGINAL */
+      max-height: 124vh;
       border-radius: 0;
-      background-color: #000; /* შავი ფონი თავისთვის */
+      background-color: white;
     }
     
     .modal-scrollable-content {
@@ -221,7 +187,7 @@
 
     .chapter-buttons button {
       padding: 10px 15px;
-      background-color: #FF4500; /* აქცენტირებული ფერი */
+      background-color: #ff4444;
       border: none;
       color: white;
       font-size: 0.9em;
@@ -240,25 +206,9 @@
     }
 
     .chapter-buttons button:hover {
-      background-color: #CC3700;
+      background-color: #cc0000;
       transform: scale(1.03);
     }
-    
-    /* პროგრესის აღნიშვნის სტილები თავების ღილაკებზე */
-    .chapter-buttons button.read {
-        background-color: #006400; 
-        opacity: 0.8;
-    }
-    .chapter-buttons button.last-read {
-        background-color: #4B0082; /* მუქი იისფერი */
-        font-weight: bold;
-    }
-    .chapter-buttons button.next-up {
-        background-color: #6A5ACD; 
-        border: 2px solid #FF4500; 
-        font-weight: bold;
-    }
-
 
     /* სურათების/ვიდეოების კონტეინერი */
     .images-container {
@@ -275,14 +225,30 @@
     .images-container::-webkit-scrollbar {
         display: none;
     }
-    
-    /* ანიმაციის სტილები უცვლელია */
+
+    .images-container img, .images-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease forwards;
+      max-width: 100%;
+    }
 
     .loading-indicator {
         text-align: center;
         padding: 20px;
         font-size: 1.2em;
         color: #ddd;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* მოდალის სათაური */
@@ -292,7 +258,7 @@
         align-items: flex-start;
         width: 100%;
         padding: 15px;
-        background-color: #121212; /* მუქი ფონი */
+        background-color: rgba(0, 0, 0, 1);
         position: sticky;
         top: 0;
         z-index: 1000;
@@ -303,46 +269,51 @@
 
     #chapterModal .modal-header {
       padding: 10px 15px;
-      background-color: #121212;
+      background-color: rgba(0, 0, 0, 1);
+    }
+
+    .modal-header.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.2em;
     }
 
     .modal-description {
       font-size: 0.9em;
-      color: #6A5ACD; /* ლავანდისფერი აქცენტი */
+      color: #b3da06;
       margin-top: 10px;
       margin-bottom: 15px;
     }
 
     /* მოდალის კონტროლები (ORIGINAL STYLES PRESERVED) */
     .modal-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 15px;
-  background-color: #121212;
-  z-index: 1000;
-  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-  opacity: 1;
-  visibility: visible;
-  margin-top: auto;
-  /* position: relative; - ამოღებულია */
-
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 15px;
+      background-color: rgba(0, 0, 0, 1);
+      z-index: 1000;
+      transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+      opacity: 1;
+      visibility: visible;
+      margin-top: auto;
+      position: relative; /* ADDED: For progress bar positioning */
     }
 
     #chapterModal .modal-controls {
-  background-color: #121212;
-  width: 100%; /* აუცილებელია, რომ მთელ სიგანეზე გაიშალოს */
-  position: fixed; /* <--- გამოიყენეთ 'fixed' ნაცვლად 'sticky'-ის */
-  bottom: 0;
+      background-color: rgba(0, 0, 0, 1);
+      position: sticky;
+      bottom: 0;
     }
 
-    .modal-controls .close-btn {
-        background-color: #333; /* მუქი ნაცრისფერი დახურვისთვის */
-        color: #E0E0E0;
-    }
-    .modal-controls .close-btn:hover {
-        background-color: #555;
+    .modal-controls.hidden {
+      opacity: 0;
+      visibility: hidden;
     }
 
     .modal-controls .close-btn,
@@ -364,7 +335,7 @@
     }
 
     .navigation-buttons button {
-      background-color: #FF4500;
+      background-color: #ff4444;
       border: none;
       color: white;
       cursor: pointer;
@@ -376,21 +347,21 @@
       flex-grow: 0; 
       margin-left: auto; 
       margin-right: 10px;
-      background-color: #6A5ACD; /* ლავანდისფერი სრულ ეკრანისთვის */
+      background-color: #6a5acd;
     }
 
     .navigation-buttons button:hover:not(:disabled) {
-        background-color: #CC3700;
+        background-color: #cc0000;
         transform: scale(1.03);
     }
 
     .navigation-buttons button:disabled {
-        background-color: #333;
+        background-color: #555;
         cursor: not-allowed;
         opacity: 0.6;
     }
     
-    /* პროგრესის ზოლის და ახალი ღილაკების სტილები */
+    /* ADDED: პროგრესის ზოლის და ახალი ღილაკების სტილები */
     .progress-container {
         position: absolute;
         top: 0;
@@ -403,14 +374,14 @@
     #progressBar {
         height: 100%;
         width: 0%;
-        background-color: #FF4500;
+        background-color: #ff4444;
     }
 
     .scroll-buttons-container {
         position: absolute;
-        bottom: 80px; 
+        bottom: 80px; /* პოზიცია სანავიგაციო პანელის თავზე */
         left: 15px;
-        z-index: 1001;
+        z-index: 1001; /* პანელზე წინ რომ იყოს */
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -419,10 +390,15 @@
         visibility: visible;
     }
 
+    .scroll-buttons-container.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
     .scroll-buttons-container button {
-        background-color: rgba(18, 18, 18, 0.7); /* მუქი გამჭვირვალე ფონი */
+        background-color: rgba(0, 0, 0, 0.7);
         border: 1px solid #555;
-        color: #FF4500; /* ნარინჯისფერ-წითელი ხატულები */
+        color: #fff;
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -458,7 +434,7 @@
     }
 
     #character-controls button {
-      background-color: #6A5ACD; /* ლავანდისფერი */
+      background-color: #6a5acd;
       color: white;
       border: none;
       padding: 3px 5px;
@@ -469,34 +445,15 @@
     }
 
     #character-controls button:hover {
-      background-color: #4B0082;
+      background-color: #483d8b;
     }
 
     #character-controls button:disabled {
       background-color: #777;
       cursor: not-allowed;
       opacity: 0.7;
-      /* ***************************************************
-*** ADDED: კოდი კონტროლების იძულებით დამალვისთვის სრულ ეკრანზე ***
-***************************************************
-*/
-
-/* 1. ზოგადი კონტროლების დამალვა */
-.modal-controls.hide-controls {
-    /* !important უზრუნველყოფს, რომ ეს სტილი ნებისმიერ სხვა სტილს გადაფარავს */
-    opacity: 0 !important;
-    visibility: hidden !important;
-}
-
-/* 2. თავის ნახვისას კონტროლების დამალვა */
-#chapterModal .modal-controls.hide-controls {
-    opacity: 0 !important;
-    visibility: hidden !important;
-
-
     }
   </style>
-
 
   <script type="module">
     // Firebase კოდი უცვლელია
@@ -508,7 +465,7 @@
       apiKey: "AIzaSyBRcdavGb1Pi2eQlN6T_UbNue2bEa-8t-g",
       authDomain: "manhwageo.firebaseapp.com",
       projectId: "manhwageo",
-      storageBucket: "manhwageo.firebaseapp.com",
+      storageBucket: "manhwageo.firebasestorage.app",
       messagingSenderId: "822450839137",
       appId: "1:822450839137:web:7dcb516bf572ae08191420",
       measurementId: "G-3KMGGLE821"
@@ -552,7 +509,6 @@
       }
     };
 
-    // MODIFIED: DOMContentLoaded-ზე ემატება პროგრესის შემოწმება ყუთებზე
     document.addEventListener('DOMContentLoaded', async () => {
       const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
       for (const box of manhwaBoxes) {
@@ -563,27 +519,6 @@
             const views = await window.getInitialViews(manhwaId);
             viewsElement.textContent = views;
           }
-          
-          // ******************************************************
-          // ADDED: პროგრესის სტატუსის შემოწმება ყუთებზე
-          const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${manhwaId}`) || 0);
-          const manhwaData = manhwas[manhwaId];
-          const totalChapters = manhwaData.chapters.length;
-
-          if (lastReadChapterId > 0 && lastReadChapterId < totalChapters) {
-              // თუ ბოლომდე არ აქვს წაკითხული
-              const indicator = document.createElement('div');
-              indicator.classList.add('progress-indicator', 'new');
-              indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალი)`;
-              box.appendChild(indicator);
-          } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
-              // თუ ბოლომდე აქვს წაკითხული
-              const indicator = document.createElement('div');
-              indicator.classList.add('progress-indicator', 'read');
-              indicator.textContent = 'დასრულებულია';
-              box.appendChild(indicator);
-          }
-          // ******************************************************
         }
       }
     });
@@ -768,12 +703,6 @@
           // ADDED: ახალი ღილაკების დამალვა/გამოჩენა
           document.querySelector('.scroll-buttons-container').classList.remove('hidden');
           clearTimeout(scrollTimeout);
-          // ******************************************************
-          // ADDED: განახლებული პროგრესის ასახვა მთავარ გვერდზე
-          if (currentManhwaId) {
-             updateMainPageProgress(currentManhwaId);
-          }
-          // ******************************************************
         }
       } else {
         modal.style.display = 'flex';
@@ -788,10 +717,6 @@
     function openChapterSelect(manhwaId) {
       currentManhwaId = manhwaId;
       const manhwaData = manhwas[manhwaId];
-      // ******************************************************
-      // ADDED: ბოლოს წაკითხული თავის წამოღება
-      const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${manhwaId}`) || 0);
-      // ******************************************************
 
       document.getElementById('chapterSelectTitle').textContent = manhwaData.title;
       document.getElementById('manhwaDescription').textContent = manhwaData.description;
@@ -805,18 +730,6 @@
         manhwaData.chapters.forEach(chapter => {
           const btn = document.createElement('button');
           btn.textContent = `თავი ${chapter.id}`;
-          
-          // ******************************************************
-          // ADDED: პროგრესის კლასების დამატება
-          if (chapter.id < lastReadChapterId) {
-             btn.classList.add('read');
-          } else if (chapter.id === lastReadChapterId) {
-             btn.classList.add('last-read');
-          } else if (chapter.id === lastReadChapterId + 1) {
-             btn.classList.add('next-up');
-          }
-          // ******************************************************
-          
           if (manhwaData.type === 'video') {
             btn.onclick = () => openChapter(chapter.id, chapter.file);
           } else {
@@ -888,16 +801,6 @@
             }
             updateNavigationButtons();
             updateProgressBar(); // ADDED: პროგრესის განულება ახალ თავზე
-            
-            // ******************************************************
-            // ADDED: პროგრესის შენახვა Local Storage-ში
-            if (currentManhwaId && currentChapterId) {
-                const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${currentManhwaId}`) || 0);
-                if (currentChapterId > lastReadChapterId) {
-                    localStorage.setItem(`last_read_${currentManhwaId}`, currentChapterId);
-                }
-            }
-            // ******************************************************
         }, 500); // მცირე დაყოვნება რბილი გადასვლისთვის
     }
 
@@ -949,37 +852,6 @@
             }
         }
     };
-    
-    // ******************************************************
-    // ADDED: მთავარი გვერდის პროგრესის ინდიკატორის განახლება
-    function updateMainPageProgress(manhwaId) {
-        const box = document.querySelector(`.box[data-manhwa-id="${manhwaId}"]`);
-        if (!box) return;
-        
-        // ძველი ინდიკატორის წაშლა
-        const oldIndicator = box.querySelector('.progress-indicator');
-        if (oldIndicator) oldIndicator.remove();
-        
-        const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${manhwaId}`) || 0);
-        const manhwaData = manhwas[manhwaId];
-        const totalChapters = manhwaData.chapters.length;
-
-        if (lastReadChapterId > 0 && lastReadChapterId < totalChapters) {
-            // ახალი თავი ელოდება
-            const indicator = document.createElement('div');
-            indicator.classList.add('progress-indicator', 'new');
-            indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალი)`;
-            box.appendChild(indicator);
-        } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
-            // დასრულებულია
-            const indicator = document.createElement('div');
-            indicator.classList.add('progress-indicator', 'read');
-            indicator.textContent = 'დასრულებულია';
-            box.appendChild(indicator);
-        }
-    }
-    // ******************************************************
-
 
     // MODIFIED: visibility logic for new buttons added
     document.getElementById('imagesContainer').addEventListener('scroll', function() {
@@ -1149,7 +1021,3 @@
   </script>
 </body>
 </html>
-
-
-
-
