@@ -476,6 +476,24 @@
       background-color: #777;
       cursor: not-allowed;
       opacity: 0.7;
+      /* ***************************************************
+*** ADDED: კოდი კონტროლების იძულებით დამალვისთვის სრულ ეკრანზე ***
+***************************************************
+*/
+
+/* 1. ზოგადი კონტროლების დამალვა */
+.modal-controls.hide-controls {
+    /* !important უზრუნველყოფს, რომ ეს სტილი ნებისმიერ სხვა სტილს გადაფარავს */
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* 2. თავის ნახვისას კონტროლების დამალვა */
+#chapterModal .modal-controls.hide-controls {
+    opacity: 0 !important;
+    visibility: hidden !important;
+
+
     }
   </style>
 
@@ -1131,6 +1149,7 @@
   </script>
 </body>
 </html>
+
 
 
 
