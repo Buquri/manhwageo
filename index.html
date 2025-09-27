@@ -132,6 +132,30 @@
     .views-counter i {
       color: #ff4444; /* ხატულის ფერი */
     }
+    
+    /* ADDED: პროგრესის აღნიშვნის სტილები ყუთებზე */
+    .box .progress-indicator {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #ff4444;
+        color: white;
+        padding: 5px 10px;
+        font-size: 0.7em;
+        border-bottom-left-radius: 6px;
+        font-weight: bold;
+        z-index: 10;
+        text-transform: uppercase;
+    }
+    
+    .box .progress-indicator.read {
+        background-color: #008000; /* წაკითხული - მწვანე */
+    }
+    
+    .box .progress-indicator.new {
+        background-color: #6a5acd; /* ახალი თავი - იისფერი/ლურჯი */
+    }
+
 
     /* მოდალური ფანჯრების სტილები (ORIGINAL STYLES RESTORED) */
     .modal {
@@ -209,6 +233,22 @@
       background-color: #cc0000;
       transform: scale(1.03);
     }
+    
+    /* ADDED: პროგრესის აღნიშვნის სტილები თავების ღილაკებზე */
+    .chapter-buttons button.read {
+        background-color: #006400; /* წაკითხული - მუქი მწვანე */
+        opacity: 0.8;
+    }
+    .chapter-buttons button.last-read {
+        background-color: #483d8b; /* ბოლოს წაკითხული - მუქი იისფერი */
+        font-weight: bold;
+    }
+    .chapter-buttons button.next-up {
+        background-color: #6a5acd; /* შემდეგი წასაკითხი - იისფერი */
+        border: 2px solid #ff4444; /* წითელი კონტური */
+        font-weight: bold;
+    }
+
 
     /* სურათების/ვიდეოების კონტეინერი */
     .images-container {
@@ -465,7 +505,7 @@
       apiKey: "AIzaSyBRcdavGb1Pi2eQlN6T_UbNue2bEa-8t-g",
       authDomain: "manhwageo.firebaseapp.com",
       projectId: "manhwageo",
-      storageBucket: "manhwageo.firebasestorage.app",
+      storageBucket: "manhwageo.firebaseapp.com",
       messagingSenderId: "822450839137",
       appId: "1:822450839137:web:7dcb516bf572ae08191420",
       measurementId: "G-3KMGGLE821"
@@ -509,6 +549,7 @@
       }
     };
 
+    // MODIFIED: DOMContentLoaded-ზე ემატება პროგრესის შემოწმება ყუთებზე
     document.addEventListener('DOMContentLoaded', async () => {
       const manhwaBoxes = document.querySelectorAll('.box[data-manhwa-id]');
       for (const box of manhwaBoxes) {
@@ -519,6 +560,27 @@
             const views = await window.getInitialViews(manhwaId);
             viewsElement.textContent = views;
           }
+          
+          // ******************************************************
+          // ADDED: პროგრესის სტატუსის შემოწმება ყუთებზე
+          const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${manhwaId}`) || 0);
+          const manhwaData = manhwas[manhwaId];
+          const totalChapters = manhwaData.chapters.length;
+
+          if (lastReadChapterId > 0 && lastReadChapterId < totalChapters) {
+              // თუ ბოლომდე არ აქვს წაკითხული
+              const indicator = document.createElement('div');
+              indicator.classList.add('progress-indicator', 'new');
+              indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალი)`;
+              box.appendChild(indicator);
+          } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
+              // თუ ბოლომდე აქვს წაკითხული
+              const indicator = document.createElement('div');
+              indicator.classList.add('progress-indicator', 'read');
+              indicator.textContent = 'დასრულებულია';
+              box.appendChild(indicator);
+          }
+          // ******************************************************
         }
       }
     });
@@ -703,6 +765,12 @@
           // ADDED: ახალი ღილაკების დამალვა/გამოჩენა
           document.querySelector('.scroll-buttons-container').classList.remove('hidden');
           clearTimeout(scrollTimeout);
+          // ******************************************************
+          // ADDED: განახლებული პროგრესის ასახვა მთავარ გვერდზე
+          if (currentManhwaId) {
+             updateMainPageProgress(currentManhwaId);
+          }
+          // ******************************************************
         }
       } else {
         modal.style.display = 'flex';
@@ -717,6 +785,10 @@
     function openChapterSelect(manhwaId) {
       currentManhwaId = manhwaId;
       const manhwaData = manhwas[manhwaId];
+      // ******************************************************
+      // ADDED: ბოლოს წაკითხული თავის წამოღება
+      const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${manhwaId}`) || 0);
+      // ******************************************************
 
       document.getElementById('chapterSelectTitle').textContent = manhwaData.title;
       document.getElementById('manhwaDescription').textContent = manhwaData.description;
@@ -730,6 +802,18 @@
         manhwaData.chapters.forEach(chapter => {
           const btn = document.createElement('button');
           btn.textContent = `თავი ${chapter.id}`;
+          
+          // ******************************************************
+          // ADDED: პროგრესის კლასების დამატება
+          if (chapter.id < lastReadChapterId) {
+             btn.classList.add('read');
+          } else if (chapter.id === lastReadChapterId) {
+             btn.classList.add('last-read');
+          } else if (chapter.id === lastReadChapterId + 1) {
+             btn.classList.add('next-up');
+          }
+          // ******************************************************
+          
           if (manhwaData.type === 'video') {
             btn.onclick = () => openChapter(chapter.id, chapter.file);
           } else {
@@ -801,6 +885,16 @@
             }
             updateNavigationButtons();
             updateProgressBar(); // ADDED: პროგრესის განულება ახალ თავზე
+            
+            // ******************************************************
+            // ADDED: პროგრესის შენახვა Local Storage-ში
+            if (currentManhwaId && currentChapterId) {
+                const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${currentManhwaId}`) || 0);
+                if (currentChapterId > lastReadChapterId) {
+                    localStorage.setItem(`last_read_${currentManhwaId}`, currentChapterId);
+                }
+            }
+            // ******************************************************
         }, 500); // მცირე დაყოვნება რბილი გადასვლისთვის
     }
 
@@ -852,6 +946,37 @@
             }
         }
     };
+    
+    // ******************************************************
+    // ADDED: მთავარი გვერდის პროგრესის ინდიკატორის განახლება
+    function updateMainPageProgress(manhwaId) {
+        const box = document.querySelector(`.box[data-manhwa-id="${manhwaId}"]`);
+        if (!box) return;
+        
+        // ძველი ინდიკატორის წაშლა
+        const oldIndicator = box.querySelector('.progress-indicator');
+        if (oldIndicator) oldIndicator.remove();
+        
+        const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${manhwaId}`) || 0);
+        const manhwaData = manhwas[manhwaId];
+        const totalChapters = manhwaData.chapters.length;
+
+        if (lastReadChapterId > 0 && lastReadChapterId < totalChapters) {
+            // ახალი თავი ელოდება
+            const indicator = document.createElement('div');
+            indicator.classList.add('progress-indicator', 'new');
+            indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალი)`;
+            box.appendChild(indicator);
+        } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
+            // დასრულებულია
+            const indicator = document.createElement('div');
+            indicator.classList.add('progress-indicator', 'read');
+            indicator.textContent = 'დასრულებულია';
+            box.appendChild(indicator);
+        }
+    }
+    // ******************************************************
+
 
     // MODIFIED: visibility logic for new buttons added
     document.getElementById('imagesContainer').addEventListener('scroll', function() {
