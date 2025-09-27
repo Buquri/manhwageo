@@ -315,24 +315,25 @@
 
     /* მოდალის კონტროლები (ORIGINAL STYLES PRESERVED) */
     .modal-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      padding: 15px;
-      background-color: #121212; /* მუქი ფონი */
-      z-index: 1000;
-      transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-      opacity: 1;
-      visibility: visible;
-      margin-top: auto;
-      position: relative; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+  background-color: #121212;
+  z-index: 1000;
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+  opacity: 1;
+  visibility: visible;
+  margin-top: auto;
+  /* position: relative; - ამოღებულია */
+
     }
 
     #chapterModal .modal-controls {
-      background-color: #121212;
-      position: sticky;
-      bottom: 0;
+  background-color: #121212;
+  /* position: sticky; - ამოღებულია */
+  bottom: 0;
     }
 
     .modal-controls .close-btn {
@@ -1129,4 +1130,5 @@
   </script>
 </body>
 </html>
+
 
