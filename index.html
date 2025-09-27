@@ -133,7 +133,7 @@
       color: #ff4444; /* ხატულის ფერი */
     }
 
-    /* მოდალური ფანჯრების სტილები (ORIGINAL STYLES PRESERVED) */
+    /* მოდალური ფანჯრების სტილები (ORIGINAL STYLES RESTORED) */
     .modal {
       position: fixed;
       top: 0;
@@ -166,15 +166,15 @@
     }
     
     .modal-scrollable-content {
-        flex-grow: 1; /* იკავებს ხელმისაწვდომ სივრცეს */
-        overflow-y: auto; /* ამატებს სქროლს, მხოლოდ თუ კონტენტი არ ეტევა */
-        padding: 0 15px; /* ჰორიზონტალური დაშორება */
-        -ms-overflow-style: none;  /* სქროლის დამალვა IE და Edge-სთვის */
-        scrollbar-width: none;  /* სქროლის დამალვა Firefox-ისთვის */
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 0 15px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 
     .modal-scrollable-content::-webkit-scrollbar {
-        display: none; /* სქროლის დამალვა Chrome, Safari, Opera-სთვის */
+        display: none;
     }
 
     /* თავების ღილაკების სტილები */
@@ -293,7 +293,7 @@
     .modal-controls {
       display: flex;
       justify-content: space-between;
-      align-items: center; /* ADDED for better alignment */
+      align-items: center;
       width: 100%;
       padding: 15px;
       background-color: rgba(0, 0, 0, 1);
@@ -360,7 +360,7 @@
         cursor: not-allowed;
         opacity: 0.6;
     }
-
+    
     /* ADDED: პროგრესის ზოლის და ახალი ღილაკების სტილები */
     .progress-container {
         position: absolute;
@@ -375,35 +375,39 @@
         height: 100%;
         width: 0%;
         background-color: #ff4444;
-        transition: width 0.1s linear;
     }
 
-    .scroll-buttons {
+    .scroll-buttons-container {
+        position: absolute;
+        bottom: 80px; /* პოზიცია სანავიგაციო პანელის თავზე */
+        left: 15px;
+        z-index: 1001; /* პანელზე წინ რომ იყოს */
         display: flex;
-        gap: 8px;
-        margin-left: 10px;
+        flex-direction: column;
+        gap: 10px;
+        transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+        opacity: 1;
+        visibility: visible;
     }
 
-    .scroll-buttons button {
-        background: none;
+    .scroll-buttons-container.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .scroll-buttons-container button {
+        background-color: rgba(0, 0, 0, 0.7);
         border: 1px solid #555;
         color: #fff;
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         cursor: pointer;
         font-size: 1rem;
-        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.2s;
     }
-    
-    .scroll-buttons button:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
 
     /* ანიმაციური პერსონაჟი */
     #animated-character {
@@ -591,6 +595,10 @@
       <div class="images-container" id="imagesContainer">
         <p class="loading-indicator">იტვირთება...</p>
       </div>
+      <div class="scroll-buttons-container">
+          <button id="scrollTopBtn" title="თავში ასვლა">▲</button>
+          <button id="scrollBottomBtn" title="ბოლოში ჩასვლა">▼</button>
+      </div>
       <div class="modal-controls" id="chapterModalControls">
         <div class="progress-container">
             <div id="progressBar"></div>
@@ -599,14 +607,10 @@
           <button id="prevChapterBtn" onclick="navigateChapter(-1)">წინა თავი</button>
           <button id="nextChapterBtn" onclick="navigateChapter(1)">შემდეგი თავი</button>
         </div>
-        <div class="scroll-buttons">
-            <button id="scrollTopBtn" title="თავში ასვლა">▲</button>
-            <button id="scrollBottomBtn" title="ბოლოში ჩასვლა">▼</button>
-        </div>
         <button id="fullscreenBtn" class="close-btn"><i class="fas fa-expand"></i></button>
         <button class="close-btn" onclick="toggleModal('chapterModal')">დახურვა</button>
       </div>
-      </div>
+    </div>
   </div>
 
   <div id="animated-character"></div>
@@ -621,7 +625,7 @@
       "ch": {
         title: "ბნელი ჯადოქრის დაბრუნება 1",
         folder: "images/",
-        description: "მინჯუნ კიმი...",
+        description: "მინჯუნ კიმი, უმაღლესი სკოლის ჩვეულებრივი მოსწავლე კორეადან, ერთ დღეს გამოიძახეს სხვა სამყაროში, სადაც ბნელი ჯადოქარი გახდა. იბრძვის იმის მოლოდინში რომ დაბრუნდება თავის სამყაროში, ამისთვის სჭირდება რომ გადაარჩინოს ეს სამყარო თავისი ბნელი ჯადოქრობით. ყველაფრის დამთავრების შემდეგ ბრუნდება თავის სამყაროში, თუმცა ამისთვის მოუწევს დატოვოს მისი დიდება და მიღწევები. როდესაც დაბრუნდება და ჩათვლის რომ ყველაფერი დამთავრდა და გადაწყვეტს ცხოვრებით სიამოვნებას, პრობლემები თავს იჩენს. იმ დროში, როცა ის სხვა სამყაროში იბრძოდა, მის რეალურ სამყაროში მიწისქვეშეთები გამოჩნდა და მათგან მონსტრებმა დაიწყეს გადმოსვლა. ძლივს უკან დაბრუნებულ, ბრძოლით დაღლილ მინჯუნს, თავს ახალი პრობლემები დაატყდება. მას ახლა უკვე თავისი სამყაროს დაცვა მოუწევს და ყოველდღიური ბრძოლა მონსტრებთან, სანამ მშვიდ ცხოვრებას დაუბრუნდება.",
         type: 'image',
         chapters: [
           { id: 1, pages: 16 }, { id: 2, pages: 15 }, { id: 3, pages: 20 },
@@ -631,12 +635,13 @@
           { id: 13, pages: 15 }, { id: 14, pages: 15 }, { id: 15, pages: 12 },
           { id: 16, pages: 14 }, { id: 17, pages: 14 }, { id: 18, pages: 16, skipFirst: true  },
           { id: 19, pages: 16 },
+          
         ]
       },
       "w2_ch": {
         title: "რკინის სისხლიანი ხმლის მქონე მონადირის შურისძიება",
         folder: "images2/",
-        description: "ის ბასკერვილების ოჯახის მონადირე იყო...",
+        description: "ის ბასკერვილების ოჯახის მონადირე იყო: ვიკირი. თუმცა, მისი ერთგულება დაჯილდოვდა ცილისწამებით და გილიოტინის პირით. „მე არასდროს ვიცხოვრებ ისე, როგორც მონადირე ძაღლი, რომელიც კურდღლის დაჭერის შემდეგ თვითონ ხდება მსხვერპლი.“ სიკვდილის ნაცვლად, მას მოულოდნელი შესაძლებლობა ელის. ვიკირის თვალები წითლად უბრწყინავდა, როდესაც სიბნელეში ეშვებს ილესავდა. „ცოტაც დამელოდე, ჰუგო. ამჯერად ყელს გამოგგლეჯ.“ დროა, მონადირემ შური იძიოს თავის პატრონზე. სისხლიანი კლანის მონადირის, შურისძიება",
         type: 'image',
         chapters: [ { id: 1, pages: 10 }, { id: 2, pages: 10 },  { id: 3, pages: 10 },   { id: 4, pages: 10 },  { id: 5, pages: 11 },  { id: 6, pages: 12 },  { id: 7, pages: 12 },
                     { id: 8, pages: 14 },{ id: 9, pages: 11 },
@@ -645,7 +650,7 @@
       "w3_ch": {
         title: "წყეული რეინკარნაცია",
         folder: "images3/",
-        description: "წაიკითხეთ მანჰვა, წყეული რეინკარნაცია...",
+        description: "წაიკითხეთ მანჰვა, წყეული რეინკარნაცია. ჰამილი, მეომარი, რომელიც თავის კოლეგებთან ერთად დემონთა მეფის განადგურების მიზნით მოგზაურობდა. სამწუხაროდ, ის დემონთა მეფესთან  ბრძოლის დაწყებამდე ცოტა ხნით ადრე გარდაიცვალა. „დიახ“. რა ჯანდაბაა? ის ხელახლა დაიბადა, როგორც მისი თანამებრძოლი მეომრის, ვერმუტის შთამომავალი. დიდი ვერმუთის,  სისხლის ხაზის შთამომავალი. არა, ის ახლა ევგენი ლიონჰარტი იყო. „უკვე საკმარისი იყო ჩემთვის ილუზია, რომ წარსულ ცხოვრებაში გენიოსი ვიყავი. მაგრამ... ეს... ეს... ეს შეუდარებელია“. მომაკვდავი სხეულიდან ახალ სხეულამდე, მას აქვს მიღწევა, რომელიც წინა ცხოვრებაში არ ჰქონია. და უცნობი წარმოშობის რეინკარნაცია, დემონებთან ერთად ცხოვრების რეალობა. ახალი სამყაროს წინაშე, სადაც ყველაფერი საეჭვოა. დაუმთავრებელი წინა ცხოვრების მოგზაურობა ევგენის სხეულით იწყება.",
         type: 'image',
         chapters: [ { id: 1, pages: 13 }, { id: 2, pages: 13 }, { id: 3, pages: 11 },
                     { id: 4, pages: 13 },
@@ -654,21 +659,21 @@
       "w4_ch": {
         title: "მალეე",
         folder: "images4/",
-        description: "უახლესი მანჰვა...",
+        description: "უახლესი მანჰვა, რომელიც მალე იქნება ხელმისაწვდომი. მოემზადეთ ახალი თავგადასავლებისთვის!",
         type: 'image',
         chapters: []
       },
       "video_manhwa1": {
         title: "მეხუთე ",
         folder: "videos/",
-        description: "აქ ჯერ არაფერია...",
+        description: "აქ ჯერ არაფერია თუმცა მალე ყველაფერი იქნება,თქვენგან მხოლოდ აქტიურობაა საჭირო .",
         type: 'video',
         chapters: [ { id: 1, file: "w5_v1.mp4" } ]
       },
       "video_manhwa2": {
         title: "მეექვსე  ",
         folder: "videos/",
-        description: "მთავარია თქვენი აქტიურობა...",
+        description: "მთავარია თქვენი აქტიურობა ყველაფერი იქნება .",
         type: 'video',
         chapters: [ { id: 1, file: "w6_v1.mp4" } ]
       }
@@ -689,11 +694,14 @@
           currentOpenModalId = null;
         }
         if (id === 'chapterModal') {
+          // სრული ეკრანიდან გამოსვლა, თუ ჩართული იყო
           if (document.fullscreenElement) {
             document.exitFullscreen();
           }
           document.getElementById('chapterModalHeader').classList.remove('hidden');
           document.getElementById('chapterModalControls').classList.remove('hidden');
+          // ADDED: ახალი ღილაკების დამალვა/გამოჩენა
+          document.querySelector('.scroll-buttons-container').classList.remove('hidden');
           clearTimeout(scrollTimeout);
         }
       } else {
@@ -705,6 +713,7 @@
       }
     }
 
+    // FIXED: აღწერის გამოსაჩენად ლოგიკა გასწორებულია
     function openChapterSelect(manhwaId) {
       currentManhwaId = manhwaId;
       const manhwaData = manhwas[manhwaId];
@@ -742,22 +751,25 @@
       toggleModal('chapterSelect');
     }
 
+    // თავების ჩატვირთვის ფუნქცია (UNCHANGED, a new function call was added at the end)
     function loadChapterContent(chapterId, contentData) {
         currentChapterId = chapterId;
         const imagesContainer = document.getElementById('imagesContainer');
         imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
-        imagesContainer.scrollTop = 0; 
+        imagesContainer.scrollTop = 0; // ყოველი ახალი თავი იწყება ზემოდან
 
         const chapterTitleElement = document.getElementById('chapterTitle');
         const manhwaData = manhwas[currentManhwaId];
         chapterTitleElement.textContent = `${manhwaData.title} - თავი ${chapterId}`;
 
+        // ვაჩენთ კონტროლებს ახალი თავის ჩატვირთვისას
         document.getElementById('chapterModalHeader').classList.remove('hidden');
         document.getElementById('chapterModalControls').classList.remove('hidden');
+        document.querySelector('.scroll-buttons-container').classList.remove('hidden'); // ADDED
         clearTimeout(scrollTimeout);
 
         setTimeout(() => {
-            imagesContainer.innerHTML = ''; 
+            imagesContainer.innerHTML = ''; // ვასუფთავებთ ძველ სურათებს
             if (manhwaData.type === 'image') {
                 for (let i = 1; i <= contentData; i++) {
                     const img = document.createElement('img');
@@ -788,8 +800,8 @@
                 imagesContainer.appendChild(video);
             }
             updateNavigationButtons();
-            updateProgressBar(); // ADDED
-        }, 500);
+            updateProgressBar(); // ADDED: პროგრესის განულება ახალ თავზე
+        }, 500); // მცირე დაყოვნება რბილი გადასვლისთვის
     }
 
     function openChapter(chapterId, contentData) {
@@ -841,8 +853,9 @@
         }
     };
 
+    // MODIFIED: visibility logic for new buttons added
     document.getElementById('imagesContainer').addEventListener('scroll', function() {
-        updateProgressBar(); // ADDED
+        const scrollButtons = document.querySelector('.scroll-buttons-container');
         const currentScrollTop = this.scrollTop;
         const header = document.getElementById('chapterModalHeader');
         const controls = document.getElementById('chapterModalControls');
@@ -850,30 +863,39 @@
         if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
             header.classList.add('hidden');
             controls.classList.add('hidden');
+            scrollButtons.classList.add('hidden'); // ADDED
         } else if (lastScrollTop - currentScrollTop > 30) {
             header.classList.remove('hidden');
             controls.classList.remove('hidden');
+            scrollButtons.classList.remove('hidden'); // ADDED
         }
         lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+        updateProgressBar(); // ADDED
     });
 
+    // MODIFIED: visibility logic for new buttons added
     document.getElementById('imagesContainer').addEventListener('click', function() {
+      const scrollButtons = document.querySelector('.scroll-buttons-container');
       const header = document.getElementById('chapterModalHeader');
       const controls = document.getElementById('chapterModalControls');
       if (header.classList.contains('hidden')) {
           header.classList.remove('hidden');
           controls.classList.remove('hidden');
+          scrollButtons.classList.remove('hidden'); // ADDED
           clearTimeout(scrollTimeout);
           scrollTimeout = setTimeout(() => {
               header.classList.add('hidden');
               controls.classList.add('hidden');
+              scrollButtons.classList.add('hidden'); // ADDED
           }, 2000);
       } else {
           header.classList.add('hidden');
           controls.classList.add('hidden');
+          scrollButtons.classList.add('hidden'); // ADDED
       }
     });
     
+    // სრული ეკრანის ფუნქციონალი
     const fullscreenBtn = document.getElementById('fullscreenBtn');
     const chapterModal = document.getElementById('chapterModal');
 
@@ -902,6 +924,7 @@
     function updateProgressBar() {
         const imagesContainer = document.getElementById('imagesContainer');
         const progressBar = document.getElementById('progressBar');
+        if (!progressBar) return; // დაცვა თუ ელემენტი არ არსებობს
         const scrollableHeight = imagesContainer.scrollHeight - imagesContainer.clientHeight;
         if (scrollableHeight <= 0) {
             progressBar.style.width = '100%';
