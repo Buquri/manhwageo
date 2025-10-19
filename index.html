@@ -166,7 +166,8 @@
       top: 0;
       left: 0;
       width: 100vw;
-      height: 85vh;
+      /* MODIFIED: დავაბრუნეთ 100vh სრულ ეკრანზე სწორი მუშაობისთვის */
+      height: 100vh; 
       background-color: rgba(0, 0, 0, 0.95);
       display: none;
       justify-content: center;
@@ -182,14 +183,19 @@
       max-height: 98vh;
       display: flex;
       flex-direction: column;
+      width: 100%; /* ADDED for consistency */
+      height: 100%; /* ADDED for consistency */
     }
 
     #chapterModal .overlay {
       padding: 0;
       max-width: 100vw;
-      max-height: 128vh;
+      /* FIXED: სიმაღლის პრობლემა სრულ ეკრანზე */
+      height: 100%; 
+      max-height: 100vh; /* Ensure it doesn't exceed viewport */
       border-radius: 0;
-      background-color: white;
+      /* MODIFIED: ფონი ისევ შავი გავხადეთ კითხვის რეჟიმისთვის */
+      background-color: black; 
     }
     
     .modal-scrollable-content {
@@ -494,7 +500,6 @@
       opacity: 0.7;
     }
 
-    /* ADDED: ახალი საინფორმაციო ბანერის სტილები */
     .info-banner {
         background-color: rgba(0, 0, 0, 0.2);
         color: #fff;
@@ -615,7 +620,7 @@
           } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
               const indicator = document.createElement('div');
               indicator.classList.add('progress-indicator', 'read');
-              indicator.textContent = 'მიმდინარე';
+              indicator.textContent = 'დასრულებულია';
               box.appendChild(indicator);
           }
         }
@@ -638,7 +643,7 @@
 
 
   <div class="main-grid">
-    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება</h2>
+    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება ჯარში </h2>
       <div class="views-counter">
         <i class="fas fa-eye"></i> <span id="views-ch">0</span>
       </div>
@@ -734,7 +739,7 @@
   <script>
     const manhwas = {
       "ch": {
-        title: "ბნელი ჯადოქრის დაბრუნება ჯარში სეზონი 1",
+        title: "ბნელი ჯადოქრის დაბრუნება სეზონი 1",
         folder: "images/",
         description: "მინჯუნ კიმი, უმაღლესი სკოლის მოსწავლე, სხვა სამყაროში ბნელი ჯადოქარი გახდა და ახლა თავისი სამყაროს დაცვა უწევს მიწისქვეშეთიდან მოსული მონსტრებისგან. დაბრუნების შემდეგ მას სურს მშვიდი ცხოვრება, მაგრამ მისი ბედი კვლავ ბრძოლაა. წაიკითხე ქართულად სრული ისტორია და აღმოაჩინე ბნელი მაგიის ძალა!",
         keywords: "ბნელი ჯადოქრის დაბრუნება, ქართულად, Dark Mage, ფანტასტიკა, მოქმედება, ბნელი ჯადოქრის დაბრუნება ჯარში, black mages return to enlistment ქართულად, შავი ჯადოქარი, ბნელი ჯადოქარი, Dark mage, მანჰვა",
@@ -1175,12 +1180,8 @@
     document.addEventListener('DOMContentLoaded', () => {
       setupScrollButtons();
       setupAnimatedCharacter();
+      // DELETED: Welcome Modal setup call removed
     });
   </script>
 </body>
 </html>
-
-
-
-
-
