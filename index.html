@@ -1,137 +1,4 @@
-      </div>
-      <button onclick="openChapterSelect('video_manhwa2')">გახსნა / დახურვა</button>
-    </div>
-  </div>
-
-  <div class="modal" id="chapterSelect">
-    <div class="overlay">
-      <div class="modal-header">
-        <h2 id="chapterSelectTitle">თავების არჩევა</h2>
-      </div>
-      <div class="modal-scrollable-content">
-        <p id="manhwaDescription" class="modal-description"></p>
-        <div class="chapter-buttons" id="chapterButtons"></div>
-      </div>
-      <div class="modal-controls">
-        <button class="close-btn" onclick="toggleModal('chapterSelect')">დახურვა</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="chapterModal">
-    <div class="overlay">
-      <div class="modal-header" id="chapterModalHeader">
-        <h2 id="chapterTitle">თავი</h2>
-      </div>
-      <div class="images-container" id="imagesContainer">
-        <p class="loading-indicator">იტვირთება...</p>
-      </div>
-      <div class="scroll-buttons-container">
-          <button id="scrollTopBtn" title="თავში ასვლა">▲</button>
-          <button id="scrollBottomBtn" title="ბოლოში ჩასვლა">▼</button>
-      </div>
-      <div class="modal-controls" id="chapterModalControls">
-        <div class="progress-container">
-            <div id="progressBar"></div>
-        </div>
-        <div class="navigation-buttons">
-          <button id="prevChapterBtn" onclick="navigateChapter(-1)">წინა თავი</button>
-          <button id="nextChapterBtn" onclick="navigateChapter(1)">შემდეგი თავი</button>
-        </div>
-        <button id="fullscreenBtn" class="close-btn"><i class="fas fa-expand"></i></button>
-        <button class="close-btn" onclick="toggleModal('chapterModal')">დახურვა</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="animated-character"></div>
-  <div id="character-controls">
-    <button id="walkSpeedBtn">სიარული</button>
-    <button id="runSpeedBtn">სირბილი</button>
-    <button id="toggleAnimationBtn">გაჩერება / გაგრძელება</button>
-  </div>
-
-  <script>
-    const manhwas = {
-      "ch": {
-        title: "ბნელი ჯადოქრის დაბრუნება სეზონი 1",
-        folder: "images/",
-        description: "მინჯუნ კიმი, უმაღლესი სკოლის მოსწავლე, სხვა სამყაროში ბნელი ჯადოქარი გახდა და ახლა თავისი სამყაროს დაცვა უწევს მიწისქვეშეთიდან მოსული მონსტრებისგან. დაბრუნების შემდეგ მას სურს მშვიდი ცხოვრება, მაგრამ მისი ბედი კვლავ ბრძოლაა. წაიკითხე ქართულად სრული ისტორია და აღმოაჩინე ბნელი მაგიის ძალა!",
-        keywords: "ბნელი ჯადოქრის დაბრუნება, ქართულად, Dark Mage, ფანტასტიკა, მოქმედება, ბნელი ჯადოქრის დაბრუნება ჯარში, black mages return to enlistment ქართულად, შავი ჯადოქარი, ბნელი ჯადოქარი, Dark mage, მანჰვა",
-        type: 'image',
-        chapters: [
-          { id: 1, pages: 16 }, { id: 2, pages: 15 }, { id: 3, pages: 20 },
-          { id: 4, pages: 18 }, { id: 5, pages: 17 }, { id: 6, pages: 14 },
-          { id: 7, pages: 12 }, { id: 8, pages: 15 }, { id: 9, pages: 11 },
-          { id: 10, pages: 13 }, { id: 11, pages: 11 }, { id: 12, pages: 13 },
-          { id: 13, pages: 15 }, { id: 14, pages: 15 }, { id: 15, pages: 12 },
-          { id: 16, pages: 14 }, { id: 17, pages: 14 }, { id: 18, pages: 16, skipFirst: true  },
-          { id: 19, pages: 16 }, { id: 20, pages: 19 },
-          
-        ]
-      },
-      "w2_ch": {
-        title: "რკინის სისხლიანი ხმლის მქონე მონადირის შურისძიება",
-        folder: "images2/",
-        description: "გაიგე ვიკირის, ბასკერვილების ოჯახის მოღალატე მონადირის ისტორია, რომელიც გილიოტინის ნაცვლად მოულოდნელ შანსს იღებს. იგი დაბრუნდა შურისძიებისთვის! სისხლიანი კლანის მონადირის ომი თავის ყოფილ პატრონზე. წაიკითხე დრამატული შურისძიების მანჰვა ქართულად.",
-        keywords: "რკინის სისხლიანი ხმლის მქონე მონადირის შურისძიება, revenge of the Iron-Blooded sword hound ქართულად, მონადირის შურისძიება, შურისძიება, ფენტეზი, iron bloded swords Hunter, მანჰვა",
-        type: 'image',
-        chapters: [ { id: 1, pages: 10 }, { id: 2, pages: 10 },  { id: 3, pages: 10 },   { id: 4, pages: 10 },  { id: 5, pages: 11 },  { id: 6, pages: 12 },  { id: 7, pages: 12 },
-                    { id: 8, pages: 14 }, { id: 9, pages: 11 }, { id: 10, pages: 12 },
-         ]
-      },
-      "w3_ch": {
-        title: "წყეული რეინკარნაცია",
-        folder: "images3/",
-        description: "წაიკითხეთ მანჰვა 'წყეული რეინკარნაცია' ქართულად! მეომარი ჰამილი ხელახლა დაიბადა, როგორც დიდი ვერმუთის შთამომავალი, ევგენი ლიონჰარტი. მას აქვს მიღწევა, რომელიც წინა ცხოვრებაში არ ჰქონია. დაიწყე დაუმთავრებელი მოგზაურობა ახალ სამყაროში დემონებთან საბრძოლველად.",
-        keywords: "წყეული რეინკარნაცია, ქართულად, Damn Reincarnation ქართულად, რეინკარნაცია, ფენტეზი, Reincarnation, წყეული რეინკარნაცია მანგა, წყეული რეინკარნაცია მანჰვა, მანჰვა",
-        type: 'image',
-        chapters: [ { id: 1, pages: 13 }, { id: 2, pages: 13 }, { id: 3, pages: 11 },
-                    { id: 4, pages: 13 }, { id: 5, pages: 12 }, { id: 6, pages: 14 },
-        ]
-      },
-      "w4_ch": {
-        title: "მალეე",
-        folder: "images4/",
-        description: "უახლესი მანჰვა, რომელიც მალე იქნება ხელმისაწვდომი Manhwageo-ზე! მოემზადეთ ახალი, დაუვიწყარი თავგადასავლებისთვის ქართულად. თვალი ადევნეთ განახლებებს!",
-        keywords: "მალე, ახალი მანჰვა, სიახლეები, ქართულად, Manhwageo",
-        type: 'image',
-        chapters: []
-      },
-      "video_manhwa1": {
-        title: "მალე",
-        folder: "videos/",
-        description: "აქ ჯერ არაფერია, თუმცა მალე ყველაფერი იქნება. თქვენგან მხოლოდ აქტიურობაა საჭირო!",
-        keywords: "მეხუთე მანჰვა, მალე, ვიდეო მანჰვა, ქართულად",
-        type: 'video',
-        chapters: [ { id: 1, file: "w5_v1.mp4" } ]
-      },
-      "video_manhwa2": {
-        title: "მალე",
-        folder: "videos/",
-        description: "თქვენი აქტიურობა უზრუნველყოფს ახალი თავების დამატებას. დაუბრუნდით შემდეგ მანჰვას მალე!",
-        keywords: "მეექვსე მანჰვა, აქტიურობა, ვიდეო მანჰვა, ქართულად",
-        type: 'video',
-        chapters: [ { id: 1, file: "w6_v1.mp4" } ]
-      }
-    };
-    window.manhwas = manhwas;
-
-    let currentManhwaId = null;
-    let currentChapterId = null;
-    let currentOpenModalId = null;
-    let lastScrollTop = 0;
-    let scrollTimeout;
-
-    function toggleModal(id, doPushState = true) {
-      const modal = document.getElementById(id);
-      if (modal.style.display === 'flex') {
-        modal.style.display = 'none';
-        if (doPushState && currentOpenModalId === id) {
-          history.back();
-          currentOpenModalId = null;
-        }
-        if (id === 'chapterM<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ka">
 <head>
   <meta charset="UTF-8">
@@ -748,7 +615,7 @@
           } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
               const indicator = document.createElement('div');
               indicator.classList.add('progress-indicator', 'read');
-              indicator.textContent = 'დასრულებულია';
+              indicator.textContent = 'დასრულებული';
               box.appendChild(indicator);
           }
         }
@@ -771,7 +638,7 @@
 
 
   <div class="main-grid">
-    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება </h2>
+    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება</h2>
       <div class="views-counter">
         <i class="fas fa-eye"></i> <span id="views-ch">0</span>
       </div>
@@ -867,7 +734,7 @@
   <script>
     const manhwas = {
       "ch": {
-        title: "ბნელი ჯადოქრის დაბრუნება სეზონი 1",
+        title: "ბნელი ჯადოქრის დაბრუნება ჯარში სეზონი 1",
         folder: "images/",
         description: "მინჯუნ კიმი, უმაღლესი სკოლის მოსწავლე, სხვა სამყაროში ბნელი ჯადოქარი გახდა და ახლა თავისი სამყაროს დაცვა უწევს მიწისქვეშეთიდან მოსული მონსტრებისგან. დაბრუნების შემდეგ მას სურს მშვიდი ცხოვრება, მაგრამ მისი ბედი კვლავ ბრძოლაა. წაიკითხე ქართულად სრული ისტორია და აღმოაჩინე ბნელი მაგიის ძალა!",
         keywords: "ბნელი ჯადოქრის დაბრუნება, ქართულად, Dark Mage, ფანტასტიკა, მოქმედება, ბნელი ჯადოქრის დაბრუნება ჯარში, black mages return to enlistment ქართულად, შავი ჯადოქარი, ბნელი ჯადოქარი, Dark mage, მანჰვა",
@@ -879,7 +746,7 @@
           { id: 10, pages: 13 }, { id: 11, pages: 11 }, { id: 12, pages: 13 },
           { id: 13, pages: 15 }, { id: 14, pages: 15 }, { id: 15, pages: 12 },
           { id: 16, pages: 14 }, { id: 17, pages: 14 }, { id: 18, pages: 16, skipFirst: true  },
-          { id: 19, pages: 16 },
+          { id: 19, pages: 16 }, { id: 20, pages: 19 },
           
         ]
       },
@@ -890,7 +757,7 @@
         keywords: "რკინის სისხლიანი ხმლის მქონე მონადირის შურისძიება, revenge of the Iron-Blooded sword hound ქართულად, მონადირის შურისძიება, შურისძიება, ფენტეზი, iron bloded swords Hunter, მანჰვა",
         type: 'image',
         chapters: [ { id: 1, pages: 10 }, { id: 2, pages: 10 },  { id: 3, pages: 10 },   { id: 4, pages: 10 },  { id: 5, pages: 11 },  { id: 6, pages: 12 },  { id: 7, pages: 12 },
-                    { id: 8, pages: 14 },{ id: 9, pages: 11 },
+                    { id: 8, pages: 14 }, { id: 9, pages: 11 }, { id: 10, pages: 12 },
          ]
       },
       "w3_ch": {
@@ -900,7 +767,7 @@
         keywords: "წყეული რეინკარნაცია, ქართულად, Damn Reincarnation ქართულად, რეინკარნაცია, ფენტეზი, Reincarnation, წყეული რეინკარნაცია მანგა, წყეული რეინკარნაცია მანჰვა, მანჰვა",
         type: 'image',
         chapters: [ { id: 1, pages: 13 }, { id: 2, pages: 13 }, { id: 3, pages: 11 },
-                    { id: 4, pages: 13 },
+                    { id: 4, pages: 13 }, { id: 5, pages: 12 }, { id: 6, pages: 14 },
         ]
       },
       "w4_ch": {
@@ -912,7 +779,7 @@
         chapters: []
       },
       "video_manhwa1": {
-        title: "მეხუთე ",
+        title: "მალე",
         folder: "videos/",
         description: "აქ ჯერ არაფერია, თუმცა მალე ყველაფერი იქნება. თქვენგან მხოლოდ აქტიურობაა საჭირო!",
         keywords: "მეხუთე მანჰვა, მალე, ვიდეო მანჰვა, ქართულად",
@@ -920,7 +787,7 @@
         chapters: [ { id: 1, file: "w5_v1.mp4" } ]
       },
       "video_manhwa2": {
-        title: "მეექვსე  ",
+        title: "მალე",
         folder: "videos/",
         description: "თქვენი აქტიურობა უზრუნველყოფს ახალი თავების დამატებას. დაუბრუნდით შემდეგ მანჰვას მალე!",
         keywords: "მეექვსე მანჰვა, აქტიურობა, ვიდეო მანჰვა, ქართულად",
@@ -945,374 +812,6 @@
           currentOpenModalId = null;
         }
         if (id === 'chapterModal') {
-          if (document.fullscreenElement) {
-            document.exitFullscreen();
-          }
-          document.getElementById('chapterModalHeader').classList.remove('hidden');
-          document.getElementById('chapterModalControls').classList.remove('hidden');
-          document.querySelector('.scroll-buttons-container').classList.remove('hidden');
-          clearTimeout(scrollTimeout);
-          if (currentManhwaId) {
-             updateMainPageProgress(currentManhwaId);
-          }
-        }
-      } else {
-        modal.style.display = 'flex';
-        currentOpenModalId = id;
-        if (doPushState) {
-          history.pushState({ modal: id }, '', `#${id}`);
-        }
-      }
-    }
-
-    function openChapterSelect(manhwaId) {
-      currentManhwaId = manhwaId;
-      const manhwaData = manhwas[manhwaId];
-      const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${manhwaId}`) || 0);
-
-      document.getElementById('chapterSelectTitle').textContent = manhwaData.title;
-      document.getElementById('manhwaDescription').textContent = manhwaData.description;
-
-      const chapterButtons = document.getElementById('chapterButtons');
-      chapterButtons.innerHTML = '';
-
-      if (manhwaData.chapters.length === 0) {
-        chapterButtons.innerHTML = '<p style="text-align:center; color:#aaa; font-size: 0.9em;">თავები ჯერ არ არის დამატებული.</p>';
-      } else {
-        manhwaData.chapters.forEach(chapter => {
-          const btn = document.createElement('button');
-          btn.textContent = `თავი ${chapter.id}`;
-          
-          if (chapter.id < lastReadChapterId) {
-             btn.classList.add('read');
-          } else if (chapter.id === lastReadChapterId) {
-             btn.classList.add('last-read');
-          } else if (chapter.id === lastReadChapterId + 1) {
-             btn.classList.add('next-up');
-          }
-          
-          if (manhwaData.type === 'video') {
-            btn.onclick = () => openChapter(chapter.id, chapter.file);
-          } else {
-            btn.onclick = () => openChapter(chapter.id, chapter.pages);
-          }
-          chapterButtons.appendChild(btn);
-        });
-      }
-
-      const viewsElement = document.querySelector(`.box[data-manhwa-id="${manhwaId}"] .views-counter span`);
-      if (viewsElement && window.updateAndGetViews) {
-        window.updateAndGetViews(manhwaId).then(views => {
-          viewsElement.textContent = views;
-        }).catch(error => {
-          console.error("ნახვების განახლების შეცდომა openChapterSelect-დან: ", error);
-          viewsElement.textContent = "შეცდომა";
-        });
-      }
-      toggleModal('chapterSelect');
-    }
-
-    function loadChapterContent(chapterId, contentData) {
-        currentChapterId = chapterId;
-        const imagesContainer = document.getElementById('imagesContainer');
-        imagesContainer.innerHTML = '<p class="loading-indicator">იტვირთება...</p>';
-        imagesContainer.scrollTop = 0;
-
-        const chapterTitleElement = document.getElementById('chapterTitle');
-        const manhwaData = manhwas[currentManhwaId];
-        chapterTitleElement.textContent = `${manhwaData.title} - თავი ${chapterId}`;
-
-        document.getElementById('chapterModalHeader').classList.remove('hidden');
-        document.getElementById('chapterModalControls').classList.remove('hidden');
-        document.querySelector('.scroll-buttons-container').classList.remove('hidden');
-        clearTimeout(scrollTimeout);
-
-        setTimeout(() => {
-            imagesContainer.innerHTML = '';
-            if (manhwaData.type === 'image') {
-                const chapterInfo = manhwaData.chapters.find(c => c.id === chapterId);
-                const startPage = chapterInfo && chapterInfo.skipFirst ? 2 : 1;
-                for (let i = startPage; i <= contentData; i++) {
-                    const img = document.createElement('img');
-                    img.src = `${manhwaData.folder}${currentManhwaId}${chapterId}_page${i}.jpg`;
-                    img.alt = `${manhwaData.title} - თავი ${chapterId}, გვერდი ${i}`;
-                    img.loading = 'lazy';
-                    img.onerror = function() {
-                        this.src = 'images/placeholder.jpg';
-                        this.alt = 'სურათი ვერ მოიძებნა';
-                    };
-                    imagesContainer.appendChild(img);
-                }
-            } else if (manhwaData.type === 'video') {
-                const video = document.createElement('video');
-                video.src = `${manhwaData.folder}${contentData}`;
-                video.controls = true;
-                video.preload = 'auto';
-                video.style.maxWidth = '100%';
-                video.style.height = 'auto';
-                video.style.display = 'block';
-                video.autoplay = true;
-                video.onerror = function() {
-                    const errorDiv = document.createElement('div');
-                    errorDiv.textContent = 'ვიდეოს ჩატვირთვის შეცდომა.';
-                    errorDiv.style.color = 'red';
-                    imagesContainer.appendChild(errorDiv);
-                };
-                imagesContainer.appendChild(video);
-            }
-            updateNavigationButtons();
-            updateProgressBar();
-            
-            if (currentManhwaId && currentChapterId) {
-                const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${currentManhwaId}`) || 0);
-                if (currentChapterId > lastReadChapterId) {
-                    localStorage.setItem(`last_read_${currentManhwaId}`, currentChapterId);
-                }
-            }
-        }, 500);
-    }
-
-    function openChapter(chapterId, contentData) {
-        loadChapterContent(chapterId, contentData);
-        toggleModal('chapterSelect', false);
-        toggleModal('chapterModal', true);
-    }
-
-    function updateNavigationButtons() {
-        const prevBtn = document.getElementById('prevChapterBtn');
-        const nextBtn = document.getElementById('nextChapterBtn');
-        const manhwaData = manhwas[currentManhwaId];
-        const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
-        prevBtn.disabled = currentChapterIndex <= 0;
-        nextBtn.disabled = currentChapterIndex >= manhwaData.chapters.length - 1;
-    }
-
-    function navigateChapter(direction) {
-        const manhwaData = manhwas[currentManhwaId];
-        const currentChapterIndex = manhwaData.chapters.findIndex(ch => ch.id === currentChapterId);
-        const newChapterIndex = currentChapterIndex + direction;
-        
-        if (newChapterIndex >= 0 && newChapterIndex < manhwaData.chapters.length) {
-            const newChapter = manhwaData.chapters[newChapterIndex];
-            if (manhwaData.type === 'video') {
-                loadChapterContent(newChapter.id, newChapter.file);
-            } else {
-                loadChapterContent(newChapter.id, newChapter.pages);
-            }
-        }
-    }
-
-    window.onpopstate = function(event) {
-      if (document.getElementById('chapterModal').style.display === 'flex') {
-        toggleModal('chapterModal', false);
-        if(currentManhwaId) openChapterSelect(currentManhwaId);
-      } else if (document.getElementById('chapterSelect').style.display === 'flex') {
-        toggleModal('chapterSelect', false);
-      }
-      currentOpenModalId = null;
-    };
-
-    window.onload = function() {
-        if (window.location.hash) {
-            const hash = window.location.hash.substring(1);
-            if (hash === 'chapterSelect' || hash === 'chapterModal') {
-                history.replaceState({}, '', window.location.pathname + window.location.search);
-            }
-        }
-    };
-    
-    function updateMainPageProgress(manhwaId) {
-        const box = document.querySelector(`.box[data-manhwa-id="${manhwaId}"]`);
-        if (!box) return;
-        
-        const oldIndicator = box.querySelector('.progress-indicator');
-        if (oldIndicator) oldIndicator.remove();
-        
-        const lastReadChapterId = parseInt(localStorage.getItem(`last_read_${manhwaId}`) || 0);
-        const manhwaData = manhwas[manhwaId];
-        const totalChapters = manhwaData.chapters.length;
-
-        if (lastReadChapterId > 0 && lastReadChapterId < totalChapters) {
-            const indicator = document.createElement('div');
-            indicator.classList.add('progress-indicator', 'new');
-            indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალი)`;
-            box.appendChild(indicator);
-        } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
-            const indicator = document.createElement('div');
-            indicator.classList.add('progress-indicator', 'read');
-            indicator.textContent = 'დასრულებულია';
-            box.appendChild(indicator);
-        }
-    }
-
-    document.getElementById('imagesContainer').addEventListener('scroll', function() {
-        const scrollButtons = document.querySelector('.scroll-buttons-container');
-        const currentScrollTop = this.scrollTop;
-        const header = document.getElementById('chapterModalHeader');
-        const controls = document.getElementById('chapterModalControls');
-        clearTimeout(scrollTimeout);
-        if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
-            header.classList.add('hidden');
-            controls.classList.add('hidden');
-            scrollButtons.classList.add('hidden');
-        } else if (lastScrollTop - currentScrollTop > 30) {
-            header.classList.remove('hidden');
-            controls.classList.remove('hidden');
-            scrollButtons.classList.remove('hidden');
-        }
-        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-        updateProgressBar();
-    });
-
-    document.getElementById('imagesContainer').addEventListener('click', function() {
-      const scrollButtons = document.querySelector('.scroll-buttons-container');
-      const header = document.getElementById('chapterModalHeader');
-      const controls = document.getElementById('chapterModalControls');
-      if (header.classList.contains('hidden')) {
-          header.classList.remove('hidden');
-          controls.classList.remove('hidden');
-          scrollButtons.classList.remove('hidden');
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
-              header.classList.add('hidden');
-              controls.classList.add('hidden');
-              scrollButtons.classList.add('hidden');
-          }, 2000);
-      } else {
-          header.classList.add('hidden');
-          controls.classList.add('hidden');
-          scrollButtons.classList.add('hidden');
-      }
-    });
-    
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    const chapterModal = document.getElementById('chapterModal');
-
-    fullscreenBtn.addEventListener('click', () => {
-        if (!document.fullscreenElement) {
-            chapterModal.requestFullscreen().catch(err => {
-                alert(`სრული ეკრანის რეჟიმის ჩართვის შეცდომა: ${err.message}`);
-            });
-        } else {
-            document.exitFullscreen();
-        }
-    });
-
-    document.addEventListener('fullscreenchange', () => {
-        const icon = fullscreenBtn.querySelector('i');
-        if (!document.fullscreenElement) {
-            icon.classList.remove('fa-compress');
-            icon.classList.add('fa-expand');
-        } else {
-            icon.classList.remove('fa-expand');
-            icon.classList.add('fa-compress');
-        }
-    });
-
-    function updateProgressBar() {
-        const imagesContainer = document.getElementById('imagesContainer');
-        const progressBar = document.getElementById('progressBar');
-        if (!progressBar) return;
-        const scrollableHeight = imagesContainer.scrollHeight - imagesContainer.clientHeight;
-        if (scrollableHeight <= 0) {
-            progressBar.style.width = '100%';
-            return;
-        }
-        const progress = (imagesContainer.scrollTop / scrollableHeight) * 100;
-        progressBar.style.width = `${progress}%`;
-    }
-
-    function setupScrollButtons() {
-        const imagesContainer = document.getElementById('imagesContainer');
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-        const scrollBottomBtn = document.getElementById('scrollBottomBtn');
-        scrollTopBtn.addEventListener('click', () => {
-            imagesContainer.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        scrollBottomBtn.addEventListener('click', () => {
-            imagesContainer.scrollTo({ top: imagesContainer.scrollHeight, behavior: 'smooth' });
-        });
-    }
-
-    function setupAnimatedCharacter() {
-      const character = document.getElementById('animated-character');
-      const walkSpeedBtn = document.getElementById('walkSpeedBtn');
-      const runSpeedBtn = document.getElementById('runSpeedBtn');
-      const toggleAnimationBtn = document.getElementById('toggleAnimationBtn');
-
-      const animationFolderPath = 'images/';
-      const idleFrames = 1, walkFrames = 2, runFrames = 2;
-      const characterWidth = 110, characterHeight = 130;
-      const walkSpeed = 0.5, runSpeed = 2;
-      const idleInterval = 500, walkInterval = 450, runInterval = 300;
-      let currentX = 0, direction = 1, animationFrame = 1;
-      let currentSpeed = 0, currentInterval = idleInterval, currentAnimationType = 'idle';
-      let animationIntervalId, movementIntervalId;
-      let isAnimationRunning = false;
-      character.style.width = `${characterWidth}px`;
-      character.style.height = `${characterHeight}px`;
-
-      function updateCharacterImage() {
-        let maxFrames = (currentAnimationType === 'idle') ? idleFrames : (currentAnimationType === 'walk' ? walkFrames : runFrames);
-        character.style.backgroundImage = `url('${animationFolderPath}animation_1_${currentAnimationType}_${animationFrame}.png')`;
-        animationFrame = (animationFrame % maxFrames) + 1;
-      }
-
-      function moveCharacter() {
-        if (!isAnimationRunning || currentAnimationType === 'idle') return;
-        currentX += direction * currentSpeed;
-        const maxX = window.innerWidth - characterWidth, minX = 0;
-        if (currentX >= maxX) {
-          currentX = maxX;
-          direction = -1;
-        } else if (currentX <= minX) {
-          currentX = minX;
-          direction = 1;
-        }
-        character.style.transform = `translateX(${currentX}px) scaleX(${direction})`;
-      }
-
-      function startAnimation(type, speed, interval) {
-        if (animationIntervalId) clearInterval(animationIntervalId);
-        if (movementIntervalId) clearInterval(movementIntervalId);
-        currentAnimationType = type;
-        currentSpeed = speed;
-        currentInterval = interval;
-        animationFrame = 1;
-        isAnimationRunning = true;
-        updateCharacterImage();
-        animationIntervalId = setInterval(updateCharacterImage, currentInterval);
-        if (type !== 'idle') {
-            movementIntervalId = setInterval(moveCharacter, 10);
-        }
-        toggleAnimationBtn.textContent = 'გაჩერება';
-        walkSpeedBtn.disabled = (type === 'walk');
-        runSpeedBtn.disabled = (type === 'run');
-      }
-
-      walkSpeedBtn.onclick = () => startAnimation('walk', walkSpeed, walkInterval);
-      runSpeedBtn.onclick = () => startAnimation('run', runSpeed, runInterval);
-      toggleAnimationBtn.onclick = () => {
-         if (isAnimationRunning) {
-           clearInterval(animationIntervalId);
-           clearInterval(movementIntervalId);
-           isAnimationRunning = false;
-           toggleAnimationBtn.textContent = 'გაგრძელება';
-         } else {
-           startAnimation(currentAnimationType, currentSpeed, currentInterval);
-         }
-       };
-      startAnimation('walk', walkSpeed, walkInterval);
-    }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-      setupScrollButtons();
-      setupAnimatedCharacter();
-    });
-  </script>
-</body>
-</html>
-odal') {
           if (document.fullscreenElement) {
             document.exitFullscreen();
           }
