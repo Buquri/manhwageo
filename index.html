@@ -166,8 +166,7 @@
       top: 0;
       left: 0;
       width: 100vw;
-      /* MODIFIED: დავაბრუნეთ 100vh სრულ ეკრანზე სწორი მუშაობისთვის */
-      height: 100vh; 
+      height: 85vh;
       background-color: rgba(0, 0, 0, 0.95);
       display: none;
       justify-content: center;
@@ -183,19 +182,14 @@
       max-height: 98vh;
       display: flex;
       flex-direction: column;
-      width: 100%; /* ADDED for consistency */
-      height: 100%; /* ADDED for consistency */
     }
 
     #chapterModal .overlay {
       padding: 0;
       max-width: 100vw;
-      /* FIXED: სიმაღლის პრობლემა სრულ ეკრანზე */
-      height: 100%; 
-      max-height: 100vh; /* Ensure it doesn't exceed viewport */
+      max-height: 124vh;
       border-radius: 0;
-      /* MODIFIED: ფონი ისევ შავი გავხადეთ კითხვის რეჟიმისთვის */
-      background-color: black; 
+      background-color: white;
     }
     
     .modal-scrollable-content {
@@ -500,6 +494,7 @@
       opacity: 0.7;
     }
 
+    /* ADDED: ახალი საინფორმაციო ბანერის სტილები */
     .info-banner {
         background-color: rgba(0, 0, 0, 0.2);
         color: #fff;
@@ -615,12 +610,12 @@
           if (lastReadChapterId > 0 && lastReadChapterId < totalChapters) {
               const indicator = document.createElement('div');
               indicator.classList.add('progress-indicator', 'new');
-              indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალი)`;
+              indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალ დამატებული თავი)`;
               box.appendChild(indicator);
           } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
               const indicator = document.createElement('div');
               indicator.classList.add('progress-indicator', 'read');
-              indicator.textContent = 'დასრულებულია';
+              indicator.textContent = 'მიმდინარე';
               box.appendChild(indicator);
           }
         }
@@ -643,7 +638,7 @@
 
 
   <div class="main-grid">
-    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება ჯარში </h2>
+    <div class="box first" data-manhwa-id="ch"> <h2>ბნელი ჯადოქრის დაბრუნება </h2>
       <div class="views-counter">
         <i class="fas fa-eye"></i> <span id="views-ch">0</span>
       </div>
@@ -1180,8 +1175,10 @@
     document.addEventListener('DOMContentLoaded', () => {
       setupScrollButtons();
       setupAnimatedCharacter();
-      // DELETED: Welcome Modal setup call removed
     });
   </script>
 </body>
 </html>
+
+
+
