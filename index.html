@@ -610,12 +610,12 @@
           if (lastReadChapterId > 0 && lastReadChapterId < totalChapters) {
               const indicator = document.createElement('div');
               indicator.classList.add('progress-indicator', 'new');
-              indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალ დამატებული თავი)`;
+              indicator.textContent = `თავი ${lastReadChapterId + 1} (ახალი)`;
               box.appendChild(indicator);
           } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
               const indicator = document.createElement('div');
               indicator.classList.add('progress-indicator', 'read');
-              indicator.textContent = 'მიმდინარე';
+              indicator.textContent = 'დასრულებულია';
               box.appendChild(indicator);
           }
         }
