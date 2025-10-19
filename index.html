@@ -187,7 +187,7 @@
     #chapterModal .overlay {
       padding: 0;
       max-width: 100vw;
-      max-height: 124vh;
+      max-height: 128vh;
       border-radius: 0;
       background-color: white;
     }
@@ -615,7 +615,7 @@
           } else if (lastReadChapterId >= totalChapters && totalChapters > 0) {
               const indicator = document.createElement('div');
               indicator.classList.add('progress-indicator', 'read');
-              indicator.textContent = 'დასრულებული';
+              indicator.textContent = 'მიმდინარე';
               box.appendChild(indicator);
           }
         }
@@ -1179,6 +1179,7 @@
   </script>
 </body>
 </html>
+
 
 
 
