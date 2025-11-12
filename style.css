@@ -150,7 +150,7 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 98vh;
+  height: 86vh;
   background-color: rgba(0, 0, 0, 0.95);
   display: none;
   justify-content: center;
@@ -253,7 +253,7 @@ body {
 
 .images-container img, .images-container video {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   border-radius: 0;
   opacity: 0;
