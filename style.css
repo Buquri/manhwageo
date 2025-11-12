@@ -151,7 +151,7 @@ body {
   left: 0;
   width: 100vw;
   /* 🛠️ შესწორება #1: მოდალმა უნდა დაიკავოს ეკრანის 100% სიმაღლე */
-  height: 100vh;
+  height: 150vh;
   background-color: rgba(0, 0, 0, 0.95);
   display: none;
   justify-content: center;
