@@ -150,12 +150,14 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 85vh;
+  /* 🛠️ შესწორება #1: მოდალმა უნდა დაიკავოს ეკრანის 100% სიმაღლე */
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.95);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 999;
+  overflow: auto;
 }
 
 .overlay {
@@ -171,15 +173,17 @@ body {
 #chapterModal .overlay {
   padding: 0;
   max-width: 100vw;
-  max-height: 124vh;
+  /* 🛠️ შესწორება #2: თავის მოდალის შიგთავსმაც უნდა დაიკავოს 100% სიმაღლე */
+  height: 100vh;
+  max-height: 100vh;
   border-radius: 0;
-  background-color: white;
+  background-color: black; /* შავი ფონი კითხვისთვის */
 }
 
 .modal-scrollable-content {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 0 15px;
+    padding: 0;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -245,6 +249,7 @@ body {
   scrollbar-width: none;
   margin-top: 0;
   background-color: black;
+  width: 100%;
 }
 
 .images-container::-webkit-scrollbar {
@@ -260,6 +265,7 @@ body {
   transform: translateY(20px);
   animation: fadeUp 0.5s ease forwards;
   max-width: 100%;
+  cursor: pointer; /* სურათზე დაჭერის შესაძლებლობა */
 }
 
 .loading-indicator {
@@ -274,6 +280,22 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 🛠️ ახალი კლასი: სრული ეკრანის ჩვენება დაჭერისას */
+.images-container img.full-screen-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain; /* ინარჩუნებს პროპორციებს სრულ ეკრანზე */
+    z-index: 10001; /* მაღალი z-index, რომ ყველაფერს გადაეფაროს */
+    background-color: black;
+    cursor: zoom-out; /* მიუთითებს, რომ დაჭერით დაიხურება */
+    opacity: 1;
+    transform: none;
+    animation: none;
 }
 
 /* მოდალის სათაური */
