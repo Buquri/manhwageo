@@ -14,7 +14,7 @@ const manhwas = {
       { id: 13, pages: 15 }, { id: 14, pages: 15 }, { id: 15, pages: 12 },
       { id: 16, pages: 14 }, { id: 17, pages: 14 }, { id: 18, pages: 16, skipFirst: true  },
       { id: 19, pages: 16 }, { id: 20, pages: 19 }, { id: 21, pages: 12},
-      { id: 22, pages: 37},
+      { id: 22, pages: 37}, { id: 23, pages: 25},
     ]
   },
   "w2_ch": {
