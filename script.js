@@ -35,6 +35,7 @@ const manhwas = {
     type: 'image',
     chapters: [ { id: 1, pages: 13 }, { id: 2, pages: 13 }, { id: 3, pages: 11 },
                 { id: 4, pages: 13 }, { id: 5, pages: 12 }, { id: 6, pages: 14 },
+               { id: 7, pages: 15 },
     ]
   },
   "w4_ch": {
